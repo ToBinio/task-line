@@ -1,30 +1,61 @@
 <script setup lang="ts">
-let props = defineProps<{ data: Todo }>()
+let props = defineProps<{ data: Todo }>();
 
-let checking = ref(false)
-let todoStore = useTodoStore()
+let checking = ref(false);
+let todoStore = useTodoStore();
 
 function onCheck() {
-    checking.value = true
+    checking.value = true;
     setTimeout(() => {
-        todoStore.removeTodo(props.data.title)
-    }, 1000)
+        todoStore.removeTodo(props.data.title);
+    }, 1000);
 }
 
+let width = computed(() => {
+    let timeDiff = props.data.end.getTime() - props.data.start.getTime();
+    let numberOfDays = timeDiff / (24 * 60 * 60 * 1000);
+    let percentage = numberOfDays / 7.0;
+    return percentage;
+});
+
+let offset = computed(() => {
+    let timeDiff = props.data.start.getTime() - new Date().getTime();
+    let numberOfDays = timeDiff / (24 * 60 * 60 * 1000) + 0.5;
+    let percentage = numberOfDays / 7.0;
+    return percentage;
+});
 </script>
 
 <template>
-    <div class="p-2 flex items-center gap-1">
-        <button :disabled="checking" @click="onCheck()">
-            <span class="flex items-center justify-center h-5 w-5 border-2 border-gray-800 rounded-full">
-                <transition>
-                    <icon v-if="checking" name="material-symbols:check-rounded"/>
-                </transition>
+    <div class="relative">
+        <div class="p-1 flex items-center gap-1">
+            <button :disabled="checking" @click="onCheck()">
+                <span
+                    class="flex items-center justify-center h-5 w-5 border-2 border-gray-800 rounded-full"
+                >
+                    <transition>
+                        <icon
+                            v-if="checking"
+                            name="material-symbols:check-rounded"
+                        />
+                    </transition>
+                </span>
+            </button>
+            <span>
+                {{ data.title }}
             </span>
-        </button>
-        <span>
-            {{ data.title }}
-        </span>
+        </div>
+        <div class="flex justify-evenly h-2 w-1/1 absolute -translate-y-1/3">
+            <div
+                v-for="n in 6"
+                class="h-2 w-0.5 bg-gray-300 rounded-full"
+            ></div>
+        </div>
+        <div
+            class="h-1 rounded-full w-1/2 bg-emerald-600 absolute -bottom-0.25"
+            :style="{ width: `${width * 100}%`, left: `${offset * 100}%` }"
+        ></div>
+        <div class="h-0.5 bg-gray-300 rounded-full"></div>
     </div>
 </template>
 

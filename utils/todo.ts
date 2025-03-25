@@ -1,1 +1,1 @@
-export type Todo = { title: string }
+export type Todo = { title: string; start: Date; end: Date };

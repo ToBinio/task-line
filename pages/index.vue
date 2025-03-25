@@ -5,17 +5,16 @@ let todoStore = useTodoStore();
 </script>
 
 <template>
-    <div>
+    <div class="m-1">
         <TimeHeader />
-        <div class="h-0.5 mx-1 bg-black"></div>
+        <div class="h-0.5 bg-gray-300"></div>
         <TransitionGroup>
             <div
-                class="max-h-12"
+                class="max-h-14"
                 v-for="todo in todoStore.data"
                 :key="todo.title"
             >
                 <Todo :data="todo" />
-                <div class="h-0.5 mx-1 bg-black"></div>
             </div>
         </TransitionGroup>
     </div>
@@ -27,7 +26,6 @@ let todoStore = useTodoStore();
     transition: 0.5s ease;
 }
 
-.v-enter-from,
 .v-leave-to {
     max-height: 0;
     opacity: 0;

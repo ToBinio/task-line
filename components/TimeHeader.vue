@@ -18,7 +18,7 @@ for (let i = 0; i < 7; i++) {
             <div>{{ day }}</div>
             <div
                 v-if="index != dayStrings.length - 1"
-                class="h-5 w-0.5 bg-black"
+                class="h-5 w-0.5 bg-gray-300"
             ></div>
         </template>
     </div>
