@@ -1,13 +1,21 @@
 <script setup lang="ts">
-let todoStore = useTodoStore()
+import TimeHeader from "~/components/TimeHeader.vue";
+
+let todoStore = useTodoStore();
 </script>
 
 <template>
     <div>
+        <TimeHeader />
+        <div class="h-0.5 mx-1 bg-black"></div>
         <TransitionGroup>
-            <div class="max-h-12" v-for="(todo, index) in todoStore.data" :key="todo.title">
-                <Todo :data="todo"/>
-                <div v-if="index != (todoStore.data.length - 1)" class="h-0.5 mx-1 bg-black"></div>
+            <div
+                class="max-h-12"
+                v-for="todo in todoStore.data"
+                :key="todo.title"
+            >
+                <Todo :data="todo" />
+                <div class="h-0.5 mx-1 bg-black"></div>
             </div>
         </TransitionGroup>
     </div>
