@@ -6,10 +6,16 @@ export const useTodoStore = defineStore('todos', {
         data:
             [
                 {
-                    title: "huff schlagen"
+                    title: "huff sagen das er cool ist"
                 },
                 {
                     title: "huffen"
+                },
+                {
+                    title: "duff"
+                },
+                {
+                    title: "muff"
                 }
             ]
     }),

@@ -15,8 +15,8 @@ function onCheck() {
 
 <template>
     <div class="p-2 flex items-center gap-1">
-        <button @click="onCheck()">
-            <span class="flex items-center justify-center h-4 w-4 border-2 border-gray-800 rounded-full">
+        <button :disabled="checking" @click="onCheck()">
+            <span class="flex items-center justify-center h-5 w-5 border-2 border-gray-800 rounded-full">
                 <transition>
                     <icon v-if="checking" name="material-symbols:check-rounded"/>
                 </transition>
