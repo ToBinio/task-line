@@ -6,20 +6,22 @@ let todoStore = useTodoStore();
 </script>
 
 <template>
-    <div class="m-1">
-        <TimeHeader />
-        <div class="h-0.5 spacer"></div>
-        <TransitionGroup>
-            <div
-                class="max-h-15 h-15"
-                v-for="todo in todoStore.data"
-                :key="todo.title"
-            >
-                <Todo :data="todo" />
-            </div>
-        </TransitionGroup>
+    <div class="h-dvh w-dvw overflow-hidden relative">
+        <div class="p-1">
+            <TimeHeader />
+            <div class="h-0.5 spacer"></div>
+            <TransitionGroup>
+                <div
+                    class="max-h-15 h-15"
+                    v-for="todo in todoStore.data"
+                    :key="todo.title"
+                >
+                    <Todo :data="todo" />
+                </div>
+            </TransitionGroup>
+        </div>
+        <NewTodo />
     </div>
-    <NewTodo />
 </template>
 
 <style scoped>

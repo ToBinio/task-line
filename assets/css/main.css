@@ -6,6 +6,6 @@
     }
 }
 
-html {
+body {
     @apply dark:text-white bg-stone-100 dark:bg-stone-900;
 }
