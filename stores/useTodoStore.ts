@@ -5,22 +5,22 @@ export const useTodoStore = defineStore("todos", {
   state: (): { data: Todo[] } => ({
     data: [
       {
-        title: "huff sagen das er cool ist",
+        title: "Deutsch Hausaufgabe",
         start: new Date(),
         end: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
       },
       {
-        title: "huffen",
+        title: "WMC Aufgabe 1",
         start: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
         end: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 4),
       },
       {
-        title: "duff",
+        title: "WMC Aufgabe 2",
         start: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 4),
         end: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 10),
       },
       {
-        title: "muff",
+        title: "Minecraft Film im Kino anschauen",
         start: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 3),
         end: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 3),
       },

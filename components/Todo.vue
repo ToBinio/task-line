@@ -27,35 +27,37 @@ let offset = computed(() => {
 </script>
 
 <template>
-    <div class="relative">
-        <div class="p-1 flex items-center gap-1">
+    <div class="h-full relative flex flex-col justify-center">
+        <div class="py-2 pl-1 flex items-center gap-2">
             <button :disabled="checking" @click="onCheck()">
                 <span
-                    class="flex items-center justify-center h-5 w-5 border-2 border-gray-800 rounded-full"
+                    class="flex items-center justify-center h-7 w-7 border-2 border-stone-800 dark:border-stone-200 rounded-full"
                 >
                     <transition>
                         <icon
                             v-if="checking"
+                            size="24"
                             name="material-symbols:check-rounded"
                         />
                     </transition>
                 </span>
             </button>
-            <span>
+            <span class="text-lg">
                 {{ data.title }}
             </span>
         </div>
-        <div class="flex justify-evenly h-2 w-1/1 absolute -translate-y-1/3">
+        <div class="relative">
             <div
-                v-for="n in 6"
-                class="h-2 w-0.5 bg-gray-300 rounded-full"
+                class="flex justify-evenly h-2 w-1/1 absolute -translate-y-1/3"
+            >
+                <div v-for="n in 6" class="h-2 w-0.5 spacer rounded-full"></div>
+            </div>
+            <div
+                class="h-1 rounded-full w-1/2 bg-emerald-600 absolute -bottom-0.25"
+                :style="{ width: `${width * 100}%`, left: `${offset * 100}%` }"
             ></div>
+            <div class="h-0.5 spacer rounded-full"></div>
         </div>
-        <div
-            class="h-1 rounded-full w-1/2 bg-emerald-600 absolute -bottom-0.25"
-            :style="{ width: `${width * 100}%`, left: `${offset * 100}%` }"
-        ></div>
-        <div class="h-0.5 bg-gray-300 rounded-full"></div>
     </div>
 </template>
 

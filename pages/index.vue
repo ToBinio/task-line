@@ -7,10 +7,10 @@ let todoStore = useTodoStore();
 <template>
     <div class="m-1">
         <TimeHeader />
-        <div class="h-0.5 bg-gray-300"></div>
+        <div class="h-0.5 spacer"></div>
         <TransitionGroup>
             <div
-                class="max-h-14"
+                class="max-h-15 h-15"
                 v-for="todo in todoStore.data"
                 :key="todo.title"
             >
