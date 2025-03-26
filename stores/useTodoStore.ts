@@ -31,5 +31,9 @@ export const useTodoStore = defineStore("todos", {
       const index = this.data.findIndex((value) => value.title === title);
       this.data.splice(index, 1);
     },
+
+    addTodo(title: string, start: Date, end: Date) {
+      this.data.push({ title, start, end });
+    },
   },
 });

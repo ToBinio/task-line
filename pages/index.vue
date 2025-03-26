@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import NewTodo from "~/components/NewTodo.vue";
 import TimeHeader from "~/components/TimeHeader.vue";
 
 let todoStore = useTodoStore();
@@ -18,6 +19,7 @@ let todoStore = useTodoStore();
             </div>
         </TransitionGroup>
     </div>
+    <NewTodo />
 </template>
 
 <style scoped>
