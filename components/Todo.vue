@@ -13,14 +13,17 @@ function onCheck() {
 
 let width = computed(() => {
     let timeDiff = props.data.end.getTime() - props.data.start.getTime();
-    let numberOfDays = timeDiff / (24 * 60 * 60 * 1000);
+    let numberOfDays = timeDiff / (24 * 60 * 60 * 1000.0);
     let percentage = numberOfDays / 7.0;
     return percentage;
 });
 
 let offset = computed(() => {
-    let timeDiff = props.data.start.getTime() - new Date().getTime();
-    let numberOfDays = timeDiff / (24 * 60 * 60 * 1000) + 0.5;
+    let now = new Date();
+    now.setHours(0, 0, 0, 0);
+
+    let timeDiff = props.data.start.getTime() - now.getTime();
+    let numberOfDays = timeDiff / (24 * 60 * 60 * 1000.0);
     let percentage = numberOfDays / 7.0;
     return percentage;
 });

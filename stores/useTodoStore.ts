@@ -6,23 +6,23 @@ export const useTodoStore = defineStore("todos", {
     data: [
       {
         title: "Deutsch Hausaufgabe",
-        start: new Date(),
-        end: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
+        start: getDateInNDays(0),
+        end: getDateInNDays(1),
       },
       {
         title: "WMC Aufgabe 1",
-        start: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
-        end: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 4),
+        start: getDateInNDays(1),
+        end: getDateInNDays(5),
       },
       {
         title: "WMC Aufgabe 2",
-        start: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 4),
-        end: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 10),
+        start: getDateInNDays(5),
+        end: getDateInNDays(7),
       },
       {
         title: "Minecraft Film im Kino anschauen",
-        start: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 3),
-        end: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 3),
+        start: getDateInNDays(3),
+        end: getDateInNDays(4),
       },
     ],
   }),
@@ -33,7 +33,17 @@ export const useTodoStore = defineStore("todos", {
     },
 
     addTodo(title: string, start: Date, end: Date) {
+      start.setHours(0, 0, 0, 0);
+      end.setHours(0, 0, 0, 0);
       this.data.push({ title, start, end });
     },
   },
 });
+
+function getDateInNDays(days: number): Date {
+  var now = new Date();
+  now.setHours(0, 0, 0, 0);
+  let date = new Date(now.getTime() + 1000 * 60 * 60 * 24 * days);
+
+  return date;
+}
