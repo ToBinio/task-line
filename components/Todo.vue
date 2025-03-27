@@ -7,7 +7,7 @@ let todoStore = useTodoStore();
 function onCheck() {
     checking.value = true;
     setTimeout(() => {
-        todoStore.removeTodo(props.data.title);
+        todoStore.removeTodo(props.data.uuid);
     }, 1000);
 }
 

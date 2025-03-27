@@ -1,49 +1,57 @@
 import { defineStore } from "pinia";
-import type { Todo } from "~/utils/todo";
+import type { Todo, UUID } from "~/utils/todo";
 
 export const useTodoStore = defineStore("todos", {
   state: (): { data: Todo[] } => ({
-    data: [
-      {
-        title: "Deutsch Hausaufgabe",
-        start: getDateInNDays(0),
-        end: getDateInNDays(1),
-      },
-      {
-        title: "WMC Aufgabe 1",
-        start: getDateInNDays(1),
-        end: getDateInNDays(5),
-      },
-      {
-        title: "WMC Aufgabe 2",
-        start: getDateInNDays(5),
-        end: getDateInNDays(7),
-      },
-      {
-        title: "Minecraft Film im Kino anschauen",
-        start: getDateInNDays(3),
-        end: getDateInNDays(4),
-      },
-    ],
+    data: getTestTodos(10),
   }),
   actions: {
-    removeTodo(title: string) {
-      const index = this.data.findIndex((value) => value.title === title);
+    removeTodo(uuid: UUID) {
+      const index = this.data.findIndex((value) => value.uuid === uuid);
       this.data.splice(index, 1);
     },
 
     addTodo(title: string, start: Date, end: Date) {
       start.setHours(0, 0, 0, 0);
       end.setHours(0, 0, 0, 0);
-      this.data.push({ title, start, end });
+      let uuid = crypto.randomUUID();
+
+      this.data.push({ uuid, title, start, end });
     },
   },
 });
 
-function getDateInNDays(days: number): Date {
+function getToDayInNDays(days: number): Date {
   var now = new Date();
   now.setHours(0, 0, 0, 0);
   let date = new Date(now.getTime() + 1000 * 60 * 60 * 24 * days);
 
   return date;
+}
+
+function getTestTodos(n: number): Todo[] {
+  let tasks = [
+    "Deutsch Hausaufgabe",
+    "WMC Aufgabe 1",
+    "WMC Aufgabe 2",
+    "Minecraft Film im Kino anschauen",
+  ];
+
+  let data = [];
+
+  for (let i = 0; i < n; i++) {
+    let start = Math.floor(Math.random() * 10);
+    let duration = Math.floor(Math.random() * 10);
+
+    let uuid = crypto.randomUUID();
+
+    data.push({
+      uuid,
+      title: tasks[i % tasks.length],
+      start: getToDayInNDays(start),
+      end: getToDayInNDays(start + duration),
+    });
+  }
+
+  return data;
 }

@@ -14,7 +14,7 @@ let todoStore = useTodoStore();
                 <div
                     class="max-h-15 h-15"
                     v-for="todo in todoStore.data"
-                    :key="todo.title"
+                    :key="todo.uuid"
                 >
                     <Todo :data="todo" />
                 </div>
