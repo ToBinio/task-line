@@ -21,9 +21,7 @@ let todoStore = useTodoStore();
             </TransitionGroup>
         </div>
 
-        <!--
         <NewTodo />
-        -->
     </div>
 </template>
 

@@ -7,12 +7,20 @@ let to = ref("");
 
 let todoStore = useTodoStore();
 
+function open() {
+    isOpen.value = true;
+}
+
+function close() {
+    isOpen.value = false;
+}
+
 function isValid(): boolean {
     return title.value !== "" && from.value !== "" && to.value !== "";
 }
 
 function onAddTodo() {
-    isOpen.value = false;
+    close();
 
     let fromDate = new Date(from.value);
     let toDate = new Date(new Date(to.value).getTime() + 24 * 60 * 60 * 1000);
@@ -25,8 +33,9 @@ function onAddTodo() {
 }
 </script>
 <template>
+    <div class="fixed h-dvh w-dvw" v-if="isOpen" @click="close" />
     <div
-        class="absolute rounded-t-lg h-48 -bottom-48 bg-stone-800 w-full transition-all"
+        class="fixed rounded-t-lg h-48 -bottom-48 bg-stone-800 w-full transition-all"
         :class="{ 'bottom-0': isOpen }"
     >
         <div class="flex flex-col m-2 gap-2">
@@ -63,7 +72,7 @@ function onAddTodo() {
     <button
         v-if="!isOpen"
         class="m-2 h-14 absolute bottom-0 right-0 rounded-full aspect-square dark:bg-stone-600 hover:bg-stone-500"
-        @click="isOpen = true"
+        @click="open"
     >
         New
     </button>
