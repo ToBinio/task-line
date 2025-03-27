@@ -3,7 +3,7 @@ import type { Todo, UUID } from "~/utils/todo";
 
 export const useTodoStore = defineStore("todos", {
   state: (): { data: Todo[] } => ({
-    data: getTestTodos(10),
+    data: getTestTodos(20),
   }),
   actions: {
     removeTodo(uuid: UUID) {

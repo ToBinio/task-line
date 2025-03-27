@@ -4,12 +4,12 @@ import TimeHeader from "~/components/TimeHeader.vue";
 
 let todoStore = useTodoStore();
 </script>
-
 <template>
-    <div class="h-dvh w-dvw overflow-hidden relative">
-        <div class="p-1">
-            <TimeHeader />
-            <div class="h-0.5 spacer"></div>
+    <div class="w-dvw h-dvh flex flex-col overflow-hidden">
+        <TimeHeader />
+        <div class="h-0.5 spacer"></div>
+
+        <div class="flex-1 overflow-y-scroll overflow-x-hidden p-1 w-dvw">
             <TransitionGroup>
                 <div
                     class="max-h-15 h-15"
@@ -20,7 +20,10 @@ let todoStore = useTodoStore();
                 </div>
             </TransitionGroup>
         </div>
+
+        <!--
         <NewTodo />
+        -->
     </div>
 </template>
 
