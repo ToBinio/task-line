@@ -3,7 +3,7 @@ import type { Todo, UUID } from "~/utils/todo";
 
 export const useTodoStore = defineStore("todos", {
   state: (): { data: Todo[] } => ({
-    data: getTestTodos(20),
+    data: getTestTodos(5),
   }),
   actions: {
     removeTodo(uuid: UUID) {
@@ -12,11 +12,8 @@ export const useTodoStore = defineStore("todos", {
     },
 
     addTodo(title: string, start: Date, end: Date) {
-      start.setHours(0, 0, 0, 0);
-      end.setHours(0, 0, 0, 0);
       let uuid = crypto.randomUUID();
-
-      this.data.push({ uuid, title, start, end });
+      this.data.push({ uuid, title, start, end: addDays(end, 1) });
     },
   },
 });

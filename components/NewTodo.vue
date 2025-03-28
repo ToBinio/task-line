@@ -1,9 +1,17 @@
 <script setup lang="ts">
+import DateSelect from "./DateSelect.vue";
+
 let isOpen = ref(false);
 
 let title = ref("");
-let from = ref("");
-let to = ref("");
+let from = ref<Date | undefined>(sanitizeDate(new Date()));
+let to = ref<Date | undefined>(sanitizeDate(new Date()));
+
+function reset() {
+    title.value = "";
+    from.value = sanitizeDate(new Date());
+    to.value = sanitizeDate(new Date());
+}
 
 let todoStore = useTodoStore();
 
@@ -13,23 +21,18 @@ function open() {
 
 function close() {
     isOpen.value = false;
+    reset();
 }
 
 function isValid(): boolean {
-    return title.value !== "" && from.value !== "" && to.value !== "";
+    return (
+        title.value !== "" && from.value !== undefined && to.value !== undefined
+    );
 }
 
 function onAddTodo() {
+    todoStore.addTodo(title.value, from.value!, to.value!);
     close();
-
-    let fromDate = new Date(from.value);
-    let toDate = new Date(new Date(to.value).getTime() + 24 * 60 * 60 * 1000);
-
-    todoStore.addTodo(title.value, fromDate, toDate);
-
-    title.value = "";
-    from.value = "";
-    to.value = "";
 }
 </script>
 <template>
@@ -40,38 +43,18 @@ function onAddTodo() {
             @click="close"
         />
         <div
-            class="fixed rounded-t-lg h-48 bottom-0 translate-y-full bg-stone-800 w-full transition-all z-100"
+            class="fixed rounded-t-lg h-100 bottom-0 translate-y-full bg-stone-800 w-full transition-all z-100"
             :class="{ '!translate-y-0': isOpen }"
         >
             <div class="flex flex-col m-2 gap-2">
                 <div class="flex flex-col">
-                    <label for="title"> Title </label>
                     <input
+                        placeholder="Title"
                         v-model="title"
-                        id="title"
-                        class="border-2 border-stone-700 rounded"
+                        class="pl-1 border-2 border-stone-700 rounded"
                     />
                 </div>
-                <div class="flex justify-between">
-                    <div class="flex flex-col">
-                        <label for="from"> From </label>
-                        <input
-                            v-model="from"
-                            id="from"
-                            class="border-2 border-stone-700 rounded"
-                            type="date"
-                        />
-                    </div>
-                    <div class="flex flex-col">
-                        <label for="to"> To </label>
-                        <input
-                            v-model="to"
-                            id="to"
-                            class="border-2 border-stone-700 rounded"
-                            type="date"
-                        />
-                    </div>
-                </div>
+                <DateSelect v-model:from="from" v-model:to="to" />
             </div>
         </div>
         <button

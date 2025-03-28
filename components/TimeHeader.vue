@@ -8,7 +8,7 @@ for (let i = 0; i < 7; i++) {
         now.toLocaleString(undefined, { weekday: "long" }).substring(0, 2),
     );
     // Increment the date by one day
-    now = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+    now = addDays(now, 1);
 }
 </script>
 
