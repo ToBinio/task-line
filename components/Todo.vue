@@ -27,6 +27,16 @@ let offset = computed(() => {
     let percentage = numberOfDays / 7.0;
     return percentage;
 });
+
+let tagStore = useTagStore();
+let { getTagByUUID } = storeToRefs(tagStore);
+
+let color = computed(() => {
+    return (
+        getTagByUUID.value(props.data.tags[0])?.color ??
+        "oklch(0.596 0.145 163.225)"
+    );
+});
 </script>
 
 <template>
@@ -56,8 +66,12 @@ let offset = computed(() => {
                 <div v-for="n in 6" class="h-2 w-0.5 spacer rounded-full"></div>
             </div>
             <div
-                class="h-1 rounded-full w-1/2 bg-emerald-600 absolute -bottom-0.25"
-                :style="{ width: `${width * 100}%`, left: `${offset * 100}%` }"
+                class="h-1 rounded-full w-1/2 absolute -bottom-0.25"
+                :style="{
+                    width: `${width * 100}%`,
+                    left: `${offset * 100}%`,
+                    backgroundColor: color,
+                }"
             ></div>
             <div class="h-0.5 spacer rounded-full"></div>
         </div>

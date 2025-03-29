@@ -31,7 +31,7 @@ let isToday = computed(() => {
 
 <template>
     <button
-        class="w-8 aspect-square rounded border-1 border-stone-700"
+        class="w-8 rounded border-1 border-stone-700"
         :disabled="day == undefined"
         @click="emit('select')"
         :class="{

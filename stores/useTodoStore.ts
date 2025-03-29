@@ -1,5 +1,13 @@
 import { defineStore } from "pinia";
-import type { Todo, UUID } from "~/utils/todo";
+
+export type UUID = `${string}-${string}-${string}-${string}-${string}`;
+export type Todo = {
+  uuid: UUID;
+  title: string;
+  start: Date;
+  end: Date;
+  tags: UUID[];
+};
 
 export const useTodoStore = defineStore("todos", {
   state: (): { data: Todo[] } => ({
@@ -11,9 +19,9 @@ export const useTodoStore = defineStore("todos", {
       this.data.splice(index, 1);
     },
 
-    addTodo(title: string, start: Date, end: Date) {
+    addTodo(title: string, start: Date, end: Date, tags: UUID[]) {
       let uuid = crypto.randomUUID();
-      this.data.push({ uuid, title, start, end: addDays(end, 1) });
+      this.data.push({ uuid, title, start, end: addDays(end, 1), tags });
     },
   },
 });
@@ -34,11 +42,21 @@ function getTestTodos(n: number): Todo[] {
     "Minecraft Film im Kino anschauen",
   ];
 
+  let tagsStore = useTagStore();
+
   let data = [];
 
   for (let i = 0; i < n; i++) {
     let start = Math.floor(Math.random() * 10);
     let duration = Math.floor(Math.random() * 10);
+
+    //random tags
+    let tags: UUID[] = [];
+    if (Math.round(Math.random()) == 0) {
+      tags.push(
+        tagsStore.data[Math.floor(Math.random() * tagsStore.data.length)].uuid,
+      );
+    }
 
     let uuid = crypto.randomUUID();
 
@@ -47,6 +65,7 @@ function getTestTodos(n: number): Todo[] {
       title: tasks[i % tasks.length],
       start: getToDayInNDays(start),
       end: getToDayInNDays(start + duration),
+      tags: tags,
     });
   }
 
