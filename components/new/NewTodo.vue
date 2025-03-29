@@ -53,7 +53,7 @@ function onAddTodo() {
                     <input
                         placeholder="Title"
                         v-model="title"
-                        class="pl-1 border-2 border-stone-700 rounded"
+                        class="pl-1 border-2 border-stone-700 rounded text-xl"
                     />
                 </div>
                 <DateSelect v-model:from="from" v-model:to="to" />
