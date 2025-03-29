@@ -5,12 +5,12 @@ let isOpen = ref(false);
 
 let title = ref("");
 let from = ref<Date | undefined>(sanitizeDate(new Date()));
-let to = ref<Date | undefined>(sanitizeDate(new Date()));
+let to = ref<Date | undefined>(undefined);
 
 function reset() {
     title.value = "";
     from.value = sanitizeDate(new Date());
-    to.value = sanitizeDate(new Date());
+    to.value = undefined;
 }
 
 let todoStore = useTodoStore();
@@ -25,12 +25,14 @@ function close() {
 }
 
 function isValid(): boolean {
-    return (
-        title.value !== "" && from.value !== undefined && to.value !== undefined
-    );
+    return title.value !== "" && from.value !== undefined;
 }
 
 function onAddTodo() {
+    if (!to.value) {
+        to.value = from.value;
+    }
+
     todoStore.addTodo(title.value, from.value!, to.value!);
     close();
 }
@@ -43,10 +45,10 @@ function onAddTodo() {
             @click="close"
         />
         <div
-            class="fixed rounded-t-lg h-100 bottom-0 translate-y-full bg-stone-800 w-full transition-all z-100"
+            class="fixed rounded-t-lg h-96 bottom-0 translate-y-full bg-stone-800 w-full transition-all z-100"
             :class="{ '!translate-y-0': isOpen }"
         >
-            <div class="flex flex-col m-2 gap-2">
+            <div class="flex flex-col m-2 gap-5">
                 <div class="flex flex-col">
                     <input
                         placeholder="Title"
