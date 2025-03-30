@@ -3,6 +3,7 @@ let props = defineProps<{ data: Todo }>();
 
 let checking = ref(false);
 let todoStore = useTodoStore();
+let editBus = useEditTodoEventBus();
 
 function onCheck() {
     checking.value = true;
@@ -55,9 +56,9 @@ let color = computed(() => {
                     </transition>
                 </span>
             </button>
-            <span class="text-lg">
+            <button class="text-lg" @click="() => editBus.emit(data.uuid)">
                 {{ data.title }}
-            </span>
+            </button>
         </div>
         <div class="relative">
             <div

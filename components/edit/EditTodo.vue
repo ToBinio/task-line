@@ -1,28 +1,44 @@
 <script setup lang="ts">
-import DateSelect from "./DateSelect.vue";
-import TagSelect from "./TagSelect.vue";
-import TitleSelect from "./TitleSelect.vue";
-
 let isOpen = ref(false);
+let isEditingTodo = ref<UUID | undefined>(undefined);
 
-let title = ref("");
-let tags = ref([]);
-let from = ref<Date | undefined>(sanitizeDate(new Date()));
-let to = ref<Date | undefined>(undefined);
-
-function reset() {
-    title.value = "";
-    tags.value = [];
-    from.value = sanitizeDate(new Date());
-    to.value = undefined;
-}
+let todoData = ref<TodoEditData>({
+    title: "",
+    tags: [],
+    from: sanitizeDate(new Date()),
+    to: undefined,
+});
 
 let todoStore = useTodoStore();
+let { getTodoById } = storeToRefs(todoStore);
+
+useEditTodoEventBus().on((uuid) => {
+    isEditingTodo.value = uuid;
+    let todo = getTodoById.value(uuid)!;
+
+    todoData.value.title = todo.title;
+    todoData.value.tags = [...todo.tags];
+    todoData.value.from = todo.start;
+    todoData.value.to = addDays(todo.end, -1);
+
+    open();
+});
 
 function onButtonPress() {
     if (isOpen.value) {
-        onAddTodo();
+        if (!isEditingTodo.value) {
+            todoStore.addTodo(todoData.value);
+        } else {
+            todoStore.updateTodo(isEditingTodo.value, todoData.value);
+        }
+
+        close();
     } else {
+        todoData.value.title = "";
+        todoData.value.tags = [];
+        todoData.value.from = sanitizeDate(new Date());
+        todoData.value.to = undefined;
+
         open();
     }
 }
@@ -33,22 +49,14 @@ function open() {
 
 function close() {
     isOpen.value = false;
-    reset();
+    isEditingTodo.value = undefined;
 }
 
 function isValid(): boolean {
-    return title.value !== "" && from.value !== undefined;
-}
-
-function onAddTodo() {
-    if (!to.value) {
-        to.value = from.value;
-    }
-
-    todoStore.addTodo(title.value, from.value!, to.value!, tags.value);
-    close();
+    return todoData.value.title !== "" && todoData.value.from !== undefined;
 }
 </script>
+
 <template>
     <div>
         <div
@@ -56,16 +64,7 @@ function onAddTodo() {
             v-if="isOpen"
             @click="close"
         />
-        <div
-            class="fixed rounded-t-lg h-96 bottom-0 translate-y-full bg-stone-800 w-full transition-all z-100"
-            :class="{ '!translate-y-0': isOpen }"
-        >
-            <div class="flex flex-col justify-between p-2 gap-5 h-full">
-                <TitleSelect v-model:title="title" />
-                <DateSelect v-model:from="from" v-model:to="to" />
-                <TagSelect v-model:tags="tags" />
-            </div>
-        </div>
+        <EditSheet :isOpen="isOpen" :todo="todoData" />
         <button
             class="m-2 h-10 fixed bottom-0 right-0 rounded-full aspect-square dark:bg-stone-600 hover:bg-stone-500 z-200 disabled:bg-stone-700 flex items-center justify-center"
             :disabled="isOpen && !isValid()"
@@ -73,7 +72,7 @@ function onAddTodo() {
         >
             <Transition>
                 <Icon
-                    v-if="!isOpen"
+                    v-if="!isEditingTodo"
                     class="absolute"
                     name="material-symbols:add-2-rounded"
                     size="24"
@@ -81,7 +80,7 @@ function onAddTodo() {
             </Transition>
             <Transition>
                 <Icon
-                    v-if="isOpen"
+                    v-if="isEditingTodo"
                     class="absolute"
                     name="material-symbols:save-rounded"
                     size="24"
@@ -94,7 +93,7 @@ function onAddTodo() {
 <style scoped>
 .v-enter-active,
 .v-leave-active {
-    transition: opacity 0.1s ease;
+    transition: opacity 0.2s ease;
 }
 
 .v-enter-from,

@@ -1,12 +1,20 @@
 import { defineStore } from "pinia";
 
 export type UUID = `${string}-${string}-${string}-${string}-${string}`;
+
 export type Todo = {
   uuid: UUID;
   title: string;
   start: Date;
   end: Date;
   tags: UUID[];
+};
+
+export type TodoEditData = {
+  title: string;
+  tags: UUID[];
+  from: Date;
+  to: Date | undefined;
 };
 
 export const useTodoStore = defineStore("todos", {
@@ -19,9 +27,36 @@ export const useTodoStore = defineStore("todos", {
       this.data.splice(index, 1);
     },
 
-    addTodo(title: string, start: Date, end: Date, tags: UUID[]) {
+    addTodo(todo: TodoEditData) {
       let uuid = crypto.randomUUID();
-      this.data.push({ uuid, title, start, end: addDays(end, 1), tags });
+
+      if (!todo.to) {
+        todo.to = todo.from;
+      }
+
+      this.data.push({
+        uuid,
+        title: todo.title,
+        start: todo.from,
+        end: addDays(todo.to!, 1),
+        tags: todo.tags,
+      });
+    },
+
+    updateTodo(uuid: UUID, todo: TodoEditData) {
+      const index = this.data.findIndex((value) => value.uuid === uuid);
+      this.data[index] = {
+        uuid,
+        title: todo.title,
+        start: todo.from,
+        end: addDays(todo.to!, 1),
+        tags: todo.tags,
+      };
+    },
+  },
+  getters: {
+    getTodoById(state) {
+      return (uuid: UUID) => state.data.find((todo) => todo.uuid === uuid);
     },
   },
 });
