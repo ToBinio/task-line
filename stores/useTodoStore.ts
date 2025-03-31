@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
+import { v4 } from "uuid";
 
-export type UUID = `${string}-${string}-${string}-${string}-${string}`;
+export type UUID = string;
 
 export type Todo = {
   uuid: UUID;
@@ -28,7 +29,7 @@ export const useTodoStore = defineStore("todos", {
     },
 
     addTodo(todo: TodoEditData) {
-      let uuid = crypto.randomUUID();
+      let uuid = v4();
 
       if (!todo.to) {
         todo.to = todo.from;
