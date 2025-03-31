@@ -5,7 +5,7 @@ let dayStrings = useWeekDays(new Date());
 </script>
 
 <template>
-    <div class="fixed top-0 w-dvw px-1 z-10 bg-stone-900">
+    <div class="fixed top-0 w-dvw px-1 z-10 bg-stone-100 dark:bg-stone-900">
         <div class="flex justify-evenly items-center relative">
             <template v-for="(day, index) in dayStrings">
                 <div class="flex-1 text-center">{{ day }}</div>

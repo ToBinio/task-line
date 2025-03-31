@@ -20,10 +20,13 @@ function isSelected(tag: UUID) {
     <div class="h-10 flex flex-col justify-center overflow-scroll mr-12">
         <div class="flex gap-2">
             <button
-                class="rounded border-1 border-stone-700 px-1"
+                class="rounded border-1 border-stone-300 dark:border-stone-700 px-1"
                 v-for="tag in tagStore.data"
                 :style="{ color: tag.color }"
-                :class="{ 'bg-stone-700': isSelected(tag.uuid) }"
+                :class="{
+                    'dark:bg-stone-700': isSelected(tag.uuid),
+                    'bg-stone-700': isSelected(tag.uuid),
+                }"
                 @click="onPress(tag.uuid)"
             >
                 {{ tag.name }}

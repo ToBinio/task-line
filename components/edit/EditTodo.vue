@@ -66,7 +66,7 @@ function isValid(): boolean {
         />
         <EditSheet :isOpen="isOpen" :todo="todoData" />
         <button
-            class="m-2 h-10 fixed bottom-0 right-0 rounded-full aspect-square dark:bg-stone-600 hover:bg-stone-500 z-200 disabled:bg-stone-700 flex items-center justify-center"
+            class="m-2 h-10 fixed bottom-0 right-0 rounded-full aspect-square bg-stone-400 dark:bg-stone-600 hover:bg-stone-500 z-200 disabled:dark:bg-stone-700 disabled:bg-stone-300 transition-colors flex items-center justify-center"
             :disabled="isOpen && !isValid()"
             @click="onButtonPress"
         >

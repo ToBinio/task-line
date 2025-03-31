@@ -31,12 +31,14 @@ let isToday = computed(() => {
 
 <template>
     <button
-        class="w-8 rounded border-1 border-stone-700"
+        class="w-8 rounded border-1 border-stone-300 dark:border-stone-700"
         :disabled="day == undefined"
         @click="emit('select')"
         :class="{
-            'bg-stone-700': isSelected,
-            'text-cyan-300': isToday,
+            'dark:bg-stone-700': isSelected,
+            'bg-stone-300': isSelected,
+            'dark:text-cyan-300': isToday,
+            'text-cyan-600': isToday,
             'text-stone-400': !day?.thisMonth,
         }"
     >

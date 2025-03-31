@@ -7,7 +7,7 @@ defineProps<{ isOpen: boolean; todo: TodoEditData }>();
 </script>
 <template>
     <div
-        class="fixed rounded-t-lg h-96 bottom-0 translate-y-full bg-stone-800 w-full transition-all z-100"
+        class="fixed rounded-t-lg h-96 bottom-0 translate-y-full bg-stone-200 dark:bg-stone-800 w-full transition-transform z-100"
         :class="{ '!translate-y-0': isOpen }"
     >
         <div class="flex flex-col justify-between p-2 gap-5 h-full">
