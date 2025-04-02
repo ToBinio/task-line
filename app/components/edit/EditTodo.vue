@@ -1,5 +1,12 @@
 <script setup lang="ts">
-let isOpen = ref(false);
+import Sheet from "../utils/Sheet.vue";
+import DateSelect from "./date/DateSelect.vue";
+import TagSelect from "./TagSelect.vue";
+import TitleSelect from "./TitleSelect.vue";
+
+let isOpen = defineModel<boolean>("isOpen", { required: true });
+let isButtonDisabled = defineModel<boolean>("isButtonDisabled");
+
 let isEditingTodo = ref<UUID | undefined>(undefined);
 
 let todoData = ref<TodoEditData>({
@@ -24,7 +31,7 @@ useEditTodoEventBus().on((uuid) => {
     open();
 });
 
-function onButtonPress() {
+useInteractionButtonEventBus().on(() => {
     if (isOpen.value) {
         if (!isEditingTodo.value) {
             todoStore.addTodo(todoData.value);
@@ -41,7 +48,7 @@ function onButtonPress() {
 
         open();
     }
-}
+});
 
 function open() {
     isOpen.value = true;
@@ -52,52 +59,28 @@ function close() {
     isEditingTodo.value = undefined;
 }
 
-function isValid(): boolean {
-    return todoData.value.title !== "" && todoData.value.from !== undefined;
-}
+watch([todoData.value, isOpen], () => {
+    if (!isOpen.value) {
+        isButtonDisabled.value = false;
+        return;
+    }
+
+    isButtonDisabled.value =
+        todoData.value.title == "" || todoData.value.from == undefined;
+});
 </script>
 
 <template>
-    <div>
-        <div
-            class="fixed h-dvh w-dvw top-0 left-0 backdrop-blur-[1.5px] z-30"
-            v-if="isOpen"
-            @click="close"
-        />
-        <EditSheet :isOpen="isOpen" :todo="todoData" />
-        <button
-            class="relative m-1 h-10 rounded aspect-square bg-cyan-400 dark:bg-cyan-700 hover:bg-stone-500 z-50 disabled:dark:bg-stone-700 disabled:bg-stone-300 transition-colors flex items-center justify-center"
-            :disabled="isOpen && !isValid()"
-            @click="onButtonPress"
-        >
-            <Transition>
-                <Icon
-                    v-if="!isEditingTodo"
-                    class="absolute"
-                    name="material-symbols:add-2-rounded"
-                    size="24"
+    <div class="fixed">
+        <Sheet :isOpen="isOpen" @close="close">
+            <div class="flex flex-col justify-between p-2 pb-1 gap-5 h-full">
+                <TitleSelect v-model:title="todoData.title" />
+                <DateSelect
+                    v-model:from="todoData.from"
+                    v-model:to="todoData.to"
                 />
-            </Transition>
-            <Transition>
-                <Icon
-                    v-if="isEditingTodo"
-                    class="absolute"
-                    name="material-symbols:save-rounded"
-                    size="24"
-                />
-            </Transition>
-        </button>
+                <TagSelect v-model:tags="todoData.tags" />
+            </div>
+        </Sheet>
     </div>
 </template>
-
-<style scoped>
-.v-enter-active,
-.v-leave-active {
-    transition: opacity 0.2s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-    opacity: 0;
-}
-</style>
