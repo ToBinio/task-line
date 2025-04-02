@@ -90,15 +90,15 @@ function getTestTodos(n: number): Todo[] {
     let tags: UUID[] = [];
     if (Math.round(Math.random()) == 0) {
       tags.push(
-        tagsStore.data[Math.floor(Math.random() * tagsStore.data.length)].uuid,
+        tagsStore.data[Math.floor(Math.random() * tagsStore.data.length)]!.uuid,
       );
     }
 
-    let uuid = crypto.randomUUID();
+    let uuid = v4();
 
     data.push({
       uuid,
-      title: tasks[i % tasks.length],
+      title: tasks[i % tasks.length]!,
       start: getToDayInNDays(start),
       end: getToDayInNDays(start + duration),
       tags: tags,

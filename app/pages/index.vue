@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Todos from "~/components/todo/Todos.vue";
+</script>
 <template>
     <TimeHeader />
     <Todos />
