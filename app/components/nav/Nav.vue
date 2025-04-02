@@ -1,32 +1,49 @@
 <script setup lang="ts">
-import NewTodo from "../edit/NewTodo.vue";
+import NewTodoSheet from "../edit/NewTodoSheet.vue";
 import InteractButton, { type DisplayState } from "./InteractButton.vue";
 
 let eventBus = useInteractionButtonEventBus();
 
-let isEditModalOpen = ref(false);
-let isEditModalValid = ref(false);
+let isSettingsSheetOpen = ref(false);
+let isSettingsSheetValid = ref(false);
 
-let isNewModalOpen = ref(false);
-let isNewModalValid = ref(false);
+let isFilterSheetOpen = ref(false);
+let isFilterSheetValid = ref(false);
 
-let isAnyOpen = computed(() => isEditModalOpen.value || isNewModalOpen.value);
+let isEditSheetOpen = ref(false);
+let isEditSheetValid = ref(false);
+
+let isNewSheetOpen = ref(false);
+let isNewSheetValid = ref(false);
+
+let isAnyOpen = computed(
+    () =>
+        isEditSheetOpen.value ||
+        isNewSheetOpen.value ||
+        isFilterSheetOpen.value ||
+        isSettingsSheetOpen.value,
+);
 
 let disabled = computed(() => {
-    if (isNewModalOpen.value) {
-        return !isNewModalValid.value;
+    if (isNewSheetOpen.value) {
+        return !isNewSheetValid.value;
     }
 
-    if (isEditModalOpen.value) {
-        return !isEditModalValid.value;
+    if (isEditSheetOpen.value) {
+        return !isEditSheetValid.value;
     }
 
     return false;
 });
 let displayState = computed<DisplayState>(() => {
-    if (isEditModalOpen.value) {
+    if (isEditSheetOpen.value || isFilterSheetOpen.value) {
         return "SAVE";
     }
+
+    if (isSettingsSheetOpen.value) {
+        return "CLOSE";
+    }
+
     return "ADD";
 });
 
@@ -36,7 +53,7 @@ function onInteractButtonPress() {
         return;
     }
 
-    isNewModalOpen.value = true;
+    isNewSheetOpen.value = true;
 }
 </script>
 
@@ -44,15 +61,33 @@ function onInteractButtonPress() {
     <div
         class="flex justify-between fixed bottom-0 w-dvw bg-stone-200 dark:bg-stone-800 h-12"
     >
-        <EditTodo
-            v-model:is-open="isEditModalOpen"
-            v-model:is-valid="isEditModalValid"
+        <FilterSheet v-model:is-open="isFilterSheetOpen" />
+        <SettingsSheet v-model:is-open="isSettingsSheetOpen" />
+        <EditTodoSheet
+            v-model:is-open="isEditSheetOpen"
+            v-model:is-valid="isEditSheetValid"
         />
-        <NewTodo
-            v-model:is-open="isNewModalOpen"
-            v-model:is-valid="isNewModalValid"
+        <NewTodoSheet
+            v-model:is-open="isNewSheetOpen"
+            v-model:is-valid="isNewSheetValid"
         />
-        <button>Settings</button>
+        <div class="relativ flex -z-10">
+            <button
+                @click="isSettingsSheetOpen = true"
+                class="relative m-1 h-10 aspect-square rounded bg-stone-400 dark:bg-stone-700 hover:bg-stone-500 transition-colors flex items-center justify-center"
+            >
+                <Icon
+                    name="material-symbols:settings-outline-rounded"
+                    size="24"
+                />
+            </button>
+            <button
+                @click="isFilterSheetOpen = true"
+                class="relative m-1 h-10 aspect-square rounded bg-stone-400 dark:bg-stone-700 hover:bg-stone-500 transition-colors flex items-center justify-center"
+            >
+                <Icon name="material-symbols:filter-alt" size="24" />
+            </button>
+        </div>
         <InteractButton
             :disabled="disabled"
             :displayState="displayState"

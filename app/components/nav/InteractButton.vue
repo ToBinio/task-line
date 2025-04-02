@@ -1,5 +1,5 @@
 <script setup lang="ts">
-export type DisplayState = "ADD" | "SAVE";
+export type DisplayState = "ADD" | "SAVE" | "CLOSE";
 
 defineProps<{
     disabled: boolean;
@@ -28,6 +28,14 @@ const emit = defineEmits<{ pressed: [] }>();
                 class="absolute"
                 name="material-symbols:save-rounded"
                 size="24"
+            />
+        </Transition>
+        <Transition>
+            <Icon
+                v-if="displayState == 'CLOSE'"
+                class="absolute"
+                name="material-symbols:keyboard-arrow-down-rounded"
+                size="36"
             />
         </Transition>
     </button>

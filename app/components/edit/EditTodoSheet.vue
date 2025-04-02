@@ -54,16 +54,11 @@ watch(
 </script>
 
 <template>
-    <div class="fixed">
-        <Sheet :isOpen="isOpen" @close="close">
-            <div class="flex flex-col justify-between p-2 pb-1 gap-5 h-full">
-                <TitleSelect v-model:title="todoData.title" />
-                <DateSelect
-                    v-model:from="todoData.from"
-                    v-model:to="todoData.to"
-                />
-                <TagSelect v-model:tags="todoData.tags" />
-            </div>
-        </Sheet>
-    </div>
+    <Sheet :isOpen="isOpen" @close="close">
+        <div class="flex flex-col justify-between p-2 pb-1 gap-5 h-full">
+            <TitleSelect v-model:title="todoData.title" />
+            <DateSelect v-model:from="todoData.from" v-model:to="todoData.to" />
+            <TagSelect v-model:tags="todoData.tags" />
+        </div>
+    </Sheet>
 </template>
