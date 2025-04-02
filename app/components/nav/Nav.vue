@@ -1,27 +1,42 @@
 <script setup lang="ts">
-// todo
-// via event buss onInteractionButtonPress propegaten -> check if open handle respectifly
-// modals: setting, filter, new, edit
-// every model model gets disabled & isOpen
-//
-// displayState <- computed from is open states
-//
-// move event bus definition to given file e.g no useEventBus file isntead just in editModal.vue file
-//
-
+import NewTodo from "../edit/NewTodo.vue";
 import InteractButton, { type DisplayState } from "./InteractButton.vue";
 
 let eventBus = useInteractionButtonEventBus();
 
 let isEditModalOpen = ref(false);
+let isEditModalValid = ref(false);
 
-let disabled = ref(false);
-let displayState = ref<DisplayState>("ADD");
+let isNewModalOpen = ref(false);
+let isNewModalValid = ref(false);
+
+let isAnyOpen = computed(() => isEditModalOpen.value || isNewModalOpen.value);
+
+let disabled = computed(() => {
+    if (isNewModalOpen.value) {
+        return !isNewModalValid.value;
+    }
+
+    if (isEditModalOpen.value) {
+        return !isEditModalValid.value;
+    }
+
+    return false;
+});
+let displayState = computed<DisplayState>(() => {
+    if (isEditModalOpen.value) {
+        return "SAVE";
+    }
+    return "ADD";
+});
 
 function onInteractButtonPress() {
-    isEditModalOpen.value = true;
+    if (isAnyOpen.value) {
+        eventBus.emit();
+        return;
+    }
 
-    eventBus.emit();
+    isNewModalOpen.value = true;
 }
 </script>
 
@@ -31,7 +46,11 @@ function onInteractButtonPress() {
     >
         <EditTodo
             v-model:is-open="isEditModalOpen"
-            v-model:is-button-disabled="disabled"
+            v-model:is-valid="isEditModalValid"
+        />
+        <NewTodo
+            v-model:is-open="isNewModalOpen"
+            v-model:is-valid="isNewModalValid"
         />
         <button>Settings</button>
         <InteractButton

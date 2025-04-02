@@ -7,7 +7,6 @@ import TitleSelect from "./TitleSelect.vue";
 let isOpen = defineModel<boolean>("isOpen", { required: true });
 let isValid = defineModel<boolean>("isValid");
 
-let uuid = ref<UUID>("");
 let todoData = ref<TodoEditData>({
     title: "",
     tags: [],
@@ -16,26 +15,21 @@ let todoData = ref<TodoEditData>({
 });
 
 let todoStore = useTodoStore();
-let { getTodoById } = storeToRefs(todoStore);
-
-useEditTodoEventBus().on((selectedUuid) => {
-    uuid.value = selectedUuid;
-    let todo = getTodoById.value(selectedUuid)!;
-
-    todoData.value.title = todo.title;
-    todoData.value.tags = [...todo.tags];
-    todoData.value.from = todo.start;
-    todoData.value.to = addDays(todo.end, -1);
-
-    isOpen.value = true;
-});
 
 useInteractionButtonEventBus().on(() => {
     if (!isOpen.value) {
         return;
     }
 
-    todoStore.updateTodo(uuid.value, todoData.value);
+    todoStore.addTodo(todoData.value);
+
+    todoData.value = {
+        title: "",
+        tags: [],
+        from: sanitizeDate(new Date()),
+        to: undefined,
+    };
+
     close();
 });
 
