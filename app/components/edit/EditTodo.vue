@@ -60,13 +60,13 @@ function isValid(): boolean {
 <template>
     <div>
         <div
-            class="fixed h-dvh w-dvw top-0 left-0 backdrop-blur-[1.5px] z-50"
+            class="fixed h-dvh w-dvw top-0 left-0 backdrop-blur-[1.5px] z-30"
             v-if="isOpen"
             @click="close"
         />
         <EditSheet :isOpen="isOpen" :todo="todoData" />
         <button
-            class="m-2 h-10 fixed bottom-0 right-0 rounded-full aspect-square bg-stone-400 dark:bg-stone-600 hover:bg-stone-500 z-200 disabled:dark:bg-stone-700 disabled:bg-stone-300 transition-colors flex items-center justify-center"
+            class="relative m-1 h-10 rounded aspect-square bg-cyan-400 dark:bg-cyan-700 hover:bg-stone-500 z-50 disabled:dark:bg-stone-700 disabled:bg-stone-300 transition-colors flex items-center justify-center"
             :disabled="isOpen && !isValid()"
             @click="onButtonPress"
         >

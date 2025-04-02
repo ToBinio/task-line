@@ -51,7 +51,8 @@ export const useTagStore = defineStore("tags", {
   }),
   getters: {
     getTagByUUID(state) {
-      return (uuid: UUID) => state.data.find((tag) => tag.uuid === uuid);
+      return (uuid: UUID | undefined) =>
+        state.data.find((tag) => tag.uuid === uuid);
     },
   },
 });

@@ -2,5 +2,5 @@
 <template>
     <TimeHeader />
     <Todos />
-    <EditTodo />
+    <Nav />
 </template>
