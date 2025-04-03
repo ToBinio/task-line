@@ -47,7 +47,10 @@ let color = computed(() => {
                 <span
                     class="flex items-center justify-center h-7 w-7 border-2 border-stone-800 dark:border-stone-200 rounded-full"
                 >
-                    <transition>
+                    <transition
+                        class="transition-opacity duration-500"
+                        enter-from-class="opacity-0"
+                    >
                         <icon
                             v-if="checking"
                             size="24"
@@ -78,15 +81,3 @@ let color = computed(() => {
         </div>
     </div>
 </template>
-
-<style scoped>
-.v-enter-active,
-.v-leave-active {
-    transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-    opacity: 0;
-}
-</style>
