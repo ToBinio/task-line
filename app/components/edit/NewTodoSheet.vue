@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Sheet from "../utils/Sheet.vue";
-import DateSelect from "./date/DateSelect.vue";
+import DateSelect from "./DateSelect.vue";
 import TagSelect from "./TagSelect.vue";
 import TitleSelect from "./TitleSelect.vue";
 
