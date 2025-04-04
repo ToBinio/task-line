@@ -3,7 +3,7 @@ let todoStore = useTodoStore();
 </script>
 
 <template>
-    <div class="flex-1 overflow-y-scroll overflow-x-hidden p-1 mt-4 w-dvw">
+    <div class="flex-1 overflow-y-scroll overflow-x-hidden p-1 mt-4 w-dvw pb-16">
         <TransitionGroup leave-to-class="max-h-0! opacity-0">
             <div
                 class="transition-all duration-500 max-h-15 h-15"
