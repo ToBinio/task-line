@@ -5,7 +5,6 @@ import TagSelect from "./TagSelect.vue";
 import TitleSelect from "./TitleSelect.vue";
 
 let isOpen = defineModel<boolean>("isOpen", { required: true });
-let isValid = defineModel<boolean>("isValid");
 
 let todoData = ref<TodoEditData>({
     title: "",
@@ -16,11 +15,7 @@ let todoData = ref<TodoEditData>({
 
 let todoStore = useTodoStore();
 
-useInteractionButtonEventBus().on(() => {
-    if (!isOpen.value) {
-        return;
-    }
-
+function onAddTodo() {
     todoStore.addTodo(todoData.value);
 
     todoData.value = {
@@ -31,20 +26,15 @@ useInteractionButtonEventBus().on(() => {
     };
 
     close();
-});
+}
 
 function close() {
     isOpen.value = false;
 }
 
-watch(
-    [todoData.value, isOpen],
-    () => {
-        isValid.value =
-            todoData.value.title !== "" && todoData.value.from !== undefined;
-    },
-    { immediate: true },
-);
+let isValid = computed(() => {
+    return todoData.value.title !== "" && todoData.value.from !== undefined;
+});
 </script>
 
 <template>
@@ -52,7 +42,17 @@ watch(
         <div class="flex flex-col justify-between p-2 pb-1 gap-5 h-full">
             <TitleSelect v-model:title="todoData.title" />
             <DateSelect v-model:from="todoData.from" v-model:to="todoData.to" />
-            <TagSelect v-model:tags="todoData.tags" />
+
+            <div class="flex justify-between gap-1">
+                <TagSelect class="flex-1" v-model:tags="todoData.tags" />
+                <button
+                    @click="onAddTodo"
+                    :disabled="!isValid"
+                    class="h-10 rounded aspect-square bg-cyan-400 dark:bg-cyan-700 hover:bg-stone-500 disabled:dark:bg-stone-700 disabled:bg-stone-300 transition-colors flex items-center justify-center"
+                >
+                    <Icon name="material-symbols:add-2-rounded" size="24" />
+                </button>
+            </div>
         </div>
     </Sheet>
 </template>

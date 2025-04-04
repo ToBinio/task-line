@@ -17,7 +17,7 @@ function isSelected(tag: UUID) {
 </script>
 
 <template>
-    <div class="h-10 flex flex-col justify-center overflow-scroll mr-10">
+    <div class="h-10 flex flex-col justify-center overflow-scroll">
         <div class="flex gap-2">
             <button
                 class="rounded border-1 border-stone-300 dark:border-stone-700 px-1"

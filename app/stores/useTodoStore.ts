@@ -20,7 +20,7 @@ export type TodoEditData = {
 
 export const useTodoStore = defineStore("todos", {
   state: (): { data: Todo[] } => ({
-    data: getTestTodos(5),
+    data: getTestTodos(20),
   }),
   actions: {
     removeTodo(uuid: UUID) {
