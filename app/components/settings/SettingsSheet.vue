@@ -25,7 +25,7 @@ function onAddTag() {
 </script>
 
 <template>
-    <Sheet :isOpen="isOpen" @close="close">
+    <Sheet :isOpen="isOpen" title="Settings Sheet" @close="close">
         <div class="p-1">
             <h2 class="text-lg text-stone-400">Tags</h2>
             <div class="flex pt-1 pb-2 gap-1 overflow-scroll">

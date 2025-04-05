@@ -9,7 +9,7 @@ function close() {
 </script>
 
 <template>
-    <Sheet :isOpen="isOpen" @close="close">
+    <Sheet :isOpen="isOpen" title="Filter Sheet" @close="close">
         <div class="text-lg">Filters</div>
     </Sheet>
 </template>
