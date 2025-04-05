@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Tag from "../utils/Tag.vue";
+
 let tags = defineModel<UUID[]>("tags");
 
 const tagStore = useTagStore();
@@ -11,26 +13,20 @@ function onPress(tag: UUID) {
     }
 }
 
-function isSelected(tag: UUID) {
-    return tags.value!.includes(tag);
+function isSelected(tag: Tag): boolean {
+    return tags.value!.includes(tag.uuid);
 }
 </script>
 
 <template>
     <div class="flex flex-col justify-center overflow-scroll">
         <div class="flex gap-2">
-            <button
-                class="rounded border-1 border-stone-300 dark:border-stone-700 px-1"
+            <Tag
                 v-for="tag in tagStore.data"
-                :style="{ color: tag.color }"
-                :class="{
-                    'dark:bg-stone-700': isSelected(tag.uuid),
-                    'bg-stone-700': isSelected(tag.uuid),
-                }"
-                @click="onPress(tag.uuid)"
-            >
-                {{ tag.name }}
-            </button>
+                :tag="tag"
+                :is-selected="isSelected(tag)"
+                @press="onPress(tag.uuid)"
+            />
         </div>
     </div>
 </template>
