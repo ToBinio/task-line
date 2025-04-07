@@ -29,7 +29,7 @@ export const useTodoStore = defineStore("todos", {
     },
 
     addTodo(todo: TodoEditData) {
-      let uuid = v4();
+      const uuid = v4();
 
       if (!todo.to) {
         todo.to = todo.from;
@@ -63,38 +63,38 @@ export const useTodoStore = defineStore("todos", {
 });
 
 function getToDayInNDays(days: number): Date {
-  var now = new Date();
+  const now = new Date();
   now.setHours(0, 0, 0, 0);
-  let date = new Date(now.getTime() + 1000 * 60 * 60 * 24 * days);
+  const date = new Date(now.getTime() + 1000 * 60 * 60 * 24 * days);
 
   return date;
 }
 
 function getTestTodos(n: number): Todo[] {
-  let tasks = [
+  const tasks = [
     "Deutsch Hausaufgabe",
     "WMC Aufgabe 1",
     "WMC Aufgabe 2",
     "Minecraft Film im Kino anschauen",
   ];
 
-  let tagsStore = useTagStore();
+  const tagsStore = useTagStore();
 
-  let data = [];
+  const data = [];
 
   for (let i = 0; i < n; i++) {
-    let start = Math.floor(Math.random() * 10);
-    let duration = Math.floor(Math.random() * 10);
+    const start = Math.floor(Math.random() * 10);
+    const duration = Math.floor(Math.random() * 10);
 
     //random tags
-    let tags: UUID[] = [];
+    const tags: UUID[] = [];
     if (Math.round(Math.random()) == 0) {
       tags.push(
         tagsStore.data[Math.floor(Math.random() * tagsStore.data.length)]!.uuid,
       );
     }
 
-    let uuid = v4();
+    const uuid = v4();
 
     data.push({
       uuid,

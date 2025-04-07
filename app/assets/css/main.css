@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 @layer components {
-    .spacer {
-        @apply bg-stone-300 dark:bg-stone-700;
-    }
+  .spacer {
+    @apply bg-stone-300 dark:bg-stone-700;
+  }
 }
 
 body {
-    @apply dark:text-white bg-stone-100 dark:bg-stone-900 pointer-events-auto!;
+  @apply pointer-events-auto! bg-stone-100 dark:bg-stone-900 dark:text-white;
 }

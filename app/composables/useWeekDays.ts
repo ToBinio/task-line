@@ -1,5 +1,5 @@
 export function useWeekDays(start: Date) {
-  let dayStrings = [];
+  const dayStrings = [];
 
   let now = start;
 
