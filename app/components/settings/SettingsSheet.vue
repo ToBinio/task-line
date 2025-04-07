@@ -12,7 +12,7 @@ function close() {
 
 <template>
     <Sheet :isOpen="isOpen" title="Settings Sheet" @close="close">
-        <div class="p-1">
+        <div class="p-1 pt-0">
             <h2 class="text-lg text-stone-400">Tags</h2>
             <div class="flex pt-1 pb-2 gap-1 overflow-scroll">
                 <SettingsAddTodo />

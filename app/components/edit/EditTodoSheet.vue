@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import TagSelect from "../utils/input/TagSelect.vue";
 import Sheet from "../utils/Sheet.vue";
 import DateSelect from "./DateSelect.vue";
-import TagSelect from "./TagSelect.vue";
 import TitleSelect from "./TitleSelect.vue";
 
 let isOpen = ref(false);

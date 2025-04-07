@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Tag from "../utils/Tag.vue";
+import Tag from "../Tag.vue";
 
-let tags = defineModel<UUID[]>("tags");
+let tags = defineModel<UUID[]>("tags", { required: true });
 
 const tagStore = useTagStore();
 
