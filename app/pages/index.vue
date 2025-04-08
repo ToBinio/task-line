@@ -2,7 +2,7 @@
 import Todos from "~/components/todo/Todos.vue";
 </script>
 <template>
-  <div>
+  <div class="overflow-x-hidden">
     <TimeHeader />
     <Todos />
     <Nav />

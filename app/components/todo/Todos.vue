@@ -20,13 +20,13 @@ const filterdTodos = computed(() => {
 <template>
   <div class="mt-3 mb-10 w-dvw flex-1 px-1 py-3">
     <TransitionGroup
-      leave-to-class="max-h-0! opacity-0"
-      enter-from-class="max-h-0! opacity-0"
+      leave-to-class="max-h-0! opacity-0 scale-y-0"
+      enter-from-class="max-h-0! opacity-0 scale-y-0"
     >
       <Todo
         v-for="todo in filterdTodos"
         :key="todo.uuid"
-        class="max-h-16 overflow-hidden transition-all duration-500"
+        class="max-h-16 transition-all duration-300 ease-in"
         :data="todo"
       />
     </TransitionGroup>

@@ -44,7 +44,7 @@ const tags = computed(() => {
 
 <template>
   <div class="relative flex flex-col justify-center">
-    <div class="flex items-center gap-2 pt-2 pb-1">
+    <div class="flex items-center gap-1 pt-2 pb-1">
       <button :disabled="checking" @click="onCheck()">
         <div
           class="m-1 flex h-8 w-8 items-center justify-center rounded-xl border-2 border-stone-600 dark:border-stone-400"
