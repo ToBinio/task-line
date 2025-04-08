@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Tag from "../utils/Tag.vue";
+
 const props = defineProps<{ data: Todo }>();
 
 const checking = ref(false);
@@ -30,13 +32,13 @@ const offset = computed(() => {
 });
 
 const tagStore = useTagStore();
-const { getTagByUUID } = storeToRefs(tagStore);
 
-const color = computed(() => {
-  return (
-    getTagByUUID.value(props.data.tags[0])?.color ??
-    "oklch(0.596 0.145 163.225)"
-  );
+const tags = computed(() => {
+  return props.data.tags
+    .map((tagId) => {
+      return tagStore.getTagByUUID(tagId)!;
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
 });
 </script>
 
@@ -59,20 +61,30 @@ const color = computed(() => {
           </transition>
         </span>
       </button>
-      <button class="text-lg" @click="() => editBus.emit(data.uuid)">
-        {{ data.title }}
-      </button>
+      <div class="flex flex-col">
+        <button class="text-lg" @click="() => editBus.emit(data.uuid)">
+          {{ data.title }}
+        </button>
+        <div class="flex">
+          <Tag
+            v-for="tag in tags"
+            :key="tag?.uuid"
+            :tag="tag"
+            :is-selected="false"
+            class="text-xs"
+          />
+        </div>
+      </div>
     </div>
     <div class="relative">
       <div class="absolute flex h-2 w-1/1 -translate-y-1/3 justify-evenly">
         <div v-for="n in 6" :key="n" class="spacer h-2 w-0.5 rounded-full" />
       </div>
       <div
-        class="absolute -bottom-0.25 h-1 w-1/2 rounded-full"
+        class="absolute -bottom-0.25 h-1 w-1/2 rounded-full bg-emerald-600"
         :style="{
           width: `${width * 100}%`,
           left: `${offset * 100}%`,
-          backgroundColor: color,
         }"
       />
       <div class="spacer h-0.5 rounded-full" />
