@@ -43,11 +43,11 @@ const tags = computed(() => {
 </script>
 
 <template>
-  <div class="relative flex h-full flex-col justify-center">
-    <div class="flex items-center gap-2 py-2 pl-1">
+  <div class="relative flex flex-col justify-center">
+    <div class="flex items-center gap-2 pt-2 pb-1">
       <button :disabled="checking" @click="onCheck()">
-        <span
-          class="flex h-7 w-7 items-center justify-center rounded-full border-2 border-stone-800 dark:border-stone-200"
+        <div
+          class="m-1 flex h-8 w-8 items-center justify-center rounded-xl border-2 border-stone-600 dark:border-stone-400"
         >
           <transition
             class="transition-opacity duration-500"
@@ -59,7 +59,7 @@ const tags = computed(() => {
               name="material-symbols:check-rounded"
             />
           </transition>
-        </span>
+        </div>
       </button>
       <div class="flex flex-col">
         <button class="text-lg" @click="() => editBus.emit(data.uuid)">
@@ -76,18 +76,20 @@ const tags = computed(() => {
         </div>
       </div>
     </div>
-    <div class="relative">
-      <div class="absolute flex h-2 w-1/1 -translate-y-1/3 justify-evenly">
+    <div class="relative flex h-2 flex-col justify-center">
+      <div
+        class="absolute top-1/2 flex h-2 w-full -translate-y-1/2 justify-evenly"
+      >
         <div v-for="n in 6" :key="n" class="spacer h-2 w-0.5 rounded-full" />
       </div>
       <div
-        class="absolute -bottom-0.25 h-1 w-1/2 rounded-full bg-emerald-600"
+        class="absolute top-1/2 h-1 -translate-y-1/2 rounded-full bg-emerald-600"
         :style="{
           width: `${width * 100}%`,
           left: `${offset * 100}%`,
         }"
       />
-      <div class="spacer h-0.5 rounded-full" />
+      <div class="spacer h-0.5 w-full rounded-full" />
     </div>
   </div>
 </template>
