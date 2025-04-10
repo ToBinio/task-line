@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Tag } from "~~/shared/types";
+
 const props = defineProps<{ tag: Tag; isSelected: boolean }>();
 const emits = defineEmits(["press"]);
 

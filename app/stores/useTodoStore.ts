@@ -1,22 +1,6 @@
 import { defineStore } from "pinia";
 import { v4 } from "uuid";
-
-export type UUID = string;
-
-export type Todo = {
-  uuid: UUID;
-  title: string;
-  start: Date;
-  end: Date;
-  tags: UUID[];
-};
-
-export type TodoEditData = {
-  title: string;
-  tags: UUID[];
-  from: Date;
-  to: Date | undefined;
-};
+import type { Todo, UUID } from "~~/shared/types";
 
 export const useTodoStore = defineStore("todos", {
   state: (): { data: Todo[] } => ({
@@ -28,7 +12,7 @@ export const useTodoStore = defineStore("todos", {
       this.data.splice(index, 1);
     },
 
-    addTodo(todo: TodoEditData) {
+    addTodo(todo: EditTodoData) {
       const uuid = v4();
 
       if (!todo.to) {
@@ -44,7 +28,7 @@ export const useTodoStore = defineStore("todos", {
       });
     },
 
-    updateTodo(uuid: UUID, todo: TodoEditData) {
+    updateTodo(uuid: UUID, todo: EditTodoData) {
       const index = this.data.findIndex((value) => value.uuid === uuid);
       this.data[index] = {
         uuid,

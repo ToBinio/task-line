@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import { ref, computed } from "vue";
 import TagSelect from "../utils/input/TagSelect.vue";
 import Sheet from "../utils/Sheet.vue";
 import DateSelect from "./DateSelect.vue";
 import TitleSelect from "./TitleSelect.vue";
+import type { EditTodoData } from "~/utils/types";
 
 const isOpen = defineModel<boolean>("isOpen", { required: true });
 
-const todoData = ref<TodoEditData>({
+const todoData = ref<EditTodoData>({
   title: "",
   tags: [],
   from: sanitizeDate(new Date()),

@@ -1,10 +1,5 @@
 import { v4 } from "uuid";
-
-export type Tag = {
-  uuid: UUID;
-  name: string;
-  color: string;
-};
+import type { Tag, UUID } from "~~/shared/types";
 
 export const useTagStore = defineStore("tags", {
   state: (): { data: Tag[] } => ({

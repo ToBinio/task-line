@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Todo } from "~~/shared/types";
 import Tag from "../utils/Tag.vue";
 import TimeDisplay from "./TimeDisplay.vue";
 

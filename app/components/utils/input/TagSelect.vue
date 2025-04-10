@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Tag from "../Tag.vue";
+import type { Tag, UUID } from "~~/shared/types";
 
 const tags = defineModel<UUID[]>("tags", { required: true });
 
