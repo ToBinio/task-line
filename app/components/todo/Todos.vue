@@ -4,6 +4,10 @@ import { useFilterStore } from "~/stores/useFilterStore";
 const todoStore = useTodoStore();
 const filterStore = useFilterStore();
 
+await callOnce(async () => {
+  await todoStore.fetch();
+});
+
 const filterdTodos = computed(() => {
   return todoStore.data.filter((todo) => {
     for (const tag of filterStore.tags) {
