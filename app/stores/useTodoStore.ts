@@ -19,9 +19,17 @@ export const useTodoStore = defineStore("todos", {
       this.data = transformedData;
     },
 
-    removeTodo(uuid: UUID) {
+    async removeTodo(uuid: UUID) {
       const index = this.data.findIndex((value) => value.uuid === uuid);
       this.data.splice(index, 1);
+
+      await $fetch("/api/todo/" + uuid, {
+        method: "DELETE",
+      }).catch(async (err) => {
+        console.warn(err);
+        // TODO: reanable once handeling todos via login
+        // await this.fetch();
+      });
     },
 
     addTodo(todo: EditTodoData) {
