@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Tag from "../utils/Tag.vue";
+import TimeDisplay from "./TimeDisplay.vue";
 
 const props = defineProps<{ data: Todo }>();
 
@@ -13,23 +14,6 @@ function onCheck() {
     todoStore.removeTodo(props.data.uuid);
   }, 1000);
 }
-
-const width = computed(() => {
-  const timeDiff = props.data.end.getTime() - props.data.start.getTime();
-  const numberOfDays = timeDiff / (24 * 60 * 60 * 1000.0);
-  const percentage = numberOfDays / 7.0;
-  return percentage;
-});
-
-const offset = computed(() => {
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
-
-  const timeDiff = props.data.start.getTime() - now.getTime();
-  const numberOfDays = timeDiff / (24 * 60 * 60 * 1000.0);
-  const percentage = numberOfDays / 7.0;
-  return percentage;
-});
 
 const tagStore = useTagStore();
 
@@ -76,20 +60,6 @@ const tags = computed(() => {
         </div>
       </div>
     </div>
-    <div class="relative flex h-2 flex-col justify-center">
-      <div
-        class="absolute top-1/2 flex h-2 w-full -translate-y-1/2 justify-evenly"
-      >
-        <div v-for="n in 6" :key="n" class="spacer h-2 w-0.5 rounded-full" />
-      </div>
-      <div
-        class="absolute top-1/2 h-1 -translate-y-1/2 rounded-full bg-emerald-600"
-        :style="{
-          width: `${width * 100}%`,
-          left: `${offset * 100}%`,
-        }"
-      />
-      <div class="spacer h-0.5 w-full rounded-full" />
-    </div>
+    <TimeDisplay :start="data.start" :end="data.end" />
   </div>
 </template>
