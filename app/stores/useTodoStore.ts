@@ -27,8 +27,7 @@ export const useTodoStore = defineStore("todos", {
         method: "DELETE",
       }).catch(async (err) => {
         console.warn(err);
-        // TODO: reanable once handeling todos via login
-        // await this.fetch();
+        await this.fetch();
       });
     },
 

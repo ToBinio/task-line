@@ -24,6 +24,7 @@
     "@internationalized/date": "^3.7.0",
     "@nuxt/icon": "1.11.0",
     "@tailwindcss/vite": "^4.1.3",
+    "h3": "^1.15.1",
     "nuxt": "^3.16.2",
     "reka-ui": "^2.2.0",
     "tailwindcss": "^4.1.3",
