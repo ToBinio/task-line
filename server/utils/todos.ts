@@ -34,4 +34,5 @@ export async function deleteTodo(uuid: UUID): Promise<Todo | H3Error> {
   const todo = todos.splice(index, 1)[0]!;
   await storage.set(TODOS_KEY, todos);
 
-  return todo; }
+  return todo;
+}
