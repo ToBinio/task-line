@@ -17,6 +17,25 @@ export async function getTodos(): Promise<Todo[] | H3Error> {
   return todos;
 }
 
+export async function updateOrAddTodo(todo: Todo): Promise<Todo | H3Error> {
+  const storage = useStorage();
+  const todos = await getTodos();
+
+  if (todos instanceof H3Error) return todos;
+
+  const index = todos.findIndex((value) => value.uuid === todo.uuid);
+
+  if (index === -1) {
+    todos.push(todo);
+  } else {
+    todos[index] = todo;
+  }
+
+  await storage.set(TODOS_KEY, todos);
+
+  return todo;
+}
+
 export async function deleteTodo(uuid: UUID): Promise<Todo | H3Error> {
   const storage = useStorage();
   const todos = await getTodos();

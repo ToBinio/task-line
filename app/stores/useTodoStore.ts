@@ -8,7 +8,11 @@ export const useTodoStore = defineStore("todos", {
   }),
   actions: {
     async fetch() {
-      const data = await $fetch("/api/todos");
+      const data = await $fetch("/api/todos").catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        return [];
+      });
 
       const transformedData = data.map((todo) => ({
         ...todo,
@@ -26,36 +30,59 @@ export const useTodoStore = defineStore("todos", {
       await $fetch("/api/todo/" + uuid, {
         method: "DELETE",
       }).catch(async (err) => {
+        //todo - show in toast
         console.warn(err);
         await this.fetch();
       });
     },
 
-    addTodo(todo: EditTodoData) {
+    async addTodo(todoData: EditTodoData) {
       const uuid = v4();
 
-      if (!todo.to) {
-        todo.to = todo.from;
+      if (!todoData.to) {
+        todoData.to = todoData.from;
       }
 
-      this.data.push({
+      const todo = {
         uuid,
-        title: todo.title,
-        start: todo.from,
-        end: addDays(todo.to!, 1),
-        tags: todo.tags,
+        title: todoData.title,
+        start: todoData.from,
+        end: addDays(todoData.to!, 1),
+        tags: todoData.tags,
+      };
+
+      this.data.push(todo);
+
+      await $fetch("/api/todo", {
+        method: "POST",
+        body: todo,
+      }).catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        await this.fetch();
       });
     },
 
-    updateTodo(uuid: UUID, todo: EditTodoData) {
-      const index = this.data.findIndex((value) => value.uuid === uuid);
-      this.data[index] = {
+    async updateTodo(uuid: UUID, todoData: EditTodoData) {
+      const todo = {
         uuid,
-        title: todo.title,
-        start: todo.from,
-        end: addDays(todo.to!, 1),
-        tags: todo.tags,
+        title: todoData.title,
+        start: todoData.from,
+        end: addDays(todoData.to!, 1),
+        tags: todoData.tags,
       };
+
+      const index = this.data.findIndex((value) => value.uuid === uuid);
+      this.data[index] = todo;
+
+      await $fetch("/api/todo", {
+        method: "POST",
+        body: todo,
+      }).catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        await this.fetch();
+      });
     },
   },
   getters: {
