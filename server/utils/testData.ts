@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import type { Todo, UUID } from "~~/shared/types";
+import type { Tag, Todo, UUID } from "~~/shared/types";
 
 function getToDayInNDays(days: number): Date {
   const now = new Date();
@@ -37,4 +37,19 @@ export function getTestTodos(n: number): Todo[] {
   }
 
   return data;
+}
+
+export function getTestTags(): Tag[] {
+  return [
+    {
+      uuid: crypto.randomUUID(),
+      name: "School",
+      color: "oklch(0.444 0.177 26.899)",
+    },
+    {
+      uuid: crypto.randomUUID(),
+      name: "Work",
+      color: "oklch(0.555 0.163 48.998)",
+    },
+  ];
 }

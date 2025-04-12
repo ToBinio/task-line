@@ -24,8 +24,7 @@ export const useTodoStore = defineStore("todos", {
     },
 
     async removeTodo(uuid: UUID) {
-      const index = this.data.findIndex((value) => value.uuid === uuid);
-      this.data.splice(index, 1);
+      this.data = this.data.filter((todo) => todo.uuid !== uuid);
 
       await $fetch("/api/todos/" + uuid, {
         method: "DELETE",
