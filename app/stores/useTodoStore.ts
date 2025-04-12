@@ -27,7 +27,7 @@ export const useTodoStore = defineStore("todos", {
       const index = this.data.findIndex((value) => value.uuid === uuid);
       this.data.splice(index, 1);
 
-      await $fetch("/api/todo/" + uuid, {
+      await $fetch("/api/todos/" + uuid, {
         method: "DELETE",
       }).catch(async (err) => {
         //todo - show in toast
@@ -53,7 +53,7 @@ export const useTodoStore = defineStore("todos", {
 
       this.data.push(todo);
 
-      await $fetch("/api/todo", {
+      await $fetch("/api/todos", {
         method: "POST",
         body: todo,
       }).catch(async (err) => {
@@ -75,7 +75,7 @@ export const useTodoStore = defineStore("todos", {
       const index = this.data.findIndex((value) => value.uuid === uuid);
       this.data[index] = todo;
 
-      await $fetch("/api/todo", {
+      await $fetch("/api/todos", {
         method: "POST",
         body: todo,
       }).catch(async (err) => {

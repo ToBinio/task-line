@@ -1,5 +1,4 @@
 import type { Todo } from "~~/shared/types";
-import { getTodos } from "../utils/todos";
 import { H3Error } from "h3";
 
 export default defineEventHandler(async (): Promise<Todo[]> => {

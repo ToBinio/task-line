@@ -1,6 +1,5 @@
 import { H3Error } from "h3";
 import type { Todo } from "~~/shared/types";
-import { updateOrAddTodo } from "../utils/todos";
 
 export default defineEventHandler(async (event): Promise<Todo> => {
   const newTodo = await readValidatedBody<Todo>(event, (data) => {

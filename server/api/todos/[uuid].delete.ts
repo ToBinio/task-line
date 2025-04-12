@@ -1,5 +1,4 @@
 import { H3Error } from "h3";
-import { deleteTodo } from "~~/server/utils/todos";
 import type { Todo, UUID } from "~~/shared/types";
 
 export default defineEventHandler(async (event): Promise<Todo> => {
