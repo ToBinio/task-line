@@ -67,6 +67,6 @@ const tags = computed(() => {
         </div>
       </div>
     </div>
-    <TimeDisplay :timeframe="data.timeframe!" />
+    <TimeDisplay v-if="data.timeframe" :timeframe="data.timeframe!" />
   </div>
 </template>

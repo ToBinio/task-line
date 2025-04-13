@@ -19,34 +19,24 @@ import { parseDate } from "@internationalized/date";
 
 const timeframe = defineModel<Timeframe | undefined>("timeframe");
 
-const dateRange = computed<DateRange>({
-  get() {
-    if (!timeframe.value) {
-      return {
-        start: undefined,
-        end: undefined,
-      };
-    }
+const dateRange = ref<DateRange>({
+  start: undefined,
+  end: undefined,
+});
 
-    return {
-      start: parseDate(timeframe.value.start),
-      end: parseDate(timeframe.value.end),
-    };
-  },
-  set(value) {
-    if (!value.start && !value.end) {
-      timeframe.value = undefined;
-    }
+if (timeframe.value) {
+  dateRange.value = {
+    start: parseDate(timeframe.value.start),
+    end: parseDate(timeframe.value.end),
+  };
+}
 
-    if (!value.end) {
-      value.end = value.start;
-    }
-
-    timeframe.value = {
-      start: value.start!.toString(),
-      end: value.end!.toString(),
-    };
-  },
+watch(dateRange, (value) => {
+  //todo - correcly handle deselection and single day selection - https://github.com/unovue/reka-ui/issues/1820
+  timeframe.value = {
+    start: value.start!.toString(),
+    end: value.end!.toString(),
+  };
 });
 </script>
 
@@ -54,7 +44,7 @@ const dateRange = computed<DateRange>({
   <div class="flex justify-center">
     <RangeCalendarRoot
       v-slot="{ weekDays, grid }"
-      v-model="dateRange"
+      v-model="dateRange as DateRange"
       fixed-weeks
       class="flex flex-col gap-1"
     >
