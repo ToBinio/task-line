@@ -67,6 +67,6 @@ const tags = computed(() => {
         </div>
       </div>
     </div>
-    <TimeDisplay :start="data.start" :end="data.end" />
+    <TimeDisplay :timeframe="data.timeframe!" />
   </div>
 </template>

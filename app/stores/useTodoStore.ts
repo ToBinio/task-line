@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { v4 } from "uuid";
-import type { Todo, UUID } from "~~/shared/types";
+import type { Todo, TodoData, UUID } from "~~/shared/types";
 
 export const useTodoStore = defineStore("todos", {
   state: (): { data: Todo[] } => ({
@@ -14,13 +14,7 @@ export const useTodoStore = defineStore("todos", {
         return [];
       });
 
-      const transformedData = data.map((todo) => ({
-        ...todo,
-        start: new Date(todo.start),
-        end: new Date(todo.end),
-      }));
-
-      this.data = transformedData;
+      this.data = data;
     },
 
     async removeTodo(uuid: UUID) {
@@ -35,19 +29,12 @@ export const useTodoStore = defineStore("todos", {
       });
     },
 
-    async addTodo(todoData: EditTodoData) {
+    async addTodo(todoData: TodoData) {
       const uuid = v4();
-
-      if (!todoData.to) {
-        todoData.to = todoData.from;
-      }
 
       const todo = {
         uuid,
-        title: todoData.title,
-        start: todoData.from,
-        end: addDays(todoData.to!, 1),
-        tags: todoData.tags,
+        ...todoData,
       };
 
       this.data.push(todo);
@@ -62,13 +49,10 @@ export const useTodoStore = defineStore("todos", {
       });
     },
 
-    async updateTodo(uuid: UUID, todoData: EditTodoData) {
+    async updateTodo(uuid: UUID, todoData: TodoData) {
       const todo = {
         uuid,
-        title: todoData.title,
-        start: todoData.from,
-        end: addDays(todoData.to!, 1),
-        tags: todoData.tags,
+        ...todoData,
       };
 
       const index = this.data.findIndex((value) => value.uuid === uuid);

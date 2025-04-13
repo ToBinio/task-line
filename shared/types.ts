@@ -1,14 +1,19 @@
 export type UUID = string;
 
+export type Todo = TodoData & {
+  uuid: UUID;
+};
+
 export type TodoData = {
   title: string;
-  start: Date;
-  end: Date;
+  timeframe: Timeframe | undefined;
   tags: UUID[];
 };
 
-export type Todo = TodoData & {
-  uuid: UUID;
+/** iso formatted strings */
+export type Timeframe = {
+  start: string;
+  end: string;
 };
 
 export type Tag = {

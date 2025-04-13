@@ -1,3 +1,4 @@
+import { CalendarDate } from "@internationalized/date";
 import { v4 } from "uuid";
 import type { Tag, Todo, UUID } from "~~/shared/types";
 
@@ -30,13 +31,23 @@ export function getTestTodos(n: number): Todo[] {
     data.push({
       uuid,
       title: tasks[i % tasks.length]!,
-      start: getToDayInNDays(start),
-      end: getToDayInNDays(start + duration),
+      timeframe: {
+        start: toCalanderDate(getToDayInNDays(start)).toString(),
+        end: toCalanderDate(getToDayInNDays(start + duration)).toString(),
+      },
       tags: tags,
     });
   }
 
   return data;
+}
+
+function toCalanderDate(date: Date) {
+  return new CalendarDate(
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+  );
 }
 
 export function getTestTags(): Tag[] {

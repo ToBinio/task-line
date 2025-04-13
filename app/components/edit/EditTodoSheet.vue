@@ -1,20 +1,18 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import type { UUID } from "~~/shared/types";
+import type { TodoData, UUID } from "~~/shared/types";
 import TagSelect from "../utils/input/TagSelect.vue";
 import Sheet from "../utils/Sheet.vue";
 import DateSelect from "./DateSelect.vue";
 import TitleSelect from "./TitleSelect.vue";
-import type { EditTodoData } from "~/utils/types";
 
 const isOpen = ref(false);
 
 const uuid = ref<UUID>("");
-const todoData = ref<EditTodoData>({
+const todoData = ref<TodoData>({
   title: "",
   tags: [],
-  from: sanitizeDate(new Date()),
-  to: undefined,
+  timeframe: undefined,
 });
 
 const todoStore = useTodoStore();
@@ -26,8 +24,7 @@ useEditTodoEventBus().on((selectedUuid) => {
 
   todoData.value.title = todo.title;
   todoData.value.tags = [...todo.tags];
-  todoData.value.from = todo.start;
-  todoData.value.to = addDays(todo.end, -1);
+  todoData.value.timeframe = todo.timeframe;
 
   isOpen.value = true;
 });
@@ -42,7 +39,7 @@ function close() {
 }
 
 const isValid = computed(() => {
-  return todoData.value.title !== "" && todoData.value.from !== undefined;
+  return todoData.value.title !== "";
 });
 </script>
 
@@ -51,7 +48,7 @@ const isValid = computed(() => {
     <div class="flex h-full flex-col justify-between">
       <TitleSelect v-model:title="todoData.title" />
       <TagSelect v-model:tags="todoData.tags" />
-      <DateSelect v-model:from="todoData.from" v-model:to="todoData.to" />
+      <DateSelect v-model:timeframe="todoData.timeframe" />
       <button
         :disabled="!isValid"
         class="flex aspect-square h-10 items-center justify-center rounded bg-cyan-400 transition-colors hover:bg-stone-500 disabled:bg-stone-300 dark:bg-cyan-700 disabled:dark:bg-stone-700"

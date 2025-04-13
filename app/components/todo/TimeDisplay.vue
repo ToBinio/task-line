@@ -1,13 +1,28 @@
 <script setup lang="ts">
-const props = defineProps<{ start: Date; end: Date }>();
+import { parseDate, getLocalTimeZone } from "@internationalized/date";
+import type { Timeframe } from "~~/shared/types";
+
+const props = defineProps<{ timeframe: Timeframe }>();
+
+const time = computed(() => {
+  return {
+    start: parseDate(props.timeframe.start)
+      .toDate(getLocalTimeZone())
+      .getTime(),
+    end: parseDate(props.timeframe.end)
+      .add({ days: 1 })
+      .toDate(getLocalTimeZone())
+      .getTime(),
+  };
+});
 
 const cappedStart = computed(() => {
-  return Math.max(props.start.getTime(), sanitizeDate(new Date()).getTime());
+  return Math.max(time.value.start, sanitizeDate(new Date()).getTime());
 });
 
 const cappedEnd = computed(() => {
   return Math.min(
-    props.end.getTime(),
+    time.value.end,
     addDays(sanitizeDate(new Date()), 7).getTime(),
   );
 });
@@ -30,11 +45,11 @@ const offset = computed(() => {
 });
 
 const isCappedRight = computed(() => {
-  return props.end.getTime() > addDays(sanitizeDate(new Date()), 7).getTime();
+  return time.value.end > addDays(sanitizeDate(new Date()), 7).getTime();
 });
 
 const isCappedLeft = computed(() => {
-  return props.start.getTime() < sanitizeDate(new Date()).getTime();
+  return time.value.start < sanitizeDate(new Date()).getTime();
 });
 </script>
 

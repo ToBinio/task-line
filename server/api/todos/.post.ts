@@ -4,7 +4,7 @@ import type { Todo } from "~~/shared/types";
 export default defineEventHandler(async (event): Promise<Todo> => {
   const newTodo = await readValidatedBody<Todo>(event, (data) => {
     const todo = data as Todo;
-    if (!todo.uuid || !todo.title || !todo.start || !todo.end || !todo.tags)
+    if (!todo.uuid || !todo.title || !todo.tags)
       throw createError({
         statusCode: 400,
         statusMessage: "Bad Request",

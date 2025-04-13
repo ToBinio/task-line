@@ -14,39 +14,38 @@ import {
   RangeCalendarRoot,
 } from "reka-ui";
 import type { DateRange } from "reka-ui";
-import { CalendarDate, getLocalTimeZone } from "@internationalized/date";
+import type { Timeframe } from "~~/shared/types";
+import { parseDate } from "@internationalized/date";
 
-const from = defineModel<Date>("from");
-const to = defineModel<Date>("to");
+const timeframe = defineModel<Timeframe | undefined>("timeframe");
 
 const dateRange = computed<DateRange>({
   get() {
-    let start = undefined;
-    if (from.value) {
-      start = new CalendarDate(
-        from.value!.getFullYear(),
-        from.value!.getMonth() + 1,
-        from.value!.getDate(),
-      );
-    }
-
-    let end = undefined;
-    if (to.value) {
-      end = new CalendarDate(
-        to.value!.getFullYear(),
-        to.value!.getMonth() + 1,
-        to.value!.getDate(),
-      );
+    if (!timeframe.value) {
+      return {
+        start: undefined,
+        end: undefined,
+      };
     }
 
     return {
-      start: start,
-      end: end,
+      start: parseDate(timeframe.value.start),
+      end: parseDate(timeframe.value.end),
     };
   },
   set(value) {
-    from.value = value.start?.toDate(getLocalTimeZone());
-    to.value = value.end?.toDate(getLocalTimeZone());
+    if (!value.start && !value.end) {
+      timeframe.value = undefined;
+    }
+
+    if (!value.end) {
+      value.end = value.start;
+    }
+
+    timeframe.value = {
+      start: value.start!.toString(),
+      end: value.end!.toString(),
+    };
   },
 });
 </script>
