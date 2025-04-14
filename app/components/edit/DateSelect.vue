@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { parseDate } from "@internationalized/date";
 import {
+  type DateRange,
   RangeCalendarCell,
   RangeCalendarCellTrigger,
   RangeCalendarGrid,
@@ -13,13 +15,11 @@ import {
   RangeCalendarPrev,
   RangeCalendarRoot,
 } from "reka-ui";
-import type { DateRange } from "reka-ui";
 import type { Timeframe } from "~~/shared/types";
-import { parseDate } from "@internationalized/date";
 
 const timeframe = defineModel<Timeframe | undefined>("timeframe");
 
-const dateRange = ref<DateRange>({
+const dateRange: Ref<DateRange> = ref({
   start: undefined,
   end: undefined,
 });
@@ -44,7 +44,7 @@ watch(dateRange, (value) => {
   <div class="flex justify-center">
     <RangeCalendarRoot
       v-slot="{ weekDays, grid }"
-      v-model="dateRange as DateRange"
+      v-model="dateRange"
       fixed-weeks
       class="flex flex-col gap-1"
     >
