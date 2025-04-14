@@ -7,5 +7,5 @@
 }
 
 body {
-  @apply pointer-events-auto! bg-stone-100 dark:bg-stone-900 dark:text-white;
+  @apply pointer-events-auto! bg-stone-100 dark:bg-stone-900 dark:text-stone-100;
 }

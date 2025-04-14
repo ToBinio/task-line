@@ -6,6 +6,7 @@ import {
   PopoverArrow,
   PopoverContent,
 } from "reka-ui";
+import type { Tag } from "~~/shared/types";
 
 defineProps<{ tag: Tag }>();
 

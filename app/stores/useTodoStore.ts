@@ -1,58 +1,71 @@
 import { defineStore } from "pinia";
 import { v4 } from "uuid";
-
-export type UUID = string;
-
-export type Todo = {
-  uuid: UUID;
-  title: string;
-  start: Date;
-  end: Date;
-  tags: UUID[];
-};
-
-export type TodoEditData = {
-  title: string;
-  tags: UUID[];
-  from: Date;
-  to: Date | undefined;
-};
+import type { Todo, TodoData, UUID } from "~~/shared/types";
 
 export const useTodoStore = defineStore("todos", {
   state: (): { data: Todo[] } => ({
-    data: getTestTodos(20),
+    data: [],
   }),
   actions: {
-    removeTodo(uuid: UUID) {
-      const index = this.data.findIndex((value) => value.uuid === uuid);
-      this.data.splice(index, 1);
+    async fetch() {
+      const data = await $fetch("/api/todos").catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        return [];
+      });
+
+      this.data = data;
     },
 
-    addTodo(todo: TodoEditData) {
-      const uuid = v4();
+    async removeTodo(uuid: UUID) {
+      this.data = this.data.filter((todo) => todo.uuid !== uuid);
 
-      if (!todo.to) {
-        todo.to = todo.from;
-      }
-
-      this.data.push({
-        uuid,
-        title: todo.title,
-        start: todo.from,
-        end: addDays(todo.to!, 1),
-        tags: todo.tags,
+      await $fetch("/api/todos/" + uuid, {
+        method: "DELETE",
+      }).catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        await this.fetch();
       });
     },
 
-    updateTodo(uuid: UUID, todo: TodoEditData) {
-      const index = this.data.findIndex((value) => value.uuid === uuid);
-      this.data[index] = {
+    async addTodo(todoData: TodoData) {
+      const uuid = v4();
+
+      const todo = {
         uuid,
-        title: todo.title,
-        start: todo.from,
-        end: addDays(todo.to!, 1),
-        tags: todo.tags,
+        ...todoData,
       };
+
+      this.data.push(todo);
+
+      await $fetch("/api/todos", {
+        method: "POST",
+        body: todo,
+      }).catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        await this.fetch();
+      });
+    },
+
+    async updateTodo(uuid: UUID, todoData: TodoData) {
+      const todo = {
+        uuid,
+        ...todoData,
+      };
+
+      const index = this.data.findIndex((value) => value.uuid === uuid);
+      this.data[index] = todo;
+
+      await $fetch("/api/todos", {
+        method: "POST",
+        body: todo,
+      }).catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        await this.fetch();
+      });
     },
   },
   getters: {
@@ -61,49 +74,3 @@ export const useTodoStore = defineStore("todos", {
     },
   },
 });
-
-function getToDayInNDays(days: number): Date {
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
-  const date = new Date(now.getTime() + 1000 * 60 * 60 * 24 * days);
-
-  return date;
-}
-
-function getTestTodos(n: number): Todo[] {
-  const tasks = [
-    "Deutsch Hausaufgabe",
-    "WMC Aufgabe 1",
-    "WMC Aufgabe 2",
-    "Minecraft Film im Kino anschauen",
-  ];
-
-  const tagsStore = useTagStore();
-
-  const data = [];
-
-  for (let i = 0; i < n; i++) {
-    const start = Math.floor(Math.random() * 10);
-    const duration = Math.floor(Math.random() * 10);
-
-    //random tags
-    const tags: UUID[] = [];
-    if (Math.round(Math.random()) == 0) {
-      tags.push(
-        tagsStore.data[Math.floor(Math.random() * tagsStore.data.length)]!.uuid,
-      );
-    }
-
-    const uuid = v4();
-
-    data.push({
-      uuid,
-      title: tasks[i % tasks.length]!,
-      start: getToDayInNDays(start),
-      end: getToDayInNDays(start + duration),
-      tags: tags,
-    });
-  }
-
-  return data;
-}

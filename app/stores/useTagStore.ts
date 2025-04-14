@@ -1,35 +1,48 @@
 import { v4 } from "uuid";
-
-export type Tag = {
-  uuid: UUID;
-  name: string;
-  color: string;
-};
+import type { Tag, UUID } from "~~/shared/types";
 
 export const useTagStore = defineStore("tags", {
   state: (): { data: Tag[] } => ({
-    data: [
-      {
-        uuid: crypto.randomUUID(),
-        name: "School",
-        color: "oklch(0.444 0.177 26.899)",
-      },
-      {
-        uuid: crypto.randomUUID(),
-        name: "Work",
-        color: "oklch(0.555 0.163 48.998)",
-      },
-    ],
+    data: [],
   }),
   actions: {
-    deleteTag(uuid: UUID) {
-      this.data = this.data.filter((tag) => tag.uuid !== uuid);
+    async fetch() {
+      const data = await $fetch("/api/tags").catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        return [];
+      });
+
+      this.data = data;
     },
-    addTag(name: string, color: string) {
-      this.data.unshift({
+
+    async deleteTag(uuid: UUID) {
+      this.data = this.data.filter((tag) => tag.uuid !== uuid);
+
+      await $fetch("/api/tags/" + uuid, {
+        method: "DELETE",
+      }).catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        await this.fetch();
+      });
+    },
+    async addTag(name: string, color: string) {
+      const tag = {
         uuid: v4(),
         name,
         color,
+      };
+
+      this.data.unshift(tag);
+
+      await $fetch("/api/tags", {
+        method: "POST",
+        body: tag,
+      }).catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        await this.fetch();
       });
     },
   },

@@ -14,40 +14,29 @@ import {
   RangeCalendarRoot,
 } from "reka-ui";
 import type { DateRange } from "reka-ui";
-import { CalendarDate, getLocalTimeZone } from "@internationalized/date";
+import type { Timeframe } from "~~/shared/types";
+import { parseDate } from "@internationalized/date";
 
-const from = defineModel<Date>("from");
-const to = defineModel<Date>("to");
+const timeframe = defineModel<Timeframe | undefined>("timeframe");
 
-const dateRange = computed<DateRange>({
-  get() {
-    let start = undefined;
-    if (from.value) {
-      start = new CalendarDate(
-        from.value!.getFullYear(),
-        from.value!.getMonth() + 1,
-        from.value!.getDate(),
-      );
-    }
+const dateRange = ref<DateRange>({
+  start: undefined,
+  end: undefined,
+});
 
-    let end = undefined;
-    if (to.value) {
-      end = new CalendarDate(
-        to.value!.getFullYear(),
-        to.value!.getMonth() + 1,
-        to.value!.getDate(),
-      );
-    }
+if (timeframe.value) {
+  dateRange.value = {
+    start: parseDate(timeframe.value.start),
+    end: parseDate(timeframe.value.end),
+  };
+}
 
-    return {
-      start: start,
-      end: end,
-    };
-  },
-  set(value) {
-    from.value = value.start?.toDate(getLocalTimeZone());
-    to.value = value.end?.toDate(getLocalTimeZone());
-  },
+watch(dateRange, (value) => {
+  //todo - correcly handle deselection and single day selection - https://github.com/unovue/reka-ui/issues/1820
+  timeframe.value = {
+    start: value.start!.toString(),
+    end: value.end!.toString(),
+  };
 });
 </script>
 
@@ -55,7 +44,7 @@ const dateRange = computed<DateRange>({
   <div class="flex justify-center">
     <RangeCalendarRoot
       v-slot="{ weekDays, grid }"
-      v-model="dateRange"
+      v-model="dateRange as DateRange"
       fixed-weeks
       class="flex flex-col gap-1"
     >

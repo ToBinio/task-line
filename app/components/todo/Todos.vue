@@ -18,18 +18,19 @@ const filterdTodos = computed(() => {
 </script>
 
 <template>
-  <div class="mt-4 mb-12 w-dvw flex-1 overflow-x-hidden overflow-y-scroll p-1">
-    <TransitionGroup
-      leave-to-class="max-h-0! opacity-0"
-      enter-from-class="max-h-0! opacity-0"
-    >
-      <div
-        v-for="todo in filterdTodos"
-        :key="todo.uuid"
-        class="h-15 max-h-15 transition-all duration-200"
+  <div class="flex justify-center">
+    <div class="mt-3 mb-10 w-dvw max-w-200 overflow-x-hidden px-1 py-3">
+      <TransitionGroup
+        leave-to-class="max-h-0! opacity-0 scale-y-0"
+        enter-from-class="max-h-0! opacity-0 scale-y-0"
       >
-        <Todo :data="todo" />
-      </div>
-    </TransitionGroup>
+        <Todo
+          v-for="todo in filterdTodos"
+          :key="todo.uuid"
+          class="max-h-16 transition-all duration-300 ease-in"
+          :data="todo"
+        />
+      </TransitionGroup>
+    </div>
   </div>
 </template>
