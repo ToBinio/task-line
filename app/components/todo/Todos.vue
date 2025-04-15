@@ -19,6 +19,13 @@ const filterdTodos = computed(() => {
 
 function startDrag(event: DragEvent, uuid: UUID) {
   event.dataTransfer!.setData("text", uuid);
+  (event.target as HTMLElement).dataset.dragged = "true";
+}
+
+function endDrag(event: DragEvent) {
+  console.log((event.target as HTMLElement).dataset.dragged);
+  delete (event.target as HTMLElement).dataset.dragged;
+  console.log((event.target as HTMLElement).dataset.dragged);
 }
 
 function dropHandler(event: DragEvent, uuid: UUID) {
@@ -44,13 +51,14 @@ function dropHandler(event: DragEvent, uuid: UUID) {
           v-for="todo in filterdTodos"
           :key="todo.uuid"
           draggable="true"
-          class="max-h-16 transition-all duration-300"
+          class="max-h-16 transition-all duration-300 data-[dragged]:blur-[1px] data-[dragged]:grayscale-100"
           :data="todo"
           @dragstart="
             (event: DragEvent) => {
               startDrag(event, todo.uuid);
             }
           "
+          @dragend="endDrag"
           @dragover="
             (event: DragEvent) => {
               event.preventDefault();
