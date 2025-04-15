@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useFilterStore } from "~/stores/useFilterStore";
+import type { UUID } from "~~/shared/types";
 
 const todoStore = useTodoStore();
 const filterStore = useFilterStore();
@@ -15,6 +16,21 @@ const filterdTodos = computed(() => {
     return true;
   });
 });
+
+function startDrag(event: DragEvent, uuid: UUID) {
+  event.dataTransfer!.setData("text", uuid);
+}
+
+function dropHandler(event: DragEvent, uuid: UUID) {
+  event.preventDefault();
+  const dragedUUID = event.dataTransfer!.getData("text");
+
+  const dropIndex = todoStore.data.findIndex((todo) => todo.uuid == uuid);
+  const dragIndex = todoStore.data.findIndex((todo) => todo.uuid == dragedUUID);
+
+  const draged = todoStore.data.splice(dragIndex, 1)[0]!;
+  todoStore.data.splice(dropIndex, 0, draged);
+}
 </script>
 
 <template>
@@ -27,8 +43,24 @@ const filterdTodos = computed(() => {
         <Todo
           v-for="todo in filterdTodos"
           :key="todo.uuid"
-          class="max-h-16 transition-all duration-300 ease-in"
+          draggable="true"
+          class="max-h-16 transition-all duration-300"
           :data="todo"
+          @dragstart="
+            (event: DragEvent) => {
+              startDrag(event, todo.uuid);
+            }
+          "
+          @dragover="
+            (event: DragEvent) => {
+              event.preventDefault();
+            }
+          "
+          @drop="
+            (event: DragEvent) => {
+              dropHandler(event, todo.uuid);
+            }
+          "
         />
       </TransitionGroup>
     </div>
