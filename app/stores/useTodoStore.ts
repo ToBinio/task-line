@@ -67,6 +67,26 @@ export const useTodoStore = defineStore("todos", {
         await this.fetch();
       });
     },
+
+    async moveTodo(toMove: UUID, to: UUID) {
+      const dropIndex = this.data.findIndex((todo) => todo.uuid == to);
+      const dragIndex = this.data.findIndex((todo) => todo.uuid == toMove);
+
+      const draged = this.data.splice(dragIndex, 1)[0]!;
+      this.data.splice(dropIndex, 0, draged);
+
+      await $fetch("/api/todos/move", {
+        method: "POST",
+        body: {
+          toMove,
+          to,
+        },
+      }).catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        await this.fetch();
+      });
+    },
   },
   getters: {
     getTodoById(state) {

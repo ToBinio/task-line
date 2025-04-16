@@ -23,20 +23,14 @@ function startDrag(event: DragEvent, uuid: UUID) {
 }
 
 function endDrag(event: DragEvent) {
-  console.log((event.target as HTMLElement).dataset.dragged);
   delete (event.target as HTMLElement).dataset.dragged;
-  console.log((event.target as HTMLElement).dataset.dragged);
 }
 
 function dropHandler(event: DragEvent, uuid: UUID) {
   event.preventDefault();
   const dragedUUID = event.dataTransfer!.getData("text");
 
-  const dropIndex = todoStore.data.findIndex((todo) => todo.uuid == uuid);
-  const dragIndex = todoStore.data.findIndex((todo) => todo.uuid == dragedUUID);
-
-  const draged = todoStore.data.splice(dragIndex, 1)[0]!;
-  todoStore.data.splice(dropIndex, 0, draged);
+  todoStore.moveTodo(dragedUUID, uuid);
 }
 </script>
 
