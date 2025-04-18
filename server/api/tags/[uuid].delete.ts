@@ -13,7 +13,8 @@ export default defineEventHandler(async (event): Promise<Tag> => {
     });
 
   const tag = await deleteTag(uuid);
-
   if (tag instanceof H3Error) throw tag;
+
+  sendTagsUpdate();
   return tag;
 });

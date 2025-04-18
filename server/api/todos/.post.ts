@@ -1,5 +1,4 @@
 import { H3Error } from "h3";
-import { sendTodoUpdate } from "~~/server/utils/sse/todosSee";
 import type { Todo } from "~~/shared/types";
 
 export default defineEventHandler(async (event): Promise<Todo> => {

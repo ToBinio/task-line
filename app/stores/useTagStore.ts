@@ -16,6 +16,15 @@ export const useTagStore = defineStore("tags", {
       this.data = data;
     },
 
+    async initSSE() {
+      const eventSource = new EventSource("/api/tags/sse");
+
+      eventSource.onmessage = (event) => {
+        const tags = JSON.parse(event.data);
+        this.data = tags;
+      };
+    },
+
     async deleteTag(uuid: UUID) {
       this.data = this.data.filter((tag) => tag.uuid !== uuid);
 

@@ -10,6 +10,7 @@ await callOnce(async () => {
 
 onMounted(() => {
   todoStore.initSSE();
+  tagStore.initSSE();
 });
 </script>
 <template>

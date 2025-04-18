@@ -14,7 +14,8 @@ export default defineEventHandler(async (event): Promise<Tag> => {
   });
 
   const tag = await updateOrAddTag(newTag);
-
   if (tag instanceof H3Error) throw tag;
+
+  sendTagsUpdate();
   return tag;
 });
