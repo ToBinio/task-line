@@ -10,6 +10,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/icon", "@pinia/nuxt", "@vueuse/nuxt", "@nuxt/eslint"],
   css: ["~/assets/css/main.css"],
+  nitro: {
+    experimental: {
+      websocket: true,
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
     clearScreen: false,

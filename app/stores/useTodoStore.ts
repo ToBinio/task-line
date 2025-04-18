@@ -17,6 +17,15 @@ export const useTodoStore = defineStore("todos", {
       this.data = data;
     },
 
+    async initSSE() {
+      const eventSource = new EventSource("/api/todos/sse");
+
+      eventSource.onmessage = (event) => {
+        const todos = JSON.parse(event.data);
+        this.data = todos;
+      };
+    },
+
     async removeTodo(uuid: UUID) {
       this.data = this.data.filter((todo) => todo.uuid !== uuid);
 
