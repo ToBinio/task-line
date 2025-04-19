@@ -101,5 +101,9 @@ export const useTodoStore = defineStore("todos", {
     getTodoById(state) {
       return (uuid: UUID) => state.data.find((todo) => todo.uuid === uuid);
     },
+    isTagUsed(state) {
+      return (tagUuid: UUID): boolean =>
+        state.data.find((todo) => todo.tags.includes(tagUuid)) !== undefined;
+    },
   },
 });

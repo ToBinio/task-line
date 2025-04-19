@@ -8,9 +8,14 @@ import {
 } from "reka-ui";
 import type { Tag } from "~~/shared/types";
 
-defineProps<{ tag: Tag }>();
+const props = defineProps<{ tag: Tag }>();
 
 const tagStore = useTagStore();
+const todoStore = useTodoStore();
+
+const isTagUsed = computed(() => {
+  return todoStore.isTagUsed(props.tag.uuid);
+});
 </script>
 <template>
   <div
@@ -31,9 +36,18 @@ const tagStore = useTagStore();
           side="top"
           :side-offset="5"
         >
-          <button class="h-6" @click="tagStore.deleteTag(tag.uuid)">
+          <span v-if="isTagUsed" class="flex gap-1">
+            <Icon name="material-symbols:warning-outline-rounded" size="24" />
+            Tag used
+          </span>
+          <button
+            v-if="!isTagUsed"
+            class="h-6"
+            @click="tagStore.deleteTag(props.tag.uuid)"
+          >
             <Icon name="material-symbols:delete-outline-rounded" size="24" />
           </button>
+
           <PopoverArrow
             class="fill-stone-700"
             :height="10"
