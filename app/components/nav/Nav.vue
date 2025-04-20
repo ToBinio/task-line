@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import NewTodoSheet from "../edit/NewTodoSheet.vue";
-import LoginSheet from "~/components/login/LoginSheet.vue";
 
 const isSettingsSheetOpen = ref(false);
 const isFilterSheetOpen = ref(false);
 const isNewSheetOpen = ref(false);
-const isLoginSheetOpen = ref(false);
 </script>
 
 <template>
   <FilterSheet v-model:is-open="isFilterSheetOpen" />
   <SettingsSheet v-model:is-open="isSettingsSheetOpen" />
-  <LoginSheet v-model:is-open="isLoginSheetOpen" />
   <EditTodoSheet />
   <NewTodoSheet v-model:is-open="isNewSheetOpen" />
   <div
@@ -29,12 +26,6 @@ const isLoginSheetOpen = ref(false);
         @click="isFilterSheetOpen = true"
       >
         <Icon name="material-symbols:filter-alt" size="24" />
-      </button>
-      <button
-        class="relative m-1 flex aspect-square h-10 items-center justify-center rounded bg-stone-400 transition-colors hover:bg-stone-500 dark:bg-stone-700"
-        @click="isLoginSheetOpen = true"
-      >
-        <Icon name="material-symbols:login" size="24" />
       </button>
     </div>
     <button
