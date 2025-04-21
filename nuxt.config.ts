@@ -23,4 +23,9 @@ export default defineNuxtConfig({
       strictPort: true,
     },
   },
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.BASE_URL ?? "",
+    },
+  },
 });

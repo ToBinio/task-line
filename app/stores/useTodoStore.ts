@@ -8,15 +8,16 @@ export const useTodoStore = defineStore("todos", {
   }),
   actions: {
     async fetch() {
-      const data = await $fetch("/api/todos").catch(async (err) => {
-        //todo - show in toast
-        console.warn(err);
-        return [];
-      });
+      const data = await $fetch("/api/todos", { ...useFetchOptions() }).catch(
+        async (err) => {
+          //todo - show in toast
+          console.warn(err);
+          return [];
+        },
+      );
 
       this.data = data;
     },
-
     async initSSE() {
       const eventSource = new EventSource("/api/todos/sse");
 
@@ -31,6 +32,7 @@ export const useTodoStore = defineStore("todos", {
 
       await $fetch("/api/todos/" + uuid, {
         method: "DELETE",
+        ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast
         console.warn(err);
@@ -51,6 +53,7 @@ export const useTodoStore = defineStore("todos", {
       await $fetch("/api/todos", {
         method: "POST",
         body: todo,
+        ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast
         console.warn(err);
@@ -70,6 +73,7 @@ export const useTodoStore = defineStore("todos", {
       await $fetch("/api/todos", {
         method: "POST",
         body: todo,
+        ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast
         console.warn(err);
@@ -90,6 +94,7 @@ export const useTodoStore = defineStore("todos", {
           toMove,
           to,
         },
+        ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast
         console.warn(err);

@@ -7,7 +7,9 @@ export const useTagStore = defineStore("tags", {
   }),
   actions: {
     async fetch() {
-      const data = await $fetch("/api/tags").catch(async (err) => {
+      const data = await $fetch("/api/tags", {
+        ...useFetchOptions(),
+      }).catch(async (err) => {
         //todo - show in toast
         console.warn(err);
         return [];
@@ -30,6 +32,7 @@ export const useTagStore = defineStore("tags", {
 
       await $fetch("/api/tags/" + uuid, {
         method: "DELETE",
+        ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast
         console.warn(err);
@@ -48,6 +51,7 @@ export const useTagStore = defineStore("tags", {
       await $fetch("/api/tags", {
         method: "POST",
         body: tag,
+        ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast
         console.warn(err);
