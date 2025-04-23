@@ -1,15 +1,9 @@
 import { H3Error } from "h3";
-import type { Todo } from "~~/shared/types";
+import { TodoSchema, type Todo } from "~~/shared/types";
 
 export default defineEventHandler(async (event): Promise<Todo> => {
   const newTodo = await readValidatedBody<Todo>(event, (data) => {
-    const todo = data as Todo;
-    if (!todo.uuid || !todo.title || !todo.tags)
-      throw createError({
-        statusCode: 400,
-        statusMessage: "Bad Request",
-        message: "Invalid todo",
-      });
+    return TodoSchema.parse(data) as Todo;
   });
 
   const todo = await updateOrAddTodo(newTodo);
