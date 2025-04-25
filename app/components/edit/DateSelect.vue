@@ -33,11 +33,24 @@ if (timeframe.value) {
 
 watch(dateRange, (value) => {
   //todo - correcly handle deselection and single day selection - https://github.com/unovue/reka-ui/issues/1820
+
+  if (value.end == undefined || value.start == undefined) {
+    timeframe.value = undefined;
+    return;
+  }
+
   timeframe.value = {
     start: value.start!.toString(),
     end: value.end!.toString(),
   };
 });
+
+function clear() {
+  dateRange.value = {
+    start: undefined,
+    end: undefined,
+  };
+}
 </script>
 
 <template>
@@ -46,16 +59,24 @@ watch(dateRange, (value) => {
       v-slot="{ weekDays, grid }"
       v-model="dateRange"
       fixed-weeks
-      class="flex flex-col gap-1"
+      class="flex flex-col gap-2"
     >
       <RangeCalendarHeader class="flex items-center justify-between">
-        <RangeCalendarPrev>
-          <Icon name="material-symbols:chevron-left-rounded" size="24" />
-        </RangeCalendarPrev>
-        <RangeCalendarHeading />
-        <RangeCalendarNext>
-          <Icon name="material-symbols:chevron-right-rounded" size="24" />
-        </RangeCalendarNext>
+        <button
+          class="rounded border-1 border-stone-300 px-2 text-center transition hover:bg-stone-600 dark:border-stone-700"
+          @click="clear"
+        >
+          clear
+        </button>
+        <div class="flex items-center justify-between gap-2">
+          <RangeCalendarPrev class="flex">
+            <Icon name="material-symbols:chevron-left-rounded" size="24" />
+          </RangeCalendarPrev>
+          <RangeCalendarHeading />
+          <RangeCalendarNext class="flex">
+            <Icon name="material-symbols:chevron-right-rounded" size="24" />
+          </RangeCalendarNext>
+        </div>
       </RangeCalendarHeader>
       <RangeCalendarGrid
         v-for="month in grid"
