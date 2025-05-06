@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import NewTodoSheet from "../edit/NewTodoSheet.vue";
 
+const filterStore = useFilterStore();
+
 const isSettingsSheetOpen = ref(false);
 const isFilterSheetOpen = ref(false);
 const isNewSheetOpen = ref(false);
@@ -25,7 +27,12 @@ const isNewSheetOpen = ref(false);
         class="relative m-1 flex aspect-square h-10 items-center justify-center rounded bg-stone-400 transition-colors hover:bg-stone-500 dark:bg-stone-700"
         @click="isFilterSheetOpen = true"
       >
-        <Icon name="material-symbols:filter-alt" size="24" />
+        <Icon
+          v-if="filterStore.isFiltering()"
+          name="material-symbols:filter-alt"
+          size="24"
+        />
+        <Icon v-else name="material-symbols:filter-alt" size="24" />
       </button>
     </div>
     <button

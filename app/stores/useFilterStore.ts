@@ -5,4 +5,13 @@ export const useFilterStore = defineStore("filter", {
     tags: [],
     time: "all",
   }),
+  getters: {
+    isFiltering(state) {
+      return () => {
+        if (state.time != "all") return true;
+
+        return state.tags.length != 0;
+      };
+    },
+  },
 });
