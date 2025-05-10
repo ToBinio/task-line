@@ -13,6 +13,6 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   googleSignIn: {
-    clientId: '366824119747-ni0so935ro48369c511dvs0ka08e56n9.apps.googleusercontent.com',
+    clientId: process.env.GOOGLE_CLIENT_ID,
   }
 });

@@ -21,3 +21,13 @@ export type Tag = {
   name: string;
   color: string;
 };
+
+export type JwtValidation = {
+  success: boolean;
+};
+
+export type JwtPayload = {
+  sub: string;
+  email: string;
+  picture: string;
+}
