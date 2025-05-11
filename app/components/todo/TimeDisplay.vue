@@ -69,11 +69,11 @@ const isCappedLeft = computed(() => {
     />
     <div
       v-if="isCappedRight"
-      class="absolute top-1/2 right-0 h-1 w-8 -translate-y-1/2 rounded-full bg-linear-to-r from-transparent to-emerald-300"
+      class="absolute top-1/2 right-0 h-1 w-12 -translate-y-1/2 rounded-full bg-linear-to-r from-transparent to-stone-500"
     />
     <div
       v-if="isCappedLeft"
-      class="absolute top-1/2 left-0 h-1 w-8 -translate-y-1/2 rounded-full bg-linear-to-l from-transparent to-emerald-300"
+      class="absolute top-1/2 left-0 h-1 w-12 -translate-y-1/2 rounded-full bg-linear-to-l from-transparent to-stone-500"
     />
     <div class="spacer h-0.5 w-full rounded-full" />
   </div>

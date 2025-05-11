@@ -7,6 +7,11 @@ const tagStore = useTagStore();
 await callOnce(async () => {
   await Promise.all([todoStore.fetch(), tagStore.fetch()]);
 });
+
+onMounted(() => {
+  todoStore.initSSE();
+  tagStore.initSSE();
+});
 </script>
 <template>
   <div class="overflow-x-hidden">

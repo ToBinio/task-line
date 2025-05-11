@@ -8,13 +8,23 @@ export const useTodoStore = defineStore("todos", {
   }),
   actions: {
     async fetch() {
-      const data = await $fetch("/api/todos").catch(async (err) => {
-        //todo - show in toast
-        console.warn(err);
-        return [];
-      });
+      const data = await $fetch("/api/todos", { ...useFetchOptions() }).catch(
+        async (err) => {
+          //todo - show in toast
+          console.warn(err);
+          return [];
+        },
+      );
 
       this.data = data;
+    },
+    async initSSE() {
+      const eventSource = new EventSource("/api/todos/sse");
+
+      eventSource.onmessage = (event) => {
+        const todos = JSON.parse(event.data);
+        this.data = todos;
+      };
     },
 
     async removeTodo(uuid: UUID) {
@@ -22,6 +32,7 @@ export const useTodoStore = defineStore("todos", {
 
       await $fetch("/api/todos/" + uuid, {
         method: "DELETE",
+        ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast
         console.warn(err);
@@ -42,6 +53,7 @@ export const useTodoStore = defineStore("todos", {
       await $fetch("/api/todos", {
         method: "POST",
         body: todo,
+        ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast
         console.warn(err);
@@ -61,6 +73,28 @@ export const useTodoStore = defineStore("todos", {
       await $fetch("/api/todos", {
         method: "POST",
         body: todo,
+        ...useFetchOptions(),
+      }).catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        await this.fetch();
+      });
+    },
+
+    async moveTodo(toMove: UUID, to: UUID) {
+      const dropIndex = this.data.findIndex((todo) => todo.uuid == to);
+      const dragIndex = this.data.findIndex((todo) => todo.uuid == toMove);
+
+      const draged = this.data.splice(dragIndex, 1)[0]!;
+      this.data.splice(dropIndex, 0, draged);
+
+      await $fetch("/api/todos/move", {
+        method: "POST",
+        body: {
+          toMove,
+          to,
+        },
+        ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast
         console.warn(err);
@@ -71,6 +105,10 @@ export const useTodoStore = defineStore("todos", {
   getters: {
     getTodoById(state) {
       return (uuid: UUID) => state.data.find((todo) => todo.uuid === uuid);
+    },
+    isTagUsed(state) {
+      return (tagUuid: UUID): boolean =>
+        state.data.find((todo) => todo.tags.includes(tagUuid)) !== undefined;
     },
   },
 });

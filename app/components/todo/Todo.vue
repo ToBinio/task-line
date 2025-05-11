@@ -16,6 +16,7 @@ function onCheck() {
   }, 1000);
 }
 
+const filterStore = useFilterStore();
 const tagStore = useTagStore();
 
 const tags = computed(() => {
@@ -29,6 +30,7 @@ const tags = computed(() => {
       return tag;
     })
     .filter((tag) => !!tag)
+    .filter((tag) => !filterStore.tags.includes(tag.uuid))
     .sort((a, b) => a.name.localeCompare(b.name));
 });
 </script>

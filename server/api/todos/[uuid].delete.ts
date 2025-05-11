@@ -12,7 +12,8 @@ export default defineEventHandler(async (event): Promise<Todo> => {
     });
 
   const todo = await deleteTodo(uuid);
-
   if (todo instanceof H3Error) throw todo;
+
+  sendTodoUpdate();
   return todo;
 });
