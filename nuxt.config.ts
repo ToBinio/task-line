@@ -8,7 +8,13 @@ export default defineNuxtConfig({
   ssr: process.env.TAURI_USED === "true" ? false : true,
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  modules: ["@nuxt/icon", "@pinia/nuxt", "@vueuse/nuxt", "@nuxt/eslint"],
+  modules: [
+    "@nuxt/icon",
+    "@pinia/nuxt",
+    "@vueuse/nuxt",
+    "@nuxt/eslint",
+    "nuxt-vue3-google-signin",
+  ],
   css: ["~/assets/css/main.css"],
   nitro: {
     experimental: {
@@ -27,5 +33,8 @@ export default defineNuxtConfig({
     public: {
       baseURL: process.env.BASE_URL ?? "",
     },
+  },
+  googleSignIn: {
+    clientId: process.env.GOOGLE_CLIENT_ID,
   },
 });
