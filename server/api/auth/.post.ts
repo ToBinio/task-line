@@ -2,10 +2,11 @@ import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
 import type { JwtPayload, JwtToken } from "#shared/types";
 
-const client = new OAuth2Client(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  "http://localhost:3000",
+const runtimeConfig = useRuntimeConfig();
+const oAuthClient = new OAuth2Client(
+  runtimeConfig.public.googleClientId,
+  runtimeConfig.googleClientSecret,
+  runtimeConfig.public.googleRedirectUrl,
 );
 
 export default defineEventHandler(async (event) => {
@@ -13,9 +14,9 @@ export default defineEventHandler(async (event) => {
   const code = body.code;
 
   try {
-    const result = await client.getToken(code);
+    const result = await oAuthClient.getToken(code);
 
-    client.setCredentials(result.tokens);
+    oAuthClient.setCredentials(result.tokens);
 
     const decode = jwt.decode(result.res?.data.id_token) as JwtPayload;
 
@@ -23,11 +24,13 @@ export default defineEventHandler(async (event) => {
     const sub = decode?.sub;
     const picture = decode?.picture;
 
+    const runtimeConfig = useRuntimeConfig();
+
     const token = jwt.sign(
       { sub, email, picture } as JwtPayload,
-      process.env.JWT_SECRET!,
+      runtimeConfig.jwtSecret,
       {
-        expiresIn: "1h",
+        expiresIn: runtimeConfig.jwtTTL as `${number}h`,
       },
     );
 

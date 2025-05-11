@@ -5,7 +5,13 @@ A simple to-do app focused on tasks that can be completed within a specific time
 ## .env example
 
 ```dotenv
+TAURI_USED=false
+BASE_URL="http://localhost:3000"
+
 GOOGLE_CLIENT_ID=<google_client_id>
-JWT_SECRET=<jwt_secret>
 GOOGLE_CLIENT_SECRET=<google_client_secret>
+GOOGLE_REDIRECT_URL=<google_redirect_url>
+
+JWT_SECRET=<jwt_secret>
+JWT_TTL="30d"
 ```

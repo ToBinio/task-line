@@ -32,7 +32,12 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseURL: process.env.BASE_URL ?? "",
+      googleClientId: process.env.GOOGLE_CLIENT_ID,
+      googleRedirectUrl: process.env.GOOGLE_REDIRECT_URL,
     },
+    googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    jwtSecret: process.env.JWT_SECRET,
+    jwtTTL: process.env.JWT_TTL,
   },
   googleSignIn: {
     clientId: process.env.GOOGLE_CLIENT_ID,

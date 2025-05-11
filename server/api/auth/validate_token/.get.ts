@@ -17,7 +17,8 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    jwt.verify(token, process.env.JWT_SECRET!);
+    const runtimeConfig = useRuntimeConfig();
+    jwt.verify(token, runtimeConfig.jwtSecret);
 
     return {
       success: true,
