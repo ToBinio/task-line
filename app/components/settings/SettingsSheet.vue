@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import Sheet from "../utils/Sheet.vue";
 import type { ImplicitFlowSuccessResponse } from "vue3-google-signin";
+import {
+  PopoverArrow,
+  PopoverContent,
+  PopoverPortal,
+  PopoverRoot,
+  PopoverTrigger,
+} from "reka-ui";
 
 const isOpen = defineModel<boolean>("isOpen", { required: true });
 const token = useLocalStorage<string | null>("token", null);
@@ -49,68 +56,89 @@ const { isReady, login } = useCodeClient({
         <SettingsTag v-for="tag in tagStore.data" :key="tag.uuid" :tag="tag" />
       </div>
     </div>
+
     <div class="p-1 pt-0">
       <h2 class="text-lg text-stone-400">Login</h2>
-      <div class="flex gap-1 overflow-scroll pt-1 pb-2">
-        <button
-          v-if="!isLoggedIn"
-          :disabled="!isReady"
-          class="google-login-button"
-          @click="() => login()"
-        >
-          <span class="icon"></span>Login with Google
-        </button>
 
-        <button
-          v-if="isLoggedIn"
-          class="google-login-button"
-          @click="() => logout()"
+      <div v-if="!isLoggedIn" class="flex gap-1 overflow-scroll pt-1 pb-2">
+        <div
+          class="flex h-8 items-center gap-2 rounded border-1 border-stone-300 pl-1 dark:border-stone-700"
         >
-          <span class="icon"></span>Logout
-        </button>
+          <div class="text-nowrap">Login</div>
+
+          <PopoverRoot>
+            <PopoverTrigger class="h-6 cursor-pointer">
+              <img src="@/assets/images/google_logo.svg" alt="google_logo" />
+            </PopoverTrigger>
+            <PopoverPortal>
+              <PopoverContent
+                class="z-50 mx-2 flex flex-col gap-2 rounded-lg bg-stone-700 p-2 drop-shadow-lg/30"
+                side="top"
+                :side-offset="5"
+              >
+                <button
+                  class="h-6 cursor-pointer"
+                  :disabled="!isReady"
+                  @click="() => login()"
+                >
+                  <img
+                    src="@/assets/images/google_logo.svg"
+                    alt="google_logo"
+                  />
+                </button>
+                <PopoverArrow
+                  class="fill-stone-700"
+                  :height="10"
+                  :width="20"
+                  :rounded="true"
+                />
+              </PopoverContent>
+            </PopoverPortal>
+          </PopoverRoot>
+        </div>
+
+<!--        <div>-->
+<!--          <img src="@/assets/images/google_logo.svg" alt="google_logo" />-->
+<!--        </div>-->
+      </div>
+
+      <div v-if="isLoggedIn" class="flex gap-1 overflow-scroll pt-1 pb-2">
+        <div
+          class="flex h-8 items-center gap-2 rounded border-1 border-stone-300 pl-1 dark:border-stone-700"
+        >
+          <div class="text-nowrap">Logout</div>
+
+          <PopoverRoot>
+            <PopoverTrigger class="h-6 cursor-pointer">
+              <img src="@/assets/images/google_logo.svg" alt="google_logo" />
+            </PopoverTrigger>
+            <PopoverPortal>
+              <PopoverContent
+                class="z-50 mx-2 flex flex-col gap-2 rounded-lg bg-stone-700 p-2 drop-shadow-lg/30"
+                side="top"
+                :side-offset="5"
+              >
+                <button
+                  class="h-6 cursor-pointer"
+                  :disabled="!isReady"
+                  @click="logout()"
+                >
+                  <img
+                    src="@/assets/images/google_logo.svg"
+                    alt="google_logo"
+                  />
+                </button>
+                <PopoverArrow
+                  class="fill-stone-700"
+                  :height="10"
+                  :width="20"
+                  :rounded="true"
+                />
+              </PopoverContent>
+            </PopoverPortal>
+          </PopoverRoot>
+        </div>
       </div>
     </div>
   </Sheet>
 </template>
-
-<style>
-.google-login-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  color: black;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 10px 24px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  max-width: 300px;
-  box-sizing: border-box;
-  transition: background-color 0.3s ease;
-}
-
-.google-login-button:hover {
-  background-color: #d3d3d3;
-}
-
-.google-login-button:focus {
-  outline: none;
-}
-
-.google-login-button svg {
-  margin-right: 10px;
-  width: 18px;
-  height: 18px;
-}
-
-.google-login-button .icon {
-  background-image: url("https://img.icons8.com/color/512/google-logo.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 18px;
-  height: 18px;
-  margin-right: 10px;
-}
-</style>
