@@ -31,9 +31,6 @@ export default defineEventHandler(async (event) => {
       },
     );
 
-    console.log(token);
-    console.log({ sub, email, picture });
-
     return { token: token } as JwtToken;
   } catch (err) {
     console.error(err);

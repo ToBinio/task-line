@@ -1,6 +1,6 @@
-import { decodeJwt } from '@/utils/jwt'
+import { decodeJwt } from "@/utils/jwt";
 
-export function useUserImageUrl() {
+export function useEmail() {
   const token = useLocalStorage<string | null>("token", null);
 
   return computed(() => {
