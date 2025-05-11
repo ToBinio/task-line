@@ -8,9 +8,14 @@ import {
   PopoverRoot,
   PopoverTrigger,
 } from "reka-ui";
+import type { JwtToken } from "#shared/types";
+import { useUserImageUrl } from "~/composables/useUserImageUrl";
 
 const isOpen = defineModel<boolean>("isOpen", { required: true });
+
 const token = useLocalStorage<string | null>("token", null);
+
+const userImage = useUserImageUrl();
 
 const tagStore = useTagStore();
 
@@ -21,12 +26,16 @@ function close() {
 const handleLoginSuccess = async (response: ImplicitFlowSuccessResponse) => {
   const code = response.code;
 
-  const res = await $fetch("/api/auth/", {
+  const res: JwtToken = await $fetch("/api/auth/", {
     method: "POST",
     body: { code },
   });
 
   token.value = res.token;
+};
+
+const handleLoginError = () => {
+  console.error("Login failed");
 };
 
 function logout() {
@@ -36,10 +45,6 @@ function logout() {
 const isLoggedIn = computed(() => {
   return token.value !== null;
 });
-
-const handleLoginError = () => {
-  console.error("Login failed");
-};
 
 const { isReady, login } = useCodeClient({
   onSuccess: handleLoginSuccess,
@@ -62,7 +67,7 @@ const { isReady, login } = useCodeClient({
 
       <div v-if="!isLoggedIn" class="flex gap-1 overflow-scroll pt-1 pb-2">
         <div
-          class="flex h-8 items-center gap-2 rounded border-1 border-stone-300 pl-1 dark:border-stone-700"
+          class="flex h-8 items-center gap-1 rounded border-1 border-stone-300 px-1 dark:border-stone-700"
         >
           <div class="text-nowrap">Login</div>
 
@@ -96,22 +101,23 @@ const { isReady, login } = useCodeClient({
             </PopoverPortal>
           </PopoverRoot>
         </div>
-
-<!--        <div>-->
-<!--          <img src="@/assets/images/google_logo.svg" alt="google_logo" />-->
-<!--        </div>-->
       </div>
 
       <div v-if="isLoggedIn" class="flex gap-1 overflow-scroll pt-1 pb-2">
         <div
-          class="flex h-8 items-center gap-2 rounded border-1 border-stone-300 pl-1 dark:border-stone-700"
+          class="flex h-8 items-center gap-1 rounded border-1 border-stone-300 px-1 dark:border-stone-700"
         >
           <div class="text-nowrap">Logout</div>
 
           <PopoverRoot>
             <PopoverTrigger class="h-6 cursor-pointer">
-              <img src="@/assets/images/google_logo.svg" alt="google_logo" />
+              <img
+                :src="userImage!"
+                alt="google_logo"
+                class="h-6 w-6 rounded-full object-cover"
+              />
             </PopoverTrigger>
+
             <PopoverPortal>
               <PopoverContent
                 class="z-50 mx-2 flex flex-col gap-2 rounded-lg bg-stone-700 p-2 drop-shadow-lg/30"
@@ -124,10 +130,12 @@ const { isReady, login } = useCodeClient({
                   @click="logout()"
                 >
                   <img
-                    src="@/assets/images/google_logo.svg"
+                    :src="userImage!"
                     alt="google_logo"
+                    class="h-6 w-6 rounded-full object-cover"
                   />
                 </button>
+
                 <PopoverArrow
                   class="fill-stone-700"
                   :height="10"

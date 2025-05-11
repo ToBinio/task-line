@@ -30,4 +30,8 @@ export type JwtPayload = {
   sub: string;
   email: string;
   picture: string;
-}
+};
+
+export type JwtToken = {
+  token: string;
+};

@@ -1,6 +1,6 @@
 import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
-import type { JwtPayload } from "#shared/types";
+import type { JwtPayload, JwtToken } from "#shared/types";
 
 const client = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID,
@@ -31,7 +31,10 @@ export default defineEventHandler(async (event) => {
       },
     );
 
-    return { token };
+    console.log(token);
+    console.log({ sub, email, picture });
+
+    return { token: token } as JwtToken;
   } catch (err) {
     console.error(err);
 
