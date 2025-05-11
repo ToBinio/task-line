@@ -2,7 +2,7 @@ import { getRequestHeaders } from "h3";
 import jwt from "jsonwebtoken";
 import type { JwtValidation } from "#shared/types";
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event): Promise<JwtValidation> => {
   const headers = getRequestHeaders(event);
   const authHeader = headers.authorization;
   const token = authHeader?.startsWith("Bearer ")
@@ -10,10 +10,7 @@ export default defineEventHandler(async (event) => {
     : null;
 
   if (!token) {
-    return sendError(
-      event,
-      createError({ statusCode: 401, statusMessage: "Token fehlt" }),
-    );
+    throw createError({ statusCode: 401, statusMessage: "Missing Token" });
   }
 
   try {
@@ -22,16 +19,12 @@ export default defineEventHandler(async (event) => {
 
     return {
       success: true,
-    } as JwtValidation;
+    };
   } catch (err) {
     console.log(err);
 
-    return sendError(
-      event,
-      createError({
-        statusCode: 401,
-        statusMessage: "Token ungültig oder abgelaufen",
-      }),
-    );
+    return {
+      success: false,
+    };
   }
 });

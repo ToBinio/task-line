@@ -9,15 +9,12 @@ const oAuthClient = new OAuth2Client(
   runtimeConfig.public.googleRedirectUrl,
 );
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event): Promise<JwtToken> => {
   const body = await readBody(event);
   const code = body.code;
 
   try {
     const result = await oAuthClient.getToken(code);
-
-    oAuthClient.setCredentials(result.tokens);
-
     const decode = jwt.decode(result.res?.data.id_token) as JwtPayload;
 
     const email = decode?.email;
@@ -34,13 +31,13 @@ export default defineEventHandler(async (event) => {
       },
     );
 
-    return { token: token } as JwtToken;
+    return { token: token };
   } catch (err) {
-    console.error(err);
+    console.warn(err);
 
-    return sendError(
-      event,
-      createError({ statusCode: 401, statusMessage: "Unauthorized" }),
-    );
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid Google Code",
+    });
   }
 });
