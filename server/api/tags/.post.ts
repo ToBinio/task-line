@@ -1,5 +1,4 @@
 import { H3Error } from "h3";
-import { updateOrAddTag } from "~~/server/utils/tags";
 import { TagSchema, type Tag } from "~~/shared/types";
 
 export default defineEventHandler(async (event): Promise<Tag> => {
@@ -7,9 +6,9 @@ export default defineEventHandler(async (event): Promise<Tag> => {
     return TagSchema.parse(data) as Tag;
   });
 
-  const tag = await updateOrAddTag(newTag);
+  const tag = await Tags.updateOrAdd(newTag);
   if (tag instanceof H3Error) throw tag;
 
-  sendTagsUpdate();
+  TagEventStream.sendUpdate();
   return tag;
 });

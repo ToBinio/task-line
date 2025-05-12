@@ -1,5 +1,4 @@
 import { H3Error } from "h3";
-import { deleteTag } from "~~/server/utils/tags";
 import type { Tag, UUID } from "~~/shared/types";
 
 export default defineEventHandler(async (event): Promise<Tag> => {
@@ -12,9 +11,9 @@ export default defineEventHandler(async (event): Promise<Tag> => {
       message: `no uuid set - uuid:'${uuid}'`,
     });
 
-  const tag = await deleteTag(uuid);
+  const tag = await Tags.delete(uuid);
   if (tag instanceof H3Error) throw tag;
 
-  sendTagsUpdate();
+  TagEventStream.sendUpdate();
   return tag;
 });

@@ -11,9 +11,9 @@ export default defineEventHandler(async (event): Promise<Todo> => {
       message: `no uuid set - uuid:'${uuid}'`,
     });
 
-  const todo = await deleteTodo(uuid);
+  const todo = await Todos.delete(uuid);
   if (todo instanceof H3Error) throw todo;
 
-  sendTodoUpdate();
+  TodoEventStream.sendUpdate();
   return todo;
 });

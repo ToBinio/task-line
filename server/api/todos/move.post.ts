@@ -1,5 +1,4 @@
 import { H3Error } from "h3";
-import { moveTodo } from "~~/server/utils/todos";
 import type { UUID } from "~~/shared/types";
 
 export type moveTodoBody = {
@@ -18,8 +17,8 @@ export default defineEventHandler(async (event) => {
       });
   });
 
-  const todo = await moveTodo(body.toMove, body.to);
+  const todo = await Todos.move(body.toMove, body.to);
   if (todo instanceof H3Error) throw todo;
 
-  sendTodoUpdate();
+  TodoEventStream.sendUpdate();
 });

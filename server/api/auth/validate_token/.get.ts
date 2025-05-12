@@ -21,7 +21,7 @@ export default defineEventHandler(async (event): Promise<JwtValidation> => {
       success: true,
     };
   } catch (err) {
-    console.log(err);
+    console.warn(err);
 
     return {
       success: false,

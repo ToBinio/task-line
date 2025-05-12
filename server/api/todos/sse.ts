@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const eventStream = createEventStream(event);
 
-  addTodoEventStream(eventStream);
+  TodoEventStream.addStream(eventStream);
 
   return eventStream.send();
 });

@@ -6,9 +6,9 @@ export default defineEventHandler(async (event): Promise<Todo> => {
     return TodoSchema.parse(data) as Todo;
   });
 
-  const todo = await updateOrAddTodo(newTodo);
+  const todo = await Todos.updateOrAdd(newTodo);
   if (todo instanceof H3Error) throw todo;
 
-  sendTodoUpdate();
+  TodoEventStream.sendUpdate();
   return todo;
 });

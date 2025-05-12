@@ -1,5 +1,5 @@
-import { TAGS_KEY } from "../utils/tags";
-import { TODOS_KEY } from "../utils/todos";
+import { TAGS_KEY } from "../utils/db/tags";
+import { TODOS_KEY } from "../utils/db/todos";
 import { getTestTags, getTestTodos } from "../utils/testData";
 
 export default defineNitroPlugin(async () => {
