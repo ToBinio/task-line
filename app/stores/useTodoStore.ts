@@ -8,7 +8,8 @@ export const useTodoStore = defineStore("todos", {
   }),
   actions: {
     async fetch() {
-      const data = await $fetch("/api/todos", { ...useFetchOptions() }).catch(
+      const fetch = useRequestFetch();
+      const data = await fetch("/api/todos", { ...useFetchOptions() }).catch(
         async (err) => {
           //todo - show in toast
           console.warn(err);
@@ -30,7 +31,8 @@ export const useTodoStore = defineStore("todos", {
     async removeTodo(uuid: UUID) {
       this.data = this.data.filter((todo) => todo.uuid !== uuid);
 
-      await $fetch("/api/todos/" + uuid, {
+      const fetch = useRequestFetch();
+      await fetch("/api/todos/" + uuid, {
         method: "DELETE",
         ...useFetchOptions(),
       }).catch(async (err) => {
@@ -50,7 +52,8 @@ export const useTodoStore = defineStore("todos", {
 
       this.data.push(todo);
 
-      await $fetch("/api/todos", {
+      const fetch = useRequestFetch();
+      await fetch("/api/todos", {
         method: "POST",
         body: todo,
         ...useFetchOptions(),
@@ -70,7 +73,8 @@ export const useTodoStore = defineStore("todos", {
       const index = this.data.findIndex((value) => value.uuid === uuid);
       this.data[index] = todo;
 
-      await $fetch("/api/todos", {
+      const fetch = useRequestFetch();
+      await fetch("/api/todos", {
         method: "POST",
         body: todo,
         ...useFetchOptions(),
@@ -88,7 +92,8 @@ export const useTodoStore = defineStore("todos", {
       const draged = this.data.splice(dragIndex, 1)[0]!;
       this.data.splice(dropIndex, 0, draged);
 
-      await $fetch("/api/todos/move", {
+      const fetch = useRequestFetch();
+      await fetch("/api/todos/move", {
         method: "POST",
         body: {
           toMove,

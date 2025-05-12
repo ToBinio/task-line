@@ -1,30 +1,14 @@
-import { getRequestHeaders } from "h3";
-import jwt from "jsonwebtoken";
 import type { JwtValidation } from "#shared/types";
+import { H3Error } from "h3";
 
 export default defineEventHandler(async (event): Promise<JwtValidation> => {
-  const headers = getRequestHeaders(event);
-  const authHeader = headers.authorization;
-  const token = authHeader?.startsWith("Bearer ")
-    ? authHeader.split(" ")[1]
-    : null;
+  const jwt = Auth.get(event);
 
-  if (!token) {
-    throw createError({ statusCode: 401, statusMessage: "Missing Token" });
+  if (jwt instanceof H3Error) {
+    throw jwt;
   }
 
-  try {
-    const runtimeConfig = useRuntimeConfig();
-    jwt.verify(token, runtimeConfig.jwtSecret);
-
-    return {
-      success: true,
-    };
-  } catch (err) {
-    console.warn(err);
-
-    return {
-      success: false,
-    };
-  }
+  return {
+    success: !!jwt,
+  };
 });

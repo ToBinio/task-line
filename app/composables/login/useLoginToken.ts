@@ -1,3 +1,6 @@
 export function useLoginToken() {
-  return useLocalStorage<string | undefined>("token", undefined);
+  return useCookie<string | undefined>("token", {
+    maxAge: 60 * 60,
+    sameSite: true,
+  });
 }

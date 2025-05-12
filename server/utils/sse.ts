@@ -1,39 +1,54 @@
 import type { EventStream } from "h3";
 
 export const TodoEventStream = {
-  addStream(eventStream: EventStream) {
-    addEventStream(todosEventStreams, eventStream);
+  addStream(userId: string, eventStream: EventStream) {
+    addEventStream(userId, todosEventStreams, eventStream);
   },
-  async sendUpdate() {
-    await publish(todosEventStreams, await Todos.getAll());
+  async sendUpdate(userId: string) {
+    await publish(userId, todosEventStreams, await Todos.getAll(userId));
   },
 };
 
 export const TagEventStream = {
-  addStream(eventStream: EventStream) {
-    addEventStream(tagsEventStreams, eventStream);
+  addStream(userId: string, eventStream: EventStream) {
+    addEventStream(userId, tagsEventStreams, eventStream);
   },
-  async sendUpdate() {
-    await publish(tagsEventStreams, await Tags.getAll());
+  async sendUpdate(userId: string) {
+    await publish(userId, tagsEventStreams, await Tags.getAll(userId));
   },
 };
 
-const todosEventStreams: EventStream[] = [];
-const tagsEventStreams: EventStream[] = [];
+const todosEventStreams: Map<string, EventStream[]> = new Map();
+const tagsEventStreams: Map<string, EventStream[]> = new Map();
 
-function addEventStream(eventStreams: EventStream[], eventStream: EventStream) {
-  eventStreams.push(eventStream);
+function addEventStream(
+  key: string,
+  eventStreams: Map<string, EventStream[]>,
+  eventStream: EventStream,
+) {
+  if (!eventStreams.has(key)) {
+    eventStreams.set(key, []);
+  }
+  const eventStreamList = eventStreams.get(key)!;
+
+  eventStreamList.push(eventStream);
 
   eventStream.onClosed(async () => {
-    eventStreams.splice(eventStreams.indexOf(eventStream), 1);
+    eventStreamList.splice(eventStreamList.indexOf(eventStream), 1);
     await eventStream.close();
   });
 }
 
-async function publish(eventStreams: EventStream[], data: object) {
+async function publish(
+  key: string,
+  eventStreams: Map<string, EventStream[]>,
+  data: object,
+) {
   const json = JSON.stringify(data);
 
-  eventStreams.forEach((eventStream) => {
+  const eventStreamList = eventStreams.get(key) ?? [];
+
+  eventStreamList.forEach((eventStream) => {
     eventStream.push(json);
   });
 }

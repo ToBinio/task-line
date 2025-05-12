@@ -11,9 +11,11 @@ export default defineEventHandler(async (event): Promise<Tag> => {
       message: `no uuid set - uuid:'${uuid}'`,
     });
 
-  const tag = await Tags.delete(uuid);
+  const token = Auth.getOrThrow(event);
+
+  const tag = await Tags.delete(token.sub, uuid);
   if (tag instanceof H3Error) throw tag;
 
-  TagEventStream.sendUpdate();
+  TagEventStream.sendUpdate(token.sub);
   return tag;
 });

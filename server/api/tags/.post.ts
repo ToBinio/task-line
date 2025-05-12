@@ -6,9 +6,11 @@ export default defineEventHandler(async (event): Promise<Tag> => {
     return TagSchema.parse(data) as Tag;
   });
 
-  const tag = await Tags.updateOrAdd(newTag);
+  const token = Auth.getOrThrow(event);
+
+  const tag = await Tags.updateOrAdd(token.sub, newTag);
   if (tag instanceof H3Error) throw tag;
 
-  TagEventStream.sendUpdate();
+  TagEventStream.sendUpdate(token.sub);
   return tag;
 });

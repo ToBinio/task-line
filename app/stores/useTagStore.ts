@@ -7,7 +7,8 @@ export const useTagStore = defineStore("tags", {
   }),
   actions: {
     async fetch() {
-      const data = await $fetch("/api/tags", {
+      const fetch = useRequestFetch();
+      const data = await fetch("/api/tags", {
         ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast
@@ -30,7 +31,8 @@ export const useTagStore = defineStore("tags", {
     async deleteTag(uuid: UUID) {
       this.data = this.data.filter((tag) => tag.uuid !== uuid);
 
-      await $fetch("/api/tags/" + uuid, {
+      const fetch = useRequestFetch();
+      await fetch("/api/tags/" + uuid, {
         method: "DELETE",
         ...useFetchOptions(),
       }).catch(async (err) => {
@@ -48,7 +50,8 @@ export const useTagStore = defineStore("tags", {
 
       this.data.unshift(tag);
 
-      await $fetch("/api/tags", {
+      const fetch = useRequestFetch();
+      await fetch("/api/tags", {
         method: "POST",
         body: tag,
         ...useFetchOptions(),

@@ -17,8 +17,10 @@ export default defineEventHandler(async (event) => {
       });
   });
 
-  const todo = await Todos.move(body.toMove, body.to);
+  const token = Auth.getOrThrow(event);
+
+  const todo = await Todos.move(token.sub, body.toMove, body.to);
   if (todo instanceof H3Error) throw todo;
 
-  TodoEventStream.sendUpdate();
+  TodoEventStream.sendUpdate(token.sub);
 });

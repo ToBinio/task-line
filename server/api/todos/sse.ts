@@ -1,7 +1,8 @@
 export default defineEventHandler(async (event) => {
-  const eventStream = createEventStream(event);
+  const token = Auth.getOrThrow(event);
 
-  TodoEventStream.addStream(eventStream);
+  const eventStream = createEventStream(event);
+  TodoEventStream.addStream(token.sub, eventStream);
 
   return eventStream.send();
 });

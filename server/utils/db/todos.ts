@@ -1,28 +1,26 @@
-import { H3Error } from "h3";
+import type { H3Error } from "h3";
 import type { Todo, UUID } from "~~/shared/types";
 
-export const TODOS_KEY = "todos";
+function getKey(userId: string): string {
+  return `${userId}:todos`;
+}
 
 export const Todos = {
-  async getAll(): Promise<Todo[] | H3Error> {
+  async getAll(userId: string): Promise<Todo[]> {
     const storage = useStorage();
-    const todos = await storage.get<Todo[]>(TODOS_KEY);
-
-    if (!todos)
-      return createError({
-        status: 500,
-        statusMessage: "Internal Server Error",
-        message: `no todos found`,
-      });
-
-    return todos;
+    return (
+      (await storage.get<Todo[]>(getKey(userId))) ??
+      (import.meta.dev ? getTestTodos(10) : [])
+    );
   },
 
-  async move(toMove: UUID, to: UUID): Promise<undefined | H3Error> {
+  async move(
+    userId: string,
+    toMove: UUID,
+    to: UUID,
+  ): Promise<undefined | H3Error> {
     const storage = useStorage();
-    const todos = await Todos.getAll();
-
-    if (todos instanceof H3Error) return todos;
+    const todos = await Todos.getAll(userId);
 
     const targetIndex = todos.findIndex((todo) => todo.uuid == to);
     const movedIndex = todos.findIndex((todo) => todo.uuid == toMove);
@@ -37,14 +35,12 @@ export const Todos = {
     const moved = todos.splice(movedIndex, 1)[0]!;
     todos.splice(targetIndex, 0, moved);
 
-    await storage.set(TODOS_KEY, todos);
+    await storage.set(getKey(userId), todos);
   },
 
-  async updateOrAdd(todo: Todo): Promise<Todo | H3Error> {
+  async updateOrAdd(userId: string, todo: Todo): Promise<Todo | H3Error> {
     const storage = useStorage();
-    const todos = await Todos.getAll();
-
-    if (todos instanceof H3Error) return todos;
+    const todos = await Todos.getAll(userId);
 
     const index = todos.findIndex((value) => value.uuid === todo.uuid);
 
@@ -54,16 +50,14 @@ export const Todos = {
       todos[index] = todo;
     }
 
-    await storage.set(TODOS_KEY, todos);
+    await storage.set(getKey(userId), todos);
 
     return todo;
   },
 
-  async delete(uuid: UUID): Promise<Todo | H3Error> {
+  async delete(userId: string, uuid: UUID): Promise<Todo | H3Error> {
     const storage = useStorage();
-    const todos = await Todos.getAll();
-
-    if (todos instanceof H3Error) return todos;
+    const todos = await Todos.getAll(userId);
 
     const index = todos.findIndex((value) => value.uuid === uuid);
     if (index == -1)
@@ -74,7 +68,7 @@ export const Todos = {
       });
 
     const todo = todos.splice(index, 1)[0]!;
-    await storage.set(TODOS_KEY, todos);
+    await storage.set(getKey(userId), todos);
 
     return todo;
   },
