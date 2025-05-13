@@ -2,7 +2,7 @@ import type { H3Error } from "h3";
 import type { Tag, UUID } from "~~/shared/types";
 
 function getKey(userId: string): string {
-  return `${userId}:tags`;
+  return `tags:${userId}`;
 }
 
 export const Tags = {

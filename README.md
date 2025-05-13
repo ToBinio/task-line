@@ -13,5 +13,8 @@ GOOGLE_CLIENT_SECRET=<google_client_secret>
 GOOGLE_REDIRECT_URL=<google_redirect_url>
 
 JWT_SECRET=<jwt_secret>
-JWT_TTL="30d"
+JWT_TTL_SECONDS=2592000 // 1Month
+
+MONGODB_DB=<db>
+MONGODB_CONNECTION=mongodb://<user>:<password>@<domain>:27017/<db>
 ```

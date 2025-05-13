@@ -9,7 +9,7 @@ export default defineEventHandler(async (event): Promise<JwtToken> => {
     { sub: token.sub, email: token.email, picture: token.picture },
     runtimeConfig.jwtSecret,
     {
-      expiresIn: runtimeConfig.jwtTTL as `${number}h`,
+      expiresIn: (runtimeConfig.public.jwtTTL + "s") as `${number}s`,
     },
   );
 

@@ -20,6 +20,28 @@ export default defineNuxtConfig({
     experimental: {
       websocket: true,
     },
+    storage: {
+      todos: {
+        driver: "mongodb",
+        connectionString: `${process.env.MONGODB_CONNECTION}`,
+        databaseName: `${process.env.MONGODB_DB}`,
+        collectionName: "todos",
+      },
+      tags: {
+        driver: "mongodb",
+        connectionString: `${process.env.MONGODB_CONNECTION}`,
+        databaseName: `${process.env.MONGODB_DB}`,
+        collectionName: "tags",
+      },
+    },
+    devStorage: {
+      todos: {
+        driver: "memory",
+      },
+      tags: {
+        driver: "memory",
+      },
+    },
   },
   vite: {
     plugins: [tailwindcss()],
@@ -34,10 +56,10 @@ export default defineNuxtConfig({
       baseURL: process.env.BASE_URL ?? "",
       googleClientId: process.env.GOOGLE_CLIENT_ID,
       googleRedirectUrl: process.env.GOOGLE_REDIRECT_URL,
+      jwtTTL: process.env.JWT_TTL_SECONDS,
     },
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
     jwtSecret: process.env.JWT_SECRET,
-    jwtTTL: process.env.JWT_TTL,
   },
   googleSignIn: {
     clientId: process.env.GOOGLE_CLIENT_ID,

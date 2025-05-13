@@ -27,7 +27,7 @@ export default defineEventHandler(async (event): Promise<JwtToken> => {
       { sub, email, picture } as JwtPayload,
       runtimeConfig.jwtSecret,
       {
-        expiresIn: runtimeConfig.jwtTTL as `${number}h`,
+        expiresIn: (runtimeConfig.public.jwtTTL + "s") as `${number}s`,
       },
     );
 

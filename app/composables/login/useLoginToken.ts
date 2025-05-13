@@ -1,6 +1,8 @@
 export function useLoginToken() {
+  const runtimeConfig = useRuntimeConfig();
+
   return useCookie<string | undefined>("token", {
-    maxAge: 60 * 60,
+    maxAge: parseInt(runtimeConfig.public.jwtTTL),
     sameSite: true,
   });
 }

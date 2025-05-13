@@ -2,7 +2,7 @@ import type { H3Error } from "h3";
 import type { Todo, UUID } from "~~/shared/types";
 
 function getKey(userId: string): string {
-  return `${userId}:todos`;
+  return `todos:${userId}`;
 }
 
 export const Todos = {
