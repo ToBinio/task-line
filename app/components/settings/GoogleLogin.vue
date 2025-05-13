@@ -28,6 +28,7 @@ async function handleLoginSuccess(response: ImplicitFlowSuccessResponse) {
   const res = await $fetch("/api/auth/", {
     method: "POST",
     body: { code },
+    ...useFetchOptions(),
   }).catch(async (err) => {
     //todo - show in toast
     console.warn(err);
