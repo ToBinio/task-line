@@ -2,8 +2,9 @@ import { v4 } from "uuid";
 import type { Tag, UUID } from "~~/shared/types";
 
 export const useTagStore = defineStore("tags", {
-  state: (): { data: Tag[] } => ({
+  state: (): { data: Tag[]; sse: EventSource | undefined } => ({
     data: [],
+    sse: undefined,
   }),
   actions: {
     async fetch() {
@@ -18,14 +19,23 @@ export const useTagStore = defineStore("tags", {
 
       this.data = data;
     },
+    reset() {
+      this.data = [];
+      this.stopSSE();
+    },
 
     async initSSE() {
-      const eventSource = new EventSource("/api/tags/sse");
+      this.stopSSE();
+      this.sse = new EventSource("/api/tags/sse");
 
-      eventSource.onmessage = (event) => {
+      this.sse.onmessage = (event) => {
         const tags = JSON.parse(event.data);
         this.data = tags;
       };
+    },
+    stopSSE() {
+      if (!this.sse) return;
+      this.sse.close();
     },
 
     async deleteTag(uuid: UUID) {

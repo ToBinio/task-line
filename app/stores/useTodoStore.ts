@@ -3,8 +3,9 @@ import { v4 } from "uuid";
 import type { Todo, TodoData, UUID } from "~~/shared/types";
 
 export const useTodoStore = defineStore("todos", {
-  state: (): { data: Todo[] } => ({
+  state: (): { data: Todo[]; sse: EventSource | undefined } => ({
     data: [],
+    sse: undefined,
   }),
   actions: {
     async fetch() {
@@ -19,13 +20,23 @@ export const useTodoStore = defineStore("todos", {
 
       this.data = data;
     },
-    async initSSE() {
-      const eventSource = new EventSource("/api/todos/sse");
+    reset() {
+      this.data = [];
+      this.stopSSE();
+    },
 
-      eventSource.onmessage = (event) => {
+    async initSSE() {
+      this.stopSSE();
+      this.sse = new EventSource("/api/todos/sse");
+
+      this.sse.onmessage = (event) => {
         const todos = JSON.parse(event.data);
         this.data = todos;
       };
+    },
+    stopSSE() {
+      if (!this.sse) return;
+      this.sse.close();
     },
 
     async removeTodo(uuid: UUID) {
