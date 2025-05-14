@@ -4,6 +4,10 @@ import type { Timeframe } from "~~/shared/types";
 
 const props = defineProps<{ timeframe: Timeframe }>();
 
+const timeFrameString = computed(() => {
+  return `${props.timeframe.start.toWellFormed()} - ${props.timeframe.end.toWellFormed()}`;
+});
+
 const time = computed(() => {
   return {
     start: parseDate(props.timeframe.start)
@@ -54,7 +58,10 @@ const isCappedLeft = computed(() => {
 </script>
 
 <template>
-  <div class="relative flex h-2 flex-col justify-center">
+  <div
+    class="relative flex h-2 flex-col justify-center"
+    :title="timeFrameString"
+  >
     <div
       class="absolute top-1/2 flex h-2 w-full -translate-y-1/2 justify-evenly"
     >
