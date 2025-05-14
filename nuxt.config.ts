@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: "TaskLine",
+      link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
     },
   },
   ssr: process.env.TAURI_USED === "true" ? false : true,
