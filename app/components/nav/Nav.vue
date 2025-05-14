@@ -32,7 +32,7 @@ const isNewSheetOpen = ref(false);
           name="material-symbols:filter-alt"
           size="24"
         />
-        <Icon v-else name="material-symbols:filter-alt" size="24" />
+        <Icon v-else name="material-symbols:filter-alt-outline" size="24" />
       </button>
     </div>
     <button

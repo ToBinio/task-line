@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Todo } from "~~/shared/types";
+import type { Tag as TagType, Todo } from "~~/shared/types";
 import Tag from "../utils/Tag.vue";
 import TimeDisplay from "./TimeDisplay.vue";
 
@@ -33,6 +33,10 @@ const tags = computed(() => {
     .filter((tag) => !filterStore.tags.includes(tag.uuid))
     .sort((a, b) => a.name.localeCompare(b.name));
 });
+
+function onTagPress(tag: TagType) {
+  filterStore.tags.push(tag.uuid);
+}
 </script>
 
 <template>
@@ -65,6 +69,7 @@ const tags = computed(() => {
             :tag="tag"
             :is-selected="false"
             class="text-xs"
+            @press="onTagPress(tag)"
           />
         </div>
       </div>
