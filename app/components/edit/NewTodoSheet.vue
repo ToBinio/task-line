@@ -17,6 +17,11 @@ const todoData = ref<TodoData>({
 const todoStore = useTodoStore();
 
 function onAddTodo() {
+  onAddTodoNoClose();
+  close();
+}
+
+function onAddTodoNoClose() {
   todoStore.addTodo(todoData.value);
 
   todoData.value = {
@@ -24,8 +29,6 @@ function onAddTodo() {
     tags: [],
     timeframe: undefined,
   };
-
-  close();
 }
 
 function close() {
@@ -43,13 +46,23 @@ const isValid = computed(() => {
       <TitleSelect v-model:title="todoData.title" />
       <TagSelect v-model:tags="todoData.tags" />
       <DateSelect v-model:timeframe="todoData.timeframe" />
-      <button
-        :disabled="!isValid"
-        class="flex aspect-square h-10 items-center justify-center rounded bg-cyan-400 transition-colors hover:bg-stone-500 disabled:bg-stone-300 dark:bg-cyan-700 disabled:dark:bg-stone-700"
-        @click="onAddTodo"
-      >
-        <Icon name="material-symbols:add-2-rounded" size="24" />
-      </button>
+      <div class="flex h-10 gap-1">
+        <button
+          :disabled="!isValid"
+          class="flex flex-1 items-center justify-center rounded bg-cyan-400 transition-colors hover:bg-cyan-600 disabled:bg-stone-300 dark:bg-cyan-700 disabled:dark:bg-stone-700"
+          @click="onAddTodo()"
+        >
+          <Icon name="material-symbols:add-2-rounded" size="24" />
+        </button>
+        <button
+          :disabled="!isValid"
+          class="flex w-min items-center justify-center gap-1 rounded bg-cyan-400 px-2 text-sm transition-colors hover:bg-cyan-600 disabled:bg-stone-300 dark:bg-cyan-700 disabled:dark:bg-stone-700"
+          @click="onAddTodoNoClose"
+        >
+          <Icon name="material-symbols:add-2-rounded" size="20" />
+          Another
+        </button>
+      </div>
     </div>
   </Sheet>
 </template>
