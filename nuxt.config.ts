@@ -17,9 +17,6 @@ export default defineNuxtConfig({
   ],
   css: ["~/assets/css/main.css"],
   nitro: {
-    experimental: {
-      websocket: true,
-    },
     storage: {
       todos: {
         driver: "mongodb",
