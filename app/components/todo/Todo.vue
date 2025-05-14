@@ -42,7 +42,7 @@ function onTagPress(tag: TagType) {
 <template>
   <div class="relative flex flex-col justify-center">
     <div class="flex items-center gap-1 pt-2 pb-1">
-      <button :disabled="checking" @click="onCheck()">
+      <button class="cursor-pointer" :disabled="checking" @click="onCheck()">
         <div
           class="m-1 flex h-8 w-8 items-center justify-center rounded-xl border-2 border-stone-600 dark:border-stone-400"
         >
@@ -58,8 +58,11 @@ function onTagPress(tag: TagType) {
           </transition>
         </div>
       </button>
-      <div class="flex flex-col">
-        <button class="text-lg" @click="() => editBus.emit(data.uuid)">
+      <div class="flex w-full flex-col">
+        <button
+          class="cursor-pointer text-left text-lg"
+          @click="() => editBus.emit(data.uuid)"
+        >
           {{ data.title }}
         </button>
         <div class="flex">
