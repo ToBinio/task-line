@@ -44,7 +44,7 @@ function onTagPress(tag: TagType) {
     <div class="flex items-center gap-1 pt-2 pb-1">
       <button class="cursor-pointer" :disabled="checking" @click="onCheck()">
         <div
-          class="m-1 flex h-8 w-8 items-center justify-center rounded-xl border-2 border-stone-600 dark:border-stone-400"
+          class="border-secondary m-1 flex h-8 w-8 items-center justify-center rounded-xl border-2"
         >
           <transition
             class="transition-opacity duration-500"

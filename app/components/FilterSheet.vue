@@ -16,11 +16,11 @@ function close() {
 <template>
   <Sheet :is-open="isOpen" title="Filter Sheet" @close="close">
     <div class="p-1 pt-0">
-      <h2 class="text-lg text-stone-400">Tags</h2>
+      <h2 class="text-muted-text text-lg">Tags</h2>
       <TagSelect v-model:tags="filterStore.tags" />
     </div>
     <div class="p-1">
-      <h2 class="text-lg text-stone-400">Time</h2>
+      <h2 class="text-muted-text text-lg">Time</h2>
       <RadioGroupRoot v-model="filterStore.time" class="flex gap-2">
         <div class="flex items-center gap-1">
           <RadioGroupItem

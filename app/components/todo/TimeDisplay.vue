@@ -65,10 +65,14 @@ const isCappedLeft = computed(() => {
     <div
       class="absolute top-1/2 flex h-2 w-full -translate-y-1/2 justify-evenly"
     >
-      <div v-for="n in 6" :key="n" class="spacer h-2 w-0.5 rounded-full" />
+      <div
+        v-for="n in 6"
+        :key="n"
+        class="bg-secondary h-2 w-0.5 rounded-full"
+      />
     </div>
     <div
-      class="absolute top-1/2 h-1 -translate-y-1/2 rounded-full bg-emerald-600"
+      class="bg-primary absolute top-1/2 h-1 -translate-y-1/2 rounded-full"
       :style="{
         width: `${width * 100}%`,
         left: `${offset * 100}%`,
@@ -76,12 +80,12 @@ const isCappedLeft = computed(() => {
     />
     <div
       v-if="isCappedRight"
-      class="absolute top-1/2 right-0 h-1 w-12 -translate-y-1/2 rounded-full bg-linear-to-r from-transparent to-stone-500"
+      class="to-background absolute top-1/2 right-0 h-1 w-12 -translate-y-1/2 bg-linear-to-r from-transparent"
     />
     <div
       v-if="isCappedLeft"
-      class="absolute top-1/2 left-0 h-1 w-12 -translate-y-1/2 rounded-full bg-linear-to-l from-transparent to-stone-500"
+      class="to-background absolute top-1/2 left-0 h-1 w-12 -translate-y-1/2 bg-linear-to-l from-transparent"
     />
-    <div class="spacer h-0.5 w-full rounded-full" />
+    <div class="bg-secondary h-0.5 w-full rounded-full" />
   </div>
 </template>

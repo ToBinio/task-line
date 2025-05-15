@@ -14,7 +14,7 @@ const fontColor = computed(() => {
 </script>
 <template>
   <button
-    class="cursor-pointer rounded border-1 border-stone-300 px-1 text-nowrap transition-all dark:border-stone-700"
+    class="border-secondary cursor-pointer rounded border-1 px-1 text-nowrap transition-all"
     :style="{
       color: fontColor,
       'background-color': bgColor,

@@ -1,11 +1,48 @@
 @import "tailwindcss";
 
-@layer components {
-  .spacer {
-    @apply bg-stone-300 dark:bg-stone-700;
+:root {
+  --text-color: var(--color-stone-950);
+  --muted-text-color: var(--color-stone-800);
+
+  --background-color: var(--color-stone-100);
+  --surface-color: var(--color-stone-300);
+  --popover-color: var(--color-stone-300);
+
+  --primary-color: var(--color-emerald-600);
+  --primary-hover-color: var(--color-emerald-700);
+  --secondary-color: var(--color-stone-400);
+  --secondary-popover-color: var(--color-stone-300);
+  --secondary-hover-color: var(--color-stone-500);
+
+  @media (prefers-color-scheme: dark) {
+    --text-color: var(--color-stone-100);
+    --muted-text-color: var(--color-stone-400);
+
+    --background-color: var(--color-stone-900);
+    --surface-color: var(--color-stone-800);
+    --popover-color: var(--color-stone-700);
+
+    --secondary-color: var(--color-stone-700);
+    --secondary-popover-color: var(--color-stone-600);
+    --secondary-hover-color: var(--color-stone-600);
   }
 }
 
+@theme inline {
+  --color-text: var(--text-color);
+  --color-muted-text: var(--muted-text-color);
+
+  --color-background: var(--background-color);
+  --color-surface: var(--surface-color);
+  --color-popover: var(--popover-color);
+
+  --color-primary: var(--primary-color);
+  --color-primary-hover: var(--primary-hover-color);
+  --color-secondary: var(--secondary-color);
+  --color-secondary-popover: var(--secondary-popover-color);
+  --color-secondary-hover: var(--secondary-hover-color);
+}
+
 body {
-  @apply pointer-events-auto! bg-stone-100 dark:bg-stone-900 dark:text-stone-100;
+  @apply bg-background text-text pointer-events-auto!;
 }

@@ -63,7 +63,7 @@ function clear() {
     >
       <RangeCalendarHeader class="flex items-center justify-between">
         <button
-          class="rounded border-1 border-stone-300 px-2 text-center transition hover:bg-stone-600 dark:border-stone-700"
+          class="border-secondary hover:bg-secondary rounded border-1 px-2 text-center transition"
           @click="clear"
         >
           clear
@@ -107,7 +107,7 @@ function clear() {
               class="flex-1"
             >
               <RangeCalendarCellTrigger
-                class="w-8 rounded border-1 border-stone-300 text-center data-[outside-view]:text-stone-400 data-[selected]:bg-stone-300 data-[today]:text-cyan-600 dark:border-stone-700 data-[selected]:dark:bg-stone-700 data-[today]:dark:text-cyan-300"
+                class="border-secondary data-[outside-view]:text-muted-text data-[selected]:bg-secondary data-[today]:text-primary w-8 rounded border-1 text-center"
                 :day="weekDate"
                 :month="month.value"
               />

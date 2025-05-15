@@ -33,7 +33,7 @@ const useModal = useMediaQuery("(min-width: 40rem)");
           @click="emit('close')"
         />
         <DrawerContent
-          class="fixed bottom-0 z-30 flex h-96 w-dvw flex-col gap-2 rounded-t-lg bg-stone-200 p-1 pt-2 dark:bg-stone-800"
+          class="bg-surface fixed bottom-0 z-30 flex h-96 w-dvw flex-col gap-2 rounded-t-lg p-1 pt-2"
         >
           <VisuallyHidden>
             <DrawerTitle>{{ title }}</DrawerTitle>
@@ -55,7 +55,7 @@ const useModal = useMediaQuery("(min-width: 40rem)");
           leave-to-class="opacity-0 scale-95"
         >
           <DialogContent
-            class="fixed top-1/2 left-1/2 z-30 h-96 w-9/10 max-w-128 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-stone-200 p-1 duration-200 dark:bg-stone-800"
+            class="bg-surface fixed top-1/2 left-1/2 z-30 h-96 w-9/10 max-w-128 -translate-x-1/2 -translate-y-1/2 rounded-lg p-1 duration-200"
           >
             <VisuallyHidden>
               <DialogTitle>{{ title }}</DialogTitle>

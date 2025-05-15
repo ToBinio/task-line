@@ -35,32 +35,30 @@ function onAddTag() {
 <template>
   <PopoverRoot v-model:open="open">
     <PopoverTrigger
-      class="flex aspect-square items-center rounded border-1 border-dashed border-stone-300 px-1 dark:border-stone-700"
+      class="border-secondary flex aspect-square items-center rounded border-1 px-1"
     >
       <Icon name="material-symbols:add-2-rounded" size="20" />
     </PopoverTrigger>
     <PopoverPortal>
       <PopoverContent
-        class="z-50 mx-2 flex flex-col gap-2 rounded-lg bg-stone-700 p-2 drop-shadow-lg/30"
+        class="bg-popover z-50 mx-2 flex flex-col gap-2 rounded-lg p-2 drop-shadow-lg/30"
         side="top"
         :side-offset="5"
       >
         <input
           v-model="tagName"
-          class="h-8 w-36 rounded border-1 border-stone-300 pl-1 dark:border-stone-600"
+          class="border-secondary-popover h-8 w-36 rounded border-1 pl-1"
           placeholder="new Tag"
           type="text"
         />
-        <div
-          class="flex h-8 rounded border-1 border-stone-300 dark:border-stone-600"
-        >
+        <div class="border-secondary-popover flex h-8 rounded border-1">
           <button
             class="flex aspect-square items-center justify-center"
             @click="onRandomizeColor"
           >
             <Icon
               name="material-symbols:autorenew-rounded"
-              class="text-stone-500 transition-colors hover:text-stone-400"
+              class="text-muted-text hover:text-text transition-colors"
               size="24"
             />
           </button>
@@ -71,7 +69,7 @@ function onAddTag() {
           />
         </div>
         <button
-          class="flex h-8 items-center justify-center rounded border-1 border-stone-300 bg-cyan-400 px-0.5 transition-colors hover:bg-stone-600 disabled:bg-stone-700 dark:border-stone-600 dark:bg-cyan-700"
+          class="bg-primary hover:bg-primary-hover border-secondary-popover disabled:bg-popover flex h-8 items-center justify-center rounded border-1 px-0.5 transition-colors"
           :disabled="!isValid"
           @click="onAddTag"
         >
@@ -82,7 +80,7 @@ function onAddTag() {
           />
         </button>
         <PopoverArrow
-          class="fill-stone-700"
+          class="fill-popover"
           :height="10"
           :width="20"
           :rounded="true"

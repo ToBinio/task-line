@@ -49,14 +49,14 @@ const isValid = computed(() => {
       <div class="flex h-10 gap-1">
         <button
           :disabled="!isValid"
-          class="flex flex-1 items-center justify-center rounded bg-cyan-400 transition-colors hover:bg-cyan-600 disabled:bg-stone-300 dark:bg-cyan-700 disabled:dark:bg-stone-700"
+          class="bg-primary hover:bg-primary-hover disabled:bg-secondary flex flex-1 items-center justify-center rounded transition-colors"
           @click="onAddTodo()"
         >
           <Icon name="material-symbols:add-2-rounded" size="24" />
         </button>
         <button
           :disabled="!isValid"
-          class="flex w-min items-center justify-center gap-1 rounded bg-cyan-400 px-2 text-sm transition-colors hover:bg-cyan-600 disabled:bg-stone-300 dark:bg-cyan-700 disabled:dark:bg-stone-700"
+          class="bg-primary hover:bg-primary-hover disabled:bg-secondary flex w-min items-center justify-center gap-1 rounded px-2 text-sm transition-colors"
           @click="onAddTodoNoClose"
         >
           <Icon name="material-symbols:add-2-rounded" size="20" />
