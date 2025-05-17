@@ -57,7 +57,9 @@ function dropHandler(event: DragEvent, uuid: UUID) {
 
 <template>
   <div class="flex justify-center">
-    <div class="mt-3 mb-10 w-dvw max-w-200 overflow-x-hidden px-1 py-3">
+    <div
+      class="max-h-[calc(100dvh-5.25rem)] w-dvw max-w-200 overflow-scroll px-1 md:max-h-[calc(100dvh-2rem)]"
+    >
       <TransitionGroup
         leave-to-class="max-h-0! opacity-0 scale-y-0"
         enter-from-class="max-h-0! opacity-0 scale-y-0"

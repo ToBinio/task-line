@@ -5,7 +5,7 @@ import { useInitdata } from "~/composables/useInitData";
 await useInitdata();
 </script>
 <template>
-  <div class="overflow-x-hidden">
+  <div class="overflow-x-hidden md:pl-48">
     <TimeHeader />
     <Todos />
     <Nav />

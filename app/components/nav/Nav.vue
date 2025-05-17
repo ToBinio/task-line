@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import NewTodoSheet from "../edit/NewTodoSheet.vue";
-
-const filterStore = useFilterStore();
+import VerticalNav from "./VerticalNav.vue";
+import HorizontalNav from "./HorizontalNav.vue";
 
 const isSettingsSheetOpen = ref(false);
 const isFilterSheetOpen = ref(false);
 const isNewSheetOpen = ref(false);
+
+const isWideScreen = useMediaQuery("(width >= 48rem)");
 </script>
 
 <template>
@@ -13,31 +15,17 @@ const isNewSheetOpen = ref(false);
   <SettingsSheet v-model:is-open="isSettingsSheetOpen" />
   <EditTodoSheet />
   <NewTodoSheet v-model:is-open="isNewSheetOpen" />
-  <div class="bg-surface fixed bottom-0 flex h-12 w-dvw justify-between">
-    <div class="relativ -z-10 flex">
-      <button
-        class="bg-secondary hover:bg-secondary-hover relative m-1 flex aspect-square h-10 items-center justify-center rounded transition-colors"
-        @click="isSettingsSheetOpen = true"
-      >
-        <Icon name="material-symbols:settings-outline-rounded" size="24" />
-      </button>
-      <button
-        class="bg-secondary hover:bg-secondary-hover relative m-1 flex aspect-square h-10 items-center justify-center rounded transition-colors"
-        @click="isFilterSheetOpen = true"
-      >
-        <Icon
-          v-if="filterStore.isFiltering()"
-          name="material-symbols:filter-alt"
-          size="24"
-        />
-        <Icon v-else name="material-symbols:filter-alt-outline" size="24" />
-      </button>
-    </div>
-    <button
-      class="bg-primary hover:bg-primary-hover relative m-1 flex aspect-square h-10 items-center justify-center rounded transition-colors"
-      @click="isNewSheetOpen = true"
-    >
-      <Icon name="material-symbols:add-2-rounded" size="24" />
-    </button>
-  </div>
+
+  <VerticalNav
+    v-if="isWideScreen"
+    v-model:is-settings-sheet-open="isSettingsSheetOpen"
+    v-model:is-filter-sheet-open="isFilterSheetOpen"
+    v-model:is-new-sheet-open="isNewSheetOpen"
+  />
+  <HorizontalNav
+    v-else
+    v-model:is-settings-sheet-open="isSettingsSheetOpen"
+    v-model:is-filter-sheet-open="isFilterSheetOpen"
+    v-model:is-new-sheet-open="isNewSheetOpen"
+  />
 </template>

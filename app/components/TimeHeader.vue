@@ -6,7 +6,7 @@ const dayStrings = useWeekDays(new Date());
 
 <template>
   <div class="flex justify-center">
-    <div class="bg-background fixed z-10 w-full max-w-200">
+    <div class="bg-background h-8 w-full max-w-200">
       <div class="relative flex items-center justify-evenly">
         <template v-for="(day, index) in dayStrings" :key="day">
           <div class="flex-1 text-center">{{ day }}</div>

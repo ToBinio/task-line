@@ -55,7 +55,7 @@ const useModal = useMediaQuery("(min-width: 40rem)");
           leave-to-class="opacity-0 scale-95"
         >
           <DialogContent
-            class="bg-surface fixed top-1/2 left-1/2 z-30 h-96 w-9/10 max-w-128 -translate-x-1/2 -translate-y-1/2 rounded-lg p-1 duration-200"
+            class="bg-surface fixed top-1/2 left-1/2 z-30 h-96 w-9/10 max-w-128 -translate-x-1/2 -translate-y-1/2 rounded-lg p-1 drop-shadow-2xl duration-200"
           >
             <VisuallyHidden>
               <DialogTitle>{{ title }}</DialogTitle>
