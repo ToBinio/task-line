@@ -52,4 +52,13 @@ export async function useInitdata() {
   await callOnce(async () => {
     if (token.value) await Init.data();
   });
+
+  const isWindowFocused = useWindowFocus();
+  const visibility = useDocumentVisibility();
+
+  watch([isWindowFocused, visibility], async ([focused, visible]) => {
+    if (focused && visible === "visible") {
+      await Init.data();
+    }
+  });
 }
