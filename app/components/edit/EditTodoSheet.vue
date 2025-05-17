@@ -51,7 +51,7 @@ const isValid = computed(() => {
       <DateSelect v-model:timeframe="todoData.timeframe" />
       <button
         :disabled="!isValid"
-        class="bg-primary hover:bg-primary-hover disabled:bg-secondary flex aspect-square h-10 items-center justify-center rounded transition-colors"
+        class="bg-primary hover:bg-primary-hover disabled:bg-secondary flex aspect-square h-10 cursor-pointer items-center justify-center rounded transition-colors"
         @click="onSaveTodo"
       >
         <Icon name="material-symbols:save-rounded" size="24" />

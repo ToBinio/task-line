@@ -28,7 +28,10 @@ const isTagUsed = computed(() => {
     </div>
     <PopoverRoot>
       <PopoverTrigger class="h-6">
-        <Icon name="material-symbols:delete-outline-rounded" size="24" />
+        <Icon
+          name="material-symbols:delete-outline-rounded cursor-pointer"
+          size="24"
+        />
       </PopoverTrigger>
       <PopoverPortal>
         <PopoverContent
@@ -42,7 +45,7 @@ const isTagUsed = computed(() => {
           </span>
           <button
             v-if="!isTagUsed"
-            class="h-6"
+            class="h-6 cursor-pointer"
             @click="tagStore.deleteTag(props.tag.uuid)"
           >
             <Icon name="material-symbols:delete-outline-rounded" size="24" />

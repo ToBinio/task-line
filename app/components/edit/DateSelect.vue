@@ -63,17 +63,17 @@ function clear() {
     >
       <RangeCalendarHeader class="flex items-center justify-between">
         <button
-          class="border-secondary hover:bg-secondary rounded border-1 px-2 text-center transition"
+          class="border-secondary hover:bg-secondary cursor-pointer rounded border-1 px-2 text-center transition"
           @click="clear"
         >
           clear
         </button>
         <div class="flex items-center justify-between gap-2">
-          <RangeCalendarPrev class="flex">
+          <RangeCalendarPrev class="flex cursor-pointer">
             <Icon name="material-symbols:chevron-left-rounded" size="24" />
           </RangeCalendarPrev>
           <RangeCalendarHeading />
-          <RangeCalendarNext class="flex">
+          <RangeCalendarNext class="flex cursor-pointer">
             <Icon name="material-symbols:chevron-right-rounded" size="24" />
           </RangeCalendarNext>
         </div>
@@ -107,7 +107,7 @@ function clear() {
               class="flex-1"
             >
               <RangeCalendarCellTrigger
-                class="border-secondary data-[outside-view]:text-muted-text data-[selected]:bg-secondary data-[today]:text-primary w-8 rounded border-1 text-center"
+                class="border-secondary data-[outside-view]:text-muted-text data-[selected]:bg-secondary data-[today]:text-primary w-8 cursor-pointer rounded border-1 text-center"
                 :day="weekDate"
                 :month="month.value"
               />

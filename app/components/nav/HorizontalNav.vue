@@ -10,13 +10,13 @@ const isNewSheetOpen = defineModel<boolean>("isNewSheetOpen");
   <div class="bg-surface fixed bottom-0 flex h-12 w-dvw justify-between">
     <div class="relativ -z-10 flex">
       <button
-        class="bg-secondary hover:bg-secondary-hover relative m-1 flex aspect-square h-10 items-center justify-center rounded transition-colors"
+        class="bg-secondary hover:bg-secondary-hover relative m-1 flex aspect-square h-10 cursor-pointer items-center justify-center rounded transition-colors"
         @click="isSettingsSheetOpen = true"
       >
         <Icon name="material-symbols:settings-outline-rounded" size="24" />
       </button>
       <button
-        class="bg-secondary hover:bg-secondary-hover relative m-1 flex aspect-square h-10 items-center justify-center rounded transition-colors"
+        class="bg-secondary hover:bg-secondary-hover relative m-1 flex aspect-square h-10 cursor-pointer items-center justify-center rounded transition-colors"
         @click="isFilterSheetOpen = true"
       >
         <Icon
@@ -28,7 +28,7 @@ const isNewSheetOpen = defineModel<boolean>("isNewSheetOpen");
       </button>
     </div>
     <button
-      class="bg-primary hover:bg-primary-hover relative m-1 flex aspect-square h-10 items-center justify-center rounded transition-colors"
+      class="bg-primary hover:bg-primary-hover relative m-1 flex aspect-square h-10 cursor-pointer items-center justify-center rounded transition-colors"
       @click="isNewSheetOpen = true"
     >
       <Icon name="material-symbols:add-2-rounded" size="24" />

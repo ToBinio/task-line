@@ -14,7 +14,7 @@ const isNewSheetOpen = defineModel<boolean>("isNewSheetOpen");
   >
     <div>
       <button
-        class="bg-secondary hover:bg-secondary-hover relative m-1 flex aspect-square h-10 items-center justify-center rounded transition-colors"
+        class="bg-secondary hover:bg-secondary-hover relative m-1 flex aspect-square h-10 cursor-pointer items-center justify-center rounded transition-colors"
         @click="isSettingsSheetOpen = true"
       >
         <Icon name="material-symbols:settings-outline-rounded" size="24" />
@@ -31,7 +31,7 @@ const isNewSheetOpen = defineModel<boolean>("isNewSheetOpen");
     </div>
 
     <button
-      class="bg-primary hover:bg-primary-hover relative m-1 flex aspect-square h-10 items-center justify-center rounded transition-colors"
+      class="bg-primary hover:bg-primary-hover relative m-1 flex aspect-square h-10 cursor-pointer items-center justify-center rounded transition-colors"
       @click="isNewSheetOpen = true"
     >
       <Icon name="material-symbols:add-2-rounded" size="24" />

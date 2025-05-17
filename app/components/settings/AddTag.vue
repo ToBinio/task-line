@@ -35,7 +35,7 @@ function onAddTag() {
 <template>
   <PopoverRoot v-model:open="open">
     <PopoverTrigger
-      class="border-secondary flex aspect-square items-center rounded border-1 px-1"
+      class="border-secondary flex aspect-square cursor-pointer items-center rounded border-1 px-1"
     >
       <Icon name="material-symbols:add-2-rounded" size="20" />
     </PopoverTrigger>
@@ -53,7 +53,7 @@ function onAddTag() {
         />
         <div class="border-secondary-popover flex h-8 rounded border-1">
           <button
-            class="flex aspect-square items-center justify-center"
+            class="flex aspect-square cursor-pointer items-center justify-center"
             @click="onRandomizeColor"
           >
             <Icon
@@ -64,12 +64,12 @@ function onAddTag() {
           </button>
           <input
             v-model="color"
-            class="h-full w-full rounded-sm"
+            class="h-full w-full cursor-pointer rounded-sm"
             type="color"
           />
         </div>
         <button
-          class="bg-primary hover:bg-primary-hover border-secondary-popover disabled:bg-popover flex h-8 items-center justify-center rounded border-1 px-0.5 transition-colors"
+          class="bg-primary hover:bg-primary-hover border-secondary-popover disabled:bg-popover flex h-8 cursor-pointer items-center justify-center rounded border-1 px-0.5 transition-colors"
           :disabled="!isValid"
           @click="onAddTag"
         >
