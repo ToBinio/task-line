@@ -20,15 +20,14 @@ function isSelected(tag: TagType): boolean {
 </script>
 
 <template>
-  <div class="flex flex-col justify-center overflow-scroll">
-    <div class="flex gap-2">
-      <Tag
-        v-for="tag in tagStore.data"
-        :key="tag.uuid"
-        :tag="tag"
-        :is-selected="isSelected(tag)"
-        @press="onPress(tag.uuid)"
-      />
-    </div>
+  <div class="overflow-scroll">
+    <Tag
+      v-for="tag in tagStore.data"
+      :key="tag.uuid"
+      :tag="tag"
+      :is-selected="isSelected(tag)"
+      class="mr-1 mb-1"
+      @press="onPress(tag.uuid)"
+    />
   </div>
 </template>
