@@ -1,6 +1,7 @@
 import type { Tag } from "~~/shared/types";
 
-export default defineEventHandler(async (event): Promise<Tag[]> => {
-  const token = Auth.getOrThrow(event);
-  return await Tags.getAll(token.sub);
-});
+export default defineAuthenticatedEventHandler(
+  async (event, token): Promise<Tag[]> => {
+    return await Tags.getAll(token.sub);
+  },
+);
