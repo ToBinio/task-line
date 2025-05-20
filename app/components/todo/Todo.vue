@@ -65,7 +65,7 @@ function onTagPress(tag: TagType) {
         >
           {{ data.title }}
         </button>
-        <div class="flex">
+        <div class="flex gap-1">
           <Tag
             v-for="tag in tags"
             :key="tag?.uuid"
