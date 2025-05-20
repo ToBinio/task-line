@@ -20,7 +20,7 @@ const isTagUsed = computed(() => {
 <template>
   <div
     :key="tag.uuid"
-    class="border-secondary flex h-8 items-center gap-0.5 rounded border-1 pl-1"
+    class="border-secondary flex items-center gap-0.5 rounded border-1 pl-1"
     :style="{ color: tag.color }"
   >
     <div class="text-nowrap">
@@ -28,10 +28,7 @@ const isTagUsed = computed(() => {
     </div>
     <PopoverRoot>
       <PopoverTrigger class="h-6">
-        <Icon
-          name="material-symbols:delete-outline-rounded cursor-pointer"
-          size="24"
-        />
+        <Icon name="material-symbols:delete-outline-rounded" size="24" />
       </PopoverTrigger>
       <PopoverPortal>
         <PopoverContent
