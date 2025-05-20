@@ -69,7 +69,7 @@ function dropHandler(event: DragEvent, uuid: UUID) {
           v-for="todo in filterdTodos"
           :key="todo.uuid"
           draggable="true"
-          class="max-h-16 transition-all duration-300 data-[dragged]:blur-[1px] data-[dragged]:grayscale-100"
+          class="max-h-18 transition-all duration-300 data-[dragged]:blur-[1px] data-[dragged]:grayscale-100"
           :data="todo"
           @dragstart="
             (event: DragEvent) => {
