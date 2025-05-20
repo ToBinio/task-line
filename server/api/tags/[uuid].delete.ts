@@ -1,21 +1,21 @@
 import { H3Error } from "h3";
 import type { Tag, UUID } from "~~/shared/types";
 
-export default defineEventHandler(async (event): Promise<Tag> => {
-  const uuid: UUID | undefined = getRouterParam(event, "uuid");
+export default defineAuthenticatedEventHandler(
+  async (event, token): Promise<Tag> => {
+    const uuid: UUID | undefined = getRouterParam(event, "uuid");
 
-  if (!uuid)
-    throw createError({
-      status: 400,
-      statusMessage: "Bad Request",
-      message: `no uuid set - uuid:'${uuid}'`,
-    });
+    if (!uuid)
+      throw createError({
+        status: 400,
+        statusMessage: "Bad Request",
+        message: `no uuid set - uuid:'${uuid}'`,
+      });
 
-  const token = Auth.getOrThrow(event);
+    const tag = await Tags.delete(token.sub, uuid);
+    if (tag instanceof H3Error) throw tag;
 
-  const tag = await Tags.delete(token.sub, uuid);
-  if (tag instanceof H3Error) throw tag;
-
-  TagEventStream.sendUpdate(token.sub);
-  return tag;
-});
+    TagEventStream.sendUpdate(token.sub);
+    return tag;
+  },
+);
