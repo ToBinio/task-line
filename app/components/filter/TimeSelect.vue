@@ -5,7 +5,7 @@ const time = defineModel<"all" | "today" | "week">("time", { required: true });
 </script>
 
 <template>
-  <RadioGroupRoot v-model="time" class="flex max-w-48">
+  <RadioGroupRoot v-model="time" class="flex">
     <RadioGroupItem
       class="data-[active]:bg-secondary-hover border-secondary flex-1 cursor-pointer rounded-l border-1 px-1"
       value="all"

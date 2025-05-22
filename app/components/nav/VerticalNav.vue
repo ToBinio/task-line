@@ -9,9 +9,7 @@ const isNewSheetOpen = defineModel<boolean>("isNewSheetOpen");
 </script>
 
 <template>
-  <div
-    class="bg-surface absolute bottom-0 left-0 flex h-full w-48 flex-col justify-between"
-  >
+  <div class="bg-surface left-0 flex h-dvh w-full flex-col justify-between">
     <div>
       <button
         class="bg-secondary hover:bg-secondary-hover relative m-1 flex aspect-square h-10 cursor-pointer items-center justify-center rounded transition-colors"

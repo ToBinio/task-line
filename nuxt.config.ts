@@ -20,6 +20,7 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@nuxt/eslint",
     "nuxt-vue3-google-signin",
+    "@nuxtjs/device",
   ],
   css: ["~/assets/css/main.css"],
   nitro: {
