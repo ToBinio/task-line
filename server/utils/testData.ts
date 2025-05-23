@@ -31,6 +31,7 @@ export function getTestTodos(n: number): Todo[] {
     data.push({
       uuid,
       title: tasks[i % tasks.length]!,
+      note: "",
       timeframe: {
         start: toCalanderDate(getToDayInNDays(start)).toString(),
         end: toCalanderDate(getToDayInNDays(start + duration)).toString(),
