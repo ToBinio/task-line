@@ -11,6 +11,7 @@ export type Timeframe = {
 export const TodoSchema = z.object({
   uuid: z.string().uuid(),
   title: z.string().min(1),
+  note: z.string(),
   timeframe: z
     .object({
       start: z.string().date(),
@@ -26,6 +27,7 @@ export type Todo = TodoData & {
 
 export type TodoData = {
   title: string;
+  note: string;
   timeframe: Timeframe | undefined;
   tags: UUID[];
 };

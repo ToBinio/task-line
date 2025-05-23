@@ -60,9 +60,15 @@ function onTagPress(tag: TagType) {
       </button>
       <div class="flex w-full flex-col">
         <button
-          class="cursor-pointer text-left text-lg"
+          class="flex cursor-pointer items-center text-left text-lg"
           @click="() => editBus.emit(data.uuid)"
         >
+          <icon
+            v-if="data.note ?? '' != ''"
+            class=""
+            size="20"
+            name="material-symbols:note-outline"
+          />
           {{ data.title }}
         </button>
         <div class="flex gap-1">

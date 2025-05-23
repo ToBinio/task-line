@@ -10,6 +10,7 @@ const isOpen = ref(false);
 const uuid = ref<UUID>("");
 const todoData = ref<TodoData>({
   title: "",
+  note: "",
   tags: [],
   timeframe: undefined,
 });
@@ -22,6 +23,7 @@ useEditTodoEventBus().on((selectedUuid) => {
   const todo = getTodoById.value(selectedUuid)!;
 
   todoData.value.title = todo.title;
+  todoData.value.note = todo.note;
   todoData.value.tags = [...todo.tags];
   todoData.value.timeframe = todo.timeframe;
 
@@ -49,6 +51,7 @@ const isValid = computed(() => {
       <DataSelect
         v-model:timeframe="todoData.timeframe"
         v-model:tags="todoData.tags"
+        v-model:note="todoData.note"
       />
       <button
         :disabled="!isValid"

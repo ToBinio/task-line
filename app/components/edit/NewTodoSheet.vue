@@ -9,6 +9,7 @@ const isOpen = defineModel<boolean>("isOpen", { required: true });
 
 const todoData = ref<TodoData>({
   title: "",
+  note: "",
   tags: [],
   timeframe: undefined,
 });
@@ -25,6 +26,7 @@ function onAddTodoNoClose() {
 
   todoData.value = {
     title: "",
+    note: "",
     tags: [],
     timeframe: undefined,
   };
@@ -46,6 +48,7 @@ const isValid = computed(() => {
       <DataSelect
         v-model:timeframe="todoData.timeframe"
         v-model:tags="todoData.tags"
+        v-model:note="todoData.note"
       />
       <div class="flex h-10 gap-1">
         <button
