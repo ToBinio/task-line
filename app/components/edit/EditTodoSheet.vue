@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import type { TodoData, UUID } from "~~/shared/types";
-import TagSelect from "../utils/input/TagSelect.vue";
 import Sheet from "../utils/Sheet.vue";
-import DateSelect from "./DateSelect.vue";
 import TitleSelect from "./TitleSelect.vue";
+import DataSelect from "./DataSelect.vue";
 
 const isOpen = ref(false);
 
@@ -47,8 +46,10 @@ const isValid = computed(() => {
   <Sheet :is-open="isOpen" title="Edit Todo Sheet" @close="close">
     <div class="flex h-full flex-col justify-between">
       <TitleSelect v-model:title="todoData.title" />
-      <TagSelect v-model:tags="todoData.tags" />
-      <DateSelect v-model:timeframe="todoData.timeframe" />
+      <DataSelect
+        v-model:timeframe="todoData.timeframe"
+        v-model:tags="todoData.tags"
+      />
       <button
         :disabled="!isValid"
         class="bg-primary hover:bg-primary-hover disabled:bg-secondary flex aspect-square h-10 cursor-pointer items-center justify-center rounded transition-colors"

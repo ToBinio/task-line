@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import TagSelect from "../utils/input/TagSelect.vue";
 import Sheet from "../utils/Sheet.vue";
-import DateSelect from "./DateSelect.vue";
 import TitleSelect from "./TitleSelect.vue";
 import type { TodoData } from "~~/shared/types";
+import DataSelect from "./DataSelect.vue";
 
 const isOpen = defineModel<boolean>("isOpen", { required: true });
 
@@ -44,8 +43,10 @@ const isValid = computed(() => {
   <Sheet :is-open="isOpen" title="New Todo Sheet" @close="close">
     <div class="flex h-full flex-col justify-between">
       <TitleSelect v-model:title="todoData.title" />
-      <TagSelect v-model:tags="todoData.tags" />
-      <DateSelect v-model:timeframe="todoData.timeframe" />
+      <DataSelect
+        v-model:timeframe="todoData.timeframe"
+        v-model:tags="todoData.tags"
+      />
       <div class="flex h-10 gap-1">
         <button
           :disabled="!isValid"
