@@ -71,6 +71,28 @@ export const useTagStore = defineStore("tags", {
         await this.fetch();
       });
     },
+
+    async updateTag(uuid: UUID, color: string, name: string) {
+      const tag = {
+        uuid,
+        color,
+        name,
+      };
+
+      const index = this.data.findIndex((value) => value.uuid === uuid);
+      this.data[index] = tag;
+
+      const fetch = useRequestFetch();
+      await fetch("/api/tags", {
+        method: "POST",
+        body: tag,
+        ...useFetchOptions(),
+      }).catch(async (err) => {
+        //todo - show in toast
+        console.warn(err);
+        await this.fetch();
+      });
+    },
   },
   getters: {
     getTagByUUID(state) {

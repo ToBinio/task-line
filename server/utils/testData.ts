@@ -56,12 +56,12 @@ export function getTestTags(): Tag[] {
     {
       uuid: crypto.randomUUID(),
       name: "School",
-      color: "oklch(0.444 0.177 26.899)",
+      color: "#ff0000",
     },
     {
       uuid: crypto.randomUUID(),
       name: "Work",
-      color: "oklch(0.555 0.163 48.998)",
+      color: "#ff00ff",
     },
   ];
 }

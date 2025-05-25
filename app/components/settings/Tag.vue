@@ -7,6 +7,7 @@ import {
   PopoverContent,
 } from "reka-ui";
 import type { Tag } from "~~/shared/types";
+import EditTag from "./EditTag.vue";
 
 const props = defineProps<{ tag: Tag }>();
 
@@ -16,6 +17,10 @@ const todoStore = useTodoStore();
 const isTagUsed = computed(() => {
   return todoStore.isTagUsed(props.tag.uuid);
 });
+
+function onSaveTag(tag: Tag) {
+  tagStore.updateTag(props.tag.uuid, tag.color, tag.name);
+}
 </script>
 <template>
   <div
@@ -24,7 +29,9 @@ const isTagUsed = computed(() => {
     :style="{ color: tag.color }"
   >
     <div class="text-nowrap">
-      {{ tag.name }}
+      <EditTag :default-tag="props.tag" @save="onSaveTag">
+        {{ tag.name }}
+      </EditTag>
     </div>
     <PopoverRoot>
       <PopoverTrigger class="h-6">
