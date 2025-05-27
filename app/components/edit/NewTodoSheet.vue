@@ -6,6 +6,12 @@ import type { TodoData } from "~~/shared/types";
 import DataSelect from "./DataSelect.vue";
 
 const isOpen = defineModel<boolean>("isOpen", { required: true });
+const todoStore = useTodoStore();
+const filterStore = useFilterStore();
+
+function close() {
+  isOpen.value = false;
+}
 
 const todoData = ref<TodoData>({
   title: "",
@@ -14,7 +20,15 @@ const todoData = ref<TodoData>({
   timeframe: undefined,
 });
 
-const todoStore = useTodoStore();
+watch(isOpen, () => {
+  if (isOpen.value) {
+    resetData();
+  }
+});
+
+function resetData() {
+  todoData.value.tags = [...filterStore.tags];
+}
 
 function onAddTodo() {
   onAddTodoNoClose();
@@ -23,13 +37,7 @@ function onAddTodo() {
 
 function onAddTodoNoClose() {
   todoStore.addTodo(todoData.value);
-
-  todoData.value = {
-    title: "",
-    note: "",
-    tags: [],
-    timeframe: undefined,
-  };
+  resetData();
 }
 
 const shift = useKeyModifier("Shift");
@@ -39,10 +47,6 @@ function onSubmitForm() {
   } else {
     onAddTodo();
   }
-}
-
-function close() {
-  isOpen.value = false;
 }
 
 const isValid = computed(() => {
