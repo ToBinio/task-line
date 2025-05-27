@@ -63,6 +63,7 @@ function clear() {
     >
       <RangeCalendarHeader class="flex items-center justify-between">
         <button
+          type="button"
           class="border-secondary hover:bg-secondary cursor-pointer rounded border-1 px-2 text-center transition"
           @click="clear"
         >

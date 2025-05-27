@@ -32,6 +32,15 @@ function onAddTodoNoClose() {
   };
 }
 
+const shift = useKeyModifier("Shift");
+function onSubmitForm() {
+  if (shift.value) {
+    onAddTodoNoClose();
+  } else {
+    onAddTodo();
+  }
+}
+
 function close() {
   isOpen.value = false;
 }
@@ -43,7 +52,10 @@ const isValid = computed(() => {
 
 <template>
   <Sheet :is-open="isOpen" title="New Todo Sheet" @close="close">
-    <div class="flex h-full flex-col justify-between">
+    <form
+      class="flex h-full flex-col justify-between"
+      @submit.prevent="onSubmitForm"
+    >
       <TitleSelect v-model:title="todoData.title" />
       <DataSelect
         v-model:timeframe="todoData.timeframe"
@@ -52,6 +64,7 @@ const isValid = computed(() => {
       />
       <div class="flex h-10 gap-1">
         <button
+          type="button"
           :disabled="!isValid"
           class="bg-primary hover:bg-primary-hover disabled:bg-secondary flex flex-1 cursor-pointer items-center justify-center rounded transition-colors"
           @click="onAddTodo()"
@@ -59,6 +72,7 @@ const isValid = computed(() => {
           <Icon name="material-symbols:add-2-rounded" size="24" />
         </button>
         <button
+          type="button"
           :disabled="!isValid"
           class="bg-primary hover:bg-primary-hover disabled:bg-secondary flex w-min cursor-pointer items-center justify-center gap-1 rounded px-2 text-sm transition-colors"
           @click="onAddTodoNoClose"
@@ -67,6 +81,6 @@ const isValid = computed(() => {
           Another
         </button>
       </div>
-    </div>
+    </form>
   </Sheet>
 </template>

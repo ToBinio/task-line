@@ -46,7 +46,10 @@ const isValid = computed(() => {
 
 <template>
   <Sheet :is-open="isOpen" title="Edit Todo Sheet" @close="close">
-    <div class="flex h-full flex-col justify-between">
+    <form
+      class="flex h-full flex-col justify-between"
+      @submit.prevent="onSaveTodo"
+    >
       <TitleSelect v-model:title="todoData.title" />
       <DataSelect
         v-model:timeframe="todoData.timeframe"
@@ -54,12 +57,12 @@ const isValid = computed(() => {
         v-model:note="todoData.note"
       />
       <button
+        type="submit"
         :disabled="!isValid"
         class="bg-primary hover:bg-primary-hover disabled:bg-secondary flex aspect-square h-10 cursor-pointer items-center justify-center rounded transition-colors"
-        @click="onSaveTodo"
       >
         <Icon name="material-symbols:save-rounded" size="24" />
       </button>
-    </div>
+    </form>
   </Sheet>
 </template>
