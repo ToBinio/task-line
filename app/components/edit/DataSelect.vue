@@ -56,7 +56,7 @@ const note = defineModel<string>("note", { required: true });
     </TabsContent>
 
     <TabsContent value="tags" class="pt-2">
-      <TagSelect v-model:tags="tags" />
+      <TagSelect v-model:tags="tags" :show-all="true" />
     </TabsContent>
 
     <TabsContent class="flex flex-1 flex-col justify-center" value="date">

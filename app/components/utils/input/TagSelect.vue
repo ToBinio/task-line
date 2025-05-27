@@ -1,28 +1,45 @@
 <script setup lang="ts">
 import type { Tag as TagType, UUID } from "~~/shared/types";
 import Tag from "../Tag.vue";
+import { useFilteredTodos } from "~/composables/useFilteredTodos";
 
-const tags = defineModel<UUID[]>("tags", { required: true });
+const activeTags = defineModel<UUID[]>("tags", { required: true });
+
+const props = defineProps<{ showAll: boolean }>();
 
 const tagStore = useTagStore();
 
 function onPress(tag: UUID) {
-  if (tags.value!.includes(tag)) {
-    tags.value = tags.value!.filter((id) => id !== tag);
+  if (activeTags.value!.includes(tag)) {
+    activeTags.value = activeTags.value!.filter((id) => id !== tag);
   } else {
-    tags.value!.push(tag);
+    activeTags.value!.push(tag);
   }
 }
 
 function isSelected(tag: TagType): boolean {
-  return tags.value!.includes(tag.uuid);
+  return activeTags.value!.includes(tag.uuid);
 }
+
+const filteredTodos = useFilteredTodos();
+
+const tags = computed(() => {
+  if (props.showAll) {
+    return tagStore.data;
+  }
+
+  const activeTags = filteredTodos.value.flatMap((todo) => todo.tags);
+
+  return tagStore.data.filter((tag) => {
+    return activeTags.includes(tag.uuid);
+  });
+});
 </script>
 
 <template>
   <div class="overflow-scroll">
     <Tag
-      v-for="tag in tagStore.data"
+      v-for="tag in tags"
       :key="tag.uuid"
       :tag="tag"
       :is-selected="isSelected(tag)"

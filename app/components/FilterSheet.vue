@@ -17,7 +17,7 @@ function close() {
   <Sheet :is-open="isOpen" title="Filter Sheet" @close="close">
     <div class="p-1 pt-0">
       <h2 class="text-muted-text text-lg">Tags</h2>
-      <TagSelect v-model:tags="filterStore.tags" />
+      <TagSelect v-model:tags="filterStore.tags" :show-all="false" />
     </div>
     <div class="p-1">
       <h2 class="text-muted-text text-lg">Time</h2>
