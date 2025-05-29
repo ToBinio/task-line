@@ -15,9 +15,15 @@ function close() {
   <Sheet :is-open="isOpen" title="Settings Sheet" @close="close">
     <div class="p-1 pt-0">
       <h2 class="text-muted-text text-lg">Tags</h2>
-      <div class="flex gap-1 overflow-scroll pt-1 pb-2">
-        <SettingsAddTag />
-        <SettingsTag v-for="tag in tagStore.data" :key="tag.uuid" :tag="tag" />
+      <SettingsAddTag />
+      <div>
+        <div
+          v-for="tag in tagStore.data"
+          :key="tag.uuid"
+          class="inline-block pr-1 pb-1"
+        >
+          <SettingsTag :tag="tag" />
+        </div>
       </div>
     </div>
 

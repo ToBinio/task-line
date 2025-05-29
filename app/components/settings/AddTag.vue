@@ -17,9 +17,10 @@ function onAddTag(tag: Tag) {
 <template>
   <EditTag :default-tag="tag" @save="onAddTag">
     <div
-      class="border-secondary flex aspect-square cursor-pointer items-center rounded border-1 px-1"
+      class="border-secondary flex cursor-pointer items-center gap-1 rounded border-1 px-1"
     >
       <Icon name="material-symbols:add-2-rounded" size="20" />
+      New
     </div>
   </EditTag>
 </template>

@@ -30,12 +30,16 @@ function onSaveTag(tag: Tag) {
   >
     <div class="text-nowrap">
       <EditTag :default-tag="props.tag" @save="onSaveTag">
-        {{ tag.name }}
+        <div class="cursor-pointer">
+          {{ tag.name }}
+        </div>
       </EditTag>
     </div>
     <PopoverRoot>
       <PopoverTrigger class="h-6">
-        <Icon name="material-symbols:delete-outline-rounded" size="24" />
+        <div class="cursor-pointer">
+          <Icon name="material-symbols:delete-outline-rounded" size="24" />
+        </div>
       </PopoverTrigger>
       <PopoverPortal>
         <PopoverContent
