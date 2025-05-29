@@ -27,7 +27,10 @@ watch(isOpen, () => {
 });
 
 function resetData() {
+  todoData.value.title = "";
+  todoData.value.note = "";
   todoData.value.tags = [...filterStore.tags];
+  todoData.value.timeframe = undefined;
 }
 
 function onAddTodo() {
