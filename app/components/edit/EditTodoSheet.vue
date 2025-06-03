@@ -26,6 +26,7 @@ useEditTodoEventBus().on((selectedUuid) => {
   todoData.value.title = todo.title;
   todoData.value.note = todo.note;
   todoData.value.tags = [...todo.tags];
+  todoData.value.category = todo.category;
   todoData.value.timeframe = todo.timeframe;
 
   isOpen.value = true;
@@ -55,6 +56,7 @@ const isValid = computed(() => {
       <DataSelect
         v-model:timeframe="todoData.timeframe"
         v-model:tags="todoData.tags"
+        v-model:category="todoData.category"
         v-model:note="todoData.note"
       />
       <button

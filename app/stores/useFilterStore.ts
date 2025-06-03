@@ -1,8 +1,13 @@
 import type { UUID } from "~~/shared/types";
 
 export const useFilterStore = defineStore("filter", {
-  state: (): { tags: UUID[]; time: "all" | "today" | "week" } => ({
+  state: (): {
+    tags: UUID[];
+    category: UUID | undefined;
+    time: "all" | "today" | "week";
+  } => ({
     tags: [],
+    category: undefined,
     time: "all",
   }),
   getters: {

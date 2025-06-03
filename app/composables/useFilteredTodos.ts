@@ -6,12 +6,21 @@ export function useFilteredTodos() {
 
   const filterdTodos = computed(() => {
     return todoStore.data.filter((todo) => {
+      //filter by tags
       for (const tag of filterStore.tags) {
         if (!todo.tags.includes(tag)) {
           return false;
         }
       }
 
+      //filter by category
+      if (filterStore.category) {
+        if (filterStore.category != todo.category) {
+          return false;
+        }
+      }
+
+      //filter by date
       if (filterStore.time === "all") return true;
       if (!todo.timeframe) return false;
 

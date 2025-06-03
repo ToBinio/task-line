@@ -1,17 +1,24 @@
 import { useTagStore } from "~/stores/labels/useTagStore";
 import { useLoginToken } from "./login/useLoginToken";
+import { useCategoryStore } from "~/stores/labels/useCategoryStore";
 
 export async function useInitdata() {
   const todoStore = useTodoStore();
   const tagStore = useTagStore();
+  const categoryStore = useCategoryStore();
 
   const Init = {
     client() {
       todoStore.initSSE();
       tagStore.initSSE();
+      categoryStore.initSSE();
     },
     async data() {
-      await Promise.all([todoStore.fetch(), tagStore.fetch()]);
+      await Promise.all([
+        todoStore.fetch(),
+        tagStore.fetch(),
+        categoryStore.fetch(),
+      ]);
     },
     async all() {
       Init.client();
@@ -22,6 +29,7 @@ export async function useInitdata() {
   function reset() {
     todoStore.reset();
     tagStore.reset();
+    categoryStore.reset();
   }
 
   const token = useLoginToken();

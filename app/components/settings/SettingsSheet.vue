@@ -13,8 +13,8 @@ function close() {
 
 <template>
   <Sheet :is-open="isOpen" title="Settings Sheet" @close="close">
-    <Tags />
     <Categories />
+    <Tags />
 
     <div class="p-1 pt-0">
       <h2 class="text-muted-text text-lg">Login</h2>

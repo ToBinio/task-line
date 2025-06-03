@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { Label, Todo } from "~~/shared/types";
-import Tag from "../utils/Tag.vue";
+import type { Label as LabelType, Todo } from "~~/shared/types";
+import Label from "../utils/Label.vue";
 import TimeDisplay from "./TimeDisplay.vue";
 import { useTagStore } from "~/stores/labels/useTagStore";
+import { useCategoryStore } from "~/stores/labels/useCategoryStore";
 
 const props = defineProps<{ data: Todo }>();
 
@@ -19,6 +20,7 @@ function onCheck() {
 
 const filterStore = useFilterStore();
 const tagStore = useTagStore();
+const categoryStore = useCategoryStore();
 
 const tags = computed(() => {
   return props.data.tags
@@ -35,8 +37,17 @@ const tags = computed(() => {
     .sort((a, b) => a.name.localeCompare(b.name));
 });
 
-function onTagPress(tag: Label) {
+function onTagPress(tag: LabelType) {
   filterStore.tags.push(tag.uuid);
+}
+const category = computed(() => {
+  if (!props.data.category) return undefined;
+
+  return categoryStore.getByUUID(props.data.category);
+});
+
+function onCategoryPress(category: LabelType) {
+  filterStore.category = category.uuid;
 }
 </script>
 
@@ -73,10 +84,19 @@ function onTagPress(tag: Label) {
           {{ data.title }}
         </button>
         <div class="flex gap-1">
-          <Tag
+          <Label
+            v-if="category != undefined"
+            :label="category!"
+            type="category"
+            :is-selected="false"
+            class="text-xs"
+            @press="onCategoryPress(category!)"
+          />
+          <Label
             v-for="tag in tags"
             :key="tag?.uuid"
-            :tag="tag"
+            :label="tag"
+            type="tag"
             :is-selected="false"
             class="text-xs"
             @press="onTagPress(tag)"

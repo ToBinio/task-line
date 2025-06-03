@@ -9,11 +9,13 @@ import {
 import type { Timeframe, UUID } from "~~/shared/types";
 import TagSelect from "../utils/input/TagSelect.vue";
 import DateSelect from "./DateSelect.vue";
+import CategorySelect from "../utils/input/CategorySelect.vue";
 
 const timeframe = defineModel<Timeframe | undefined>("timeframe", {
   required: true,
 });
 const tags = defineModel<UUID[]>("tags", { required: true });
+const category = defineModel<UUID | undefined>("category", { required: true });
 const note = defineModel<string>("note", { required: true });
 </script>
 
@@ -35,9 +37,9 @@ const note = defineModel<string>("note", { required: true });
       </TabsTrigger>
       <TabsTrigger
         class="data-[state=active]:text-primary w-24 cursor-pointer transition"
-        value="tags"
+        value="labels"
       >
-        Tags
+        Labels
       </TabsTrigger>
       <TabsTrigger
         class="data-[state=active]:text-primary w-24 cursor-pointer transition"
@@ -55,8 +57,11 @@ const note = defineModel<string>("note", { required: true });
       />
     </TabsContent>
 
-    <TabsContent value="tags" class="pt-2">
+    <TabsContent value="labels" class="pt-2">
+      <h2 class="text-muted-text text-lg">Tags</h2>
       <TagSelect v-model:tags="tags" :show-all="true" />
+      <h2 class="text-muted-text text-lg">Categories</h2>
+      <CategorySelect v-model:category="category" />
     </TabsContent>
 
     <TabsContent class="flex flex-1 flex-col justify-center" value="date">

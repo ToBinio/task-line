@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Label, UUID } from "~~/shared/types";
-import Tag from "../Tag.vue";
+import type { Label as LabelType, UUID } from "~~/shared/types";
+import Label from "../Label.vue";
 import { useFilteredTodos } from "~/composables/useFilteredTodos";
 import { useTagStore } from "~/stores/labels/useTagStore";
 
@@ -18,7 +18,7 @@ function onPress(tag: UUID) {
   }
 }
 
-function isSelected(tag: Label): boolean {
+function isSelected(tag: LabelType): boolean {
   return activeTags.value!.includes(tag.uuid);
 }
 
@@ -39,10 +39,11 @@ const tags = computed(() => {
 
 <template>
   <div class="overflow-scroll">
-    <Tag
+    <Label
       v-for="tag in tags"
       :key="tag.uuid"
-      :tag="tag"
+      :label="tag"
+      type="tag"
       :is-selected="isSelected(tag)"
       class="mr-1 mb-1"
       @press="onPress(tag.uuid)"

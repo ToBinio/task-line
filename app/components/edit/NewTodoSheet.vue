@@ -31,6 +31,7 @@ function resetData() {
   todoData.value.title = "";
   todoData.value.note = "";
   todoData.value.tags = [...filterStore.tags];
+  todoData.value.category = undefined;
   todoData.value.timeframe = undefined;
 }
 
@@ -68,6 +69,7 @@ const isValid = computed(() => {
       <DataSelect
         v-model:timeframe="todoData.timeframe"
         v-model:tags="todoData.tags"
+        v-model:category="todoData.category"
         v-model:note="todoData.note"
       />
       <div class="flex h-10 gap-1">
