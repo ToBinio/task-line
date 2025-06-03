@@ -18,8 +18,18 @@ export const TagEventStream = {
   },
 };
 
+export const CategorieEventStream = {
+  addStream(userId: string, eventStream: EventStream) {
+    addEventStream(userId, categoriesEventStreams, eventStream);
+  },
+  async sendUpdate(userId: string) {
+    await publish(userId, categoriesEventStreams, await Tags.getAll(userId));
+  },
+};
+
 const todosEventStreams: Map<string, EventStream[]> = new Map();
 const tagsEventStreams: Map<string, EventStream[]> = new Map();
+const categoriesEventStreams: Map<string, EventStream[]> = new Map();
 
 function addEventStream(
   key: string,
