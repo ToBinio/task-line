@@ -19,6 +19,7 @@ export const TodoSchema = z.object({
     })
     .optional(),
   tags: z.array(z.string().uuid()),
+  category: z.string().uuid().optional(),
 });
 
 export type Todo = TodoData & {
@@ -30,15 +31,16 @@ export type TodoData = {
   note: string;
   timeframe: Timeframe | undefined;
   tags: UUID[];
+  category: UUID | undefined;
 };
 
-export const TagSchema = z.object({
+export const LabelSchema = z.object({
   uuid: z.string().uuid(),
   name: z.string().min(1),
   color: z.string().startsWith("#").length(7),
 });
 
-export type Tag = {
+export type Label = {
   uuid: UUID;
   name: string;
   color: string;

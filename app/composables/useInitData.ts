@@ -1,3 +1,4 @@
+import { useTagStore } from "~/stores/labels/useTagStore";
 import { useLoginToken } from "./login/useLoginToken";
 
 export async function useInitdata() {

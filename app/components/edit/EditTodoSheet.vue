@@ -13,6 +13,7 @@ const todoData = ref<TodoData>({
   note: "",
   tags: [],
   timeframe: undefined,
+  category: undefined,
 });
 
 const todoStore = useTodoStore();

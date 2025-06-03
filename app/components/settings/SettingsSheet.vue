@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useTagStore } from "~/stores/labels/useTagStore";
 import Sheet from "../utils/Sheet.vue";
 import GoogleLogin from "./GoogleLogin.vue";
 

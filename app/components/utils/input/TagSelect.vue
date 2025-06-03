@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { Tag as TagType, UUID } from "~~/shared/types";
+import type { Label, UUID } from "~~/shared/types";
 import Tag from "../Tag.vue";
 import { useFilteredTodos } from "~/composables/useFilteredTodos";
+import { useTagStore } from "~/stores/labels/useTagStore";
 
 const activeTags = defineModel<UUID[]>("tags", { required: true });
 
@@ -17,7 +18,7 @@ function onPress(tag: UUID) {
   }
 }
 
-function isSelected(tag: TagType): boolean {
+function isSelected(tag: Label): boolean {
   return activeTags.value!.includes(tag.uuid);
 }
 

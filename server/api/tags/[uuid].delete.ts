@@ -1,8 +1,8 @@
 import { H3Error } from "h3";
-import type { Tag, UUID } from "~~/shared/types";
+import type { Label, UUID } from "~~/shared/types";
 
 export default defineAuthenticatedEventHandler(
-  async (event, token): Promise<Tag> => {
+  async (event, token): Promise<Label> => {
     const uuid: UUID | undefined = getRouterParam(event, "uuid");
 
     if (!uuid)

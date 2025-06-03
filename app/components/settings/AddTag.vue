@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { Tag } from "~~/shared/types";
+import type { Label } from "~~/shared/types";
 import EditTag from "./EditTag.vue";
+import { useTagStore } from "~/stores/labels/useTagStore";
 
 const tagStore = useTagStore();
 
@@ -10,7 +11,7 @@ const tag = ref({
   name: "",
 });
 
-function onAddTag(tag: Tag) {
+function onAddTag(tag: Label) {
   tagStore.addTag(tag.name, tag.color);
 }
 </script>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { Tag as TagType, Todo } from "~~/shared/types";
+import type { Label, Todo } from "~~/shared/types";
 import Tag from "../utils/Tag.vue";
 import TimeDisplay from "./TimeDisplay.vue";
+import { useTagStore } from "~/stores/labels/useTagStore";
 
 const props = defineProps<{ data: Todo }>();
 
@@ -34,7 +35,7 @@ const tags = computed(() => {
     .sort((a, b) => a.name.localeCompare(b.name));
 });
 
-function onTagPress(tag: TagType) {
+function onTagPress(tag: Label) {
   filterStore.tags.push(tag.uuid);
 }
 </script>

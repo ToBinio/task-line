@@ -6,10 +6,11 @@ import {
   PopoverArrow,
   PopoverContent,
 } from "reka-ui";
-import type { Tag } from "~~/shared/types";
+import type { Label } from "~~/shared/types";
 import EditTag from "./EditTag.vue";
+import { useTagStore } from "~/stores/labels/useTagStore";
 
-const props = defineProps<{ tag: Tag }>();
+const props = defineProps<{ tag: Label }>();
 
 const tagStore = useTagStore();
 const todoStore = useTodoStore();
@@ -18,7 +19,7 @@ const isTagUsed = computed(() => {
   return todoStore.isTagUsed(props.tag.uuid);
 });
 
-function onSaveTag(tag: Tag) {
+function onSaveTag(tag: Label) {
   tagStore.updateTag(props.tag.uuid, tag.color, tag.name);
 }
 </script>

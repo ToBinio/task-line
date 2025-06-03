@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Tag } from "~~/shared/types";
+import type { Label } from "~~/shared/types";
 
-const props = defineProps<{ tag: Tag; isSelected: boolean }>();
+const props = defineProps<{ tag: Label; isSelected: boolean }>();
 const emits = defineEmits(["press"]);
 
 const bgColor = computed(() => {

@@ -1,5 +1,5 @@
 import type { H3Error } from "h3";
-import type { Tag, UUID } from "~~/shared/types";
+import type { Label, UUID } from "~~/shared/types";
 
 function getKey(userId: string): string {
   return `tags:${userId}`;
@@ -7,14 +7,14 @@ function getKey(userId: string): string {
 
 export const Tags = {
   KEY: "tags",
-  async getAll(userId: string): Promise<Tag[]> {
+  async getAll(userId: string): Promise<Label[]> {
     const storage = useStorage();
     return (
-      (await storage.get<Tag[]>(getKey(userId))) ??
+      (await storage.get<Label[]>(getKey(userId))) ??
       (import.meta.dev ? getTestTags() : [])
     );
   },
-  async updateOrAdd(userId: string, tag: Tag): Promise<Tag | H3Error> {
+  async updateOrAdd(userId: string, tag: Label): Promise<Label | H3Error> {
     const storage = useStorage();
     const tags = await Tags.getAll(userId);
 
@@ -30,7 +30,7 @@ export const Tags = {
 
     return tag;
   },
-  async delete(userId: string, uuid: UUID): Promise<Tag | H3Error> {
+  async delete(userId: string, uuid: UUID): Promise<Label | H3Error> {
     const storage = useStorage();
     const tags = await Tags.getAll(userId);
 

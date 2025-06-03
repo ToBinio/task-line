@@ -18,6 +18,7 @@ const todoData = ref<TodoData>({
   note: "",
   tags: [],
   timeframe: undefined,
+  category: undefined,
 });
 
 watch(isOpen, () => {

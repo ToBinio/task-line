@@ -6,9 +6,9 @@ import {
   PopoverTrigger,
   PopoverArrow,
 } from "reka-ui";
-import type { Tag } from "~~/shared/types";
+import type { Label } from "~~/shared/types";
 
-const props = defineProps<{ defaultTag: Tag }>();
+const props = defineProps<{ defaultTag: Label }>();
 
 const tag = ref({
   uuid: "",
@@ -40,7 +40,7 @@ function onRandomizeColor() {
       .padStart(6, "0");
 }
 
-const emit = defineEmits<{ save: [Tag] }>();
+const emit = defineEmits<{ save: [Label] }>();
 
 function onClick() {
   open.value = false;

@@ -1,6 +1,6 @@
 import { CalendarDate } from "@internationalized/date";
 import { v4 } from "uuid";
-import type { Tag, Todo, UUID } from "~~/shared/types";
+import type { Label, Todo, UUID } from "~~/shared/types";
 
 function getToDayInNDays(days: number): Date {
   const now = new Date();
@@ -37,6 +37,7 @@ export function getTestTodos(n: number): Todo[] {
         end: toCalanderDate(getToDayInNDays(start + duration)).toString(),
       },
       tags: tags,
+      category: undefined,
     });
   }
 
@@ -51,7 +52,7 @@ function toCalanderDate(date: Date) {
   );
 }
 
-export function getTestTags(): Tag[] {
+export function getTestTags(): Label[] {
   return [
     {
       uuid: crypto.randomUUID(),
