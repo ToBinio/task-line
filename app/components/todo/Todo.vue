@@ -23,7 +23,7 @@ const tagStore = useTagStore();
 const tags = computed(() => {
   return props.data.tags
     .map((tagId) => {
-      const tag = tagStore.getTagByUUID(tagId);
+      const tag = tagStore.getByUUID(tagId);
       if (!tag) {
         //todo - show in toast
         console.warn(`Tag with id ${tagId} not found`);

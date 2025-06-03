@@ -61,7 +61,7 @@ function onClick() {
         <input
           v-model="label.name"
           class="border-secondary-popover h-8 w-36 rounded border-1 pl-1"
-          placeholder="new Tag"
+          placeholder="Name"
           type="text"
         />
         <div class="border-secondary-popover flex h-8 rounded border-1">

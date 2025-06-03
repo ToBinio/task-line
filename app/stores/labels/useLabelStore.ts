@@ -39,7 +39,7 @@ export function createLabelStore(labelType: "tags" | "categories") {
         this.sse.close();
       },
 
-      async deleteTag(uuid: UUID) {
+      async delete(uuid: UUID) {
         this.data = this.data.filter((tag) => tag.uuid !== uuid);
 
         const fetch = useRequestFetch();
@@ -52,7 +52,7 @@ export function createLabelStore(labelType: "tags" | "categories") {
           await this.fetch();
         });
       },
-      async addTag(name: string, color: string) {
+      async add(name: string, color: string) {
         const tag = {
           uuid: v4(),
           name,
@@ -73,7 +73,7 @@ export function createLabelStore(labelType: "tags" | "categories") {
         });
       },
 
-      async updateTag(uuid: UUID, color: string, name: string) {
+      async update(uuid: UUID, color: string, name: string) {
         const tag = {
           uuid,
           color,
@@ -96,7 +96,7 @@ export function createLabelStore(labelType: "tags" | "categories") {
       },
     },
     getters: {
-      getTagByUUID(state) {
+      getByUUID(state) {
         return (uuid: UUID | undefined) =>
           state.data.find((tag) => tag.uuid === uuid);
       },

@@ -2,16 +2,21 @@
 import { useTagStore } from "~/stores/labels/useTagStore";
 import Label from "./labels/Label.vue";
 import type { Label as LabelType } from "~~/shared/types";
+import AddLabel from "./labels/AddLabel.vue";
 
 const tagStore = useTagStore();
 const todoStore = useTodoStore();
 
+function onAddTag(tag: LabelType) {
+  tagStore.add(tag.name, tag.color);
+}
+
 function onSaveTag(tag: LabelType) {
-  tagStore.updateTag(tag.uuid, tag.color, tag.name);
+  tagStore.update(tag.uuid, tag.color, tag.name);
 }
 
 function onDeleteTag(tag: LabelType) {
-  tagStore.deleteTag(tag.uuid);
+  tagStore.delete(tag.uuid);
 }
 
 function isUsed(tag: LabelType): boolean {
@@ -22,7 +27,7 @@ function isUsed(tag: LabelType): boolean {
 <template>
   <div class="p-1 pt-0">
     <h2 class="text-muted-text text-lg">Tags</h2>
-    <SettingsAddTag />
+    <AddLabel @add="onAddTag" />
     <div>
       <div
         v-for="tag in tagStore.data"

@@ -126,5 +126,9 @@ export const useTodoStore = defineStore("todos", {
       return (tagUuid: UUID): boolean =>
         state.data.find((todo) => todo.tags.includes(tagUuid)) !== undefined;
     },
+    isCategoryUsed(state) {
+      return (categoryUuid: UUID): boolean =>
+        state.data.find((todo) => todo.category == categoryUuid) !== undefined;
+    },
   },
 });
