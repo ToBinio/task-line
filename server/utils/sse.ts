@@ -23,7 +23,11 @@ export const CategorieEventStream = {
     addEventStream(userId, categoriesEventStreams, eventStream);
   },
   async sendUpdate(userId: string) {
-    await publish(userId, categoriesEventStreams, await Tags.getAll(userId));
+    await publish(
+      userId,
+      categoriesEventStreams,
+      await Categories.getAll(userId),
+    );
   },
 };
 

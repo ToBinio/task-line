@@ -52,7 +52,7 @@ function toCalanderDate(date: Date) {
   );
 }
 
-export function getTestCategories(): Label[] {
+export function getTestLabels(): Label[] {
   return [
     {
       uuid: crypto.randomUUID(),

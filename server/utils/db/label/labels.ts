@@ -9,7 +9,7 @@ export const Labels = {
     const storage = useStorage();
     return (
       (await storage.get<Label[]>(getKey(userId))) ??
-      (import.meta.dev ? getTestCategories() : [])
+      (import.meta.dev ? getTestLabels() : [])
     );
   },
   async updateOrAdd(

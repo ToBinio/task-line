@@ -30,8 +30,8 @@ export function createLabelStore(labelType: "tags" | "categories") {
         this.sse = new EventSource(`/api/${labelType}/sse`);
 
         this.sse.onmessage = (event) => {
-          const tags = JSON.parse(event.data);
-          this.data = tags;
+          const labels = JSON.parse(event.data);
+          this.data = labels;
         };
       },
       stopSSE() {
@@ -40,7 +40,7 @@ export function createLabelStore(labelType: "tags" | "categories") {
       },
 
       async delete(uuid: UUID) {
-        this.data = this.data.filter((tag) => tag.uuid !== uuid);
+        this.data = this.data.filter((label) => label.uuid !== uuid);
 
         const fetch = useRequestFetch();
         await fetch(`/api/${labelType}/${uuid}`, {
@@ -53,18 +53,18 @@ export function createLabelStore(labelType: "tags" | "categories") {
         });
       },
       async add(name: string, color: string) {
-        const tag = {
+        const label = {
           uuid: v4(),
           name,
           color,
         };
 
-        this.data.unshift(tag);
+        this.data.unshift(label);
 
         const fetch = useRequestFetch();
         await fetch(`/api/${labelType}`, {
           method: "POST",
-          body: tag,
+          body: label,
           ...useFetchOptions(),
         }).catch(async (err) => {
           //todo - show in toast
@@ -74,19 +74,19 @@ export function createLabelStore(labelType: "tags" | "categories") {
       },
 
       async update(uuid: UUID, color: string, name: string) {
-        const tag = {
+        const label = {
           uuid,
           color,
           name,
         };
 
         const index = this.data.findIndex((value) => value.uuid === uuid);
-        this.data[index] = tag;
+        this.data[index] = label;
 
         const fetch = useRequestFetch();
-        await fetch("/api/tags", {
+        await fetch(`/api/${labelType}`, {
           method: "POST",
-          body: tag,
+          body: label,
           ...useFetchOptions(),
         }).catch(async (err) => {
           //todo - show in toast
@@ -98,7 +98,7 @@ export function createLabelStore(labelType: "tags" | "categories") {
     getters: {
       getByUUID(state) {
         return (uuid: UUID | undefined) =>
-          state.data.find((tag) => tag.uuid === uuid);
+          state.data.find((label) => label.uuid === uuid);
       },
     },
   });
