@@ -7,34 +7,28 @@ import {
   PopoverContent,
 } from "reka-ui";
 import type { Label } from "~~/shared/types";
-import EditTag from "./EditTag.vue";
-import { useTagStore } from "~/stores/labels/useTagStore";
+import EditLabel from "./EditLabel.vue";
 
-const props = defineProps<{ tag: Label }>();
+const props = defineProps<{ label: Label; isUsed: boolean }>();
+const emit = defineEmits<{ save: [Label]; delete: [Label] }>();
 
-const tagStore = useTagStore();
-const todoStore = useTodoStore();
+function onSaveLabel(label: Label) {
+  label.uuid = props.label.uuid;
+  emit("save", label);
+}
 
-const isTagUsed = computed(() => {
-  return todoStore.isTagUsed(props.tag.uuid);
-});
-
-function onSaveTag(tag: Label) {
-  tagStore.updateTag(props.tag.uuid, tag.color, tag.name);
+function onDeleteLabel() {
+  emit("delete", props.label);
 }
 </script>
 <template>
-  <div
-    :key="tag.uuid"
-    class="border-secondary flex items-center gap-0.5 rounded border-1 pl-1"
-    :style="{ color: tag.color }"
-  >
+  <div>
     <div class="text-nowrap">
-      <EditTag :default-tag="props.tag" @save="onSaveTag">
+      <EditLabel :default-label="props.label" @save="onSaveLabel">
         <div class="cursor-pointer">
-          {{ tag.name }}
+          {{ label.name }}
         </div>
-      </EditTag>
+      </EditLabel>
     </div>
     <PopoverRoot>
       <PopoverTrigger class="h-6">
@@ -48,14 +42,14 @@ function onSaveTag(tag: Label) {
           side="top"
           :side-offset="5"
         >
-          <span v-if="isTagUsed" class="flex gap-1">
+          <span v-if="isUsed" class="flex gap-1">
             <Icon name="material-symbols:warning-outline-rounded" size="24" />
-            Tag used
+            still used
           </span>
           <button
-            v-if="!isTagUsed"
+            v-if="!isUsed"
             class="h-6 cursor-pointer"
-            @click="tagStore.deleteTag(props.tag.uuid)"
+            @click="onDeleteLabel"
           >
             <Icon name="material-symbols:delete-outline-rounded" size="24" />
           </button>

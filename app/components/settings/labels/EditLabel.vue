@@ -8,32 +8,32 @@ import {
 } from "reka-ui";
 import type { Label } from "~~/shared/types";
 
-const props = defineProps<{ defaultTag: Label }>();
+const props = defineProps<{ defaultLabel: Label }>();
 
-const tag = ref({
+const label = ref({
   uuid: "",
-  color: props.defaultTag.color,
-  name: props.defaultTag.name,
+  color: props.defaultLabel.color,
+  name: props.defaultLabel.name,
 });
 
 const open = ref(false);
 
 watch(open, () => {
   if (open.value) {
-    tag.value = {
+    label.value = {
       uuid: "",
-      color: props.defaultTag.color,
-      name: props.defaultTag.name,
+      color: props.defaultLabel.color,
+      name: props.defaultLabel.name,
     };
   }
 });
 
 const isValid = computed(() => {
-  return tag.value.name != "" && tag.value.color != "";
+  return label.value.name != "" && label.value.color != "";
 });
 
 function onRandomizeColor() {
-  tag.value.color =
+  label.value.color =
     "#" +
     Math.floor(Math.random() * 16777215)
       .toString(16)
@@ -44,7 +44,7 @@ const emit = defineEmits<{ save: [Label] }>();
 
 function onClick() {
   open.value = false;
-  emit("save", tag.value);
+  emit("save", label.value);
 }
 </script>
 <template>
@@ -59,7 +59,7 @@ function onClick() {
         :side-offset="5"
       >
         <input
-          v-model="tag.name"
+          v-model="label.name"
           class="border-secondary-popover h-8 w-36 rounded border-1 pl-1"
           placeholder="new Tag"
           type="text"
@@ -76,7 +76,7 @@ function onClick() {
             />
           </button>
           <input
-            v-model="tag.color"
+            v-model="label.color"
             class="h-full w-full cursor-pointer rounded-sm"
             type="color"
           />
