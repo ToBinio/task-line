@@ -42,6 +42,7 @@ function onTagPress(tag: LabelType) {
 }
 const category = computed(() => {
   if (!props.data.category) return undefined;
+  if (filterStore.category == props.data.category) return undefined;
 
   return categoryStore.getByUUID(props.data.category);
 });
