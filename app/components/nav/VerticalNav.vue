@@ -2,6 +2,9 @@
 import TimeSelect from "../filter/TimeSelect.vue";
 import CategorySelect from "../utils/input/CategorySelect.vue";
 import TagSelect from "../utils/input/TagSelect.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const filterStore = useFilterStore();
 
@@ -20,17 +23,17 @@ const isNewSheetOpen = defineModel<boolean>("isNewSheetOpen");
       </button>
 
       <div class="p-1 pt-0">
-        <h2 class="text-muted-text text-lg">Categories</h2>
+        <h2 class="text-muted-text text-lg">{{ t("categories") }}</h2>
         <CategorySelect v-model:category="filterStore.category" />
       </div>
 
       <div class="p-1 pt-0">
-        <h2 class="text-muted-text text-lg">Tags</h2>
+        <h2 class="text-muted-text text-lg">{{ t("tags") }}</h2>
         <TagSelect v-model:tags="filterStore.tags" :show-all="false" />
       </div>
 
       <div class="p-1">
-        <h2 class="text-muted-text text-lg">Time</h2>
+        <h2 class="text-muted-text text-lg">{{ t("time") }}</h2>
         <TimeSelect v-model:time="filterStore.time" />
       </div>
     </div>

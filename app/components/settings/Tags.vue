@@ -3,6 +3,9 @@ import { useTagStore } from "~/stores/labels/useTagStore";
 import Label from "./labels/Label.vue";
 import type { Label as LabelType } from "~~/shared/types";
 import AddLabel from "./labels/AddLabel.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const tagStore = useTagStore();
 const todoStore = useTodoStore();
@@ -26,7 +29,7 @@ function isUsed(tag: LabelType): boolean {
 
 <template>
   <div class="p-1 pt-0">
-    <h2 class="text-muted-text text-lg">Tags</h2>
+    <h2 class="text-muted-text text-lg">{{ t("tags") }}</h2>
     <AddLabel @add="onAddTag" />
     <div>
       <div

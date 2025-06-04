@@ -1,0 +1,23 @@
+{
+  "categories": "Categories",
+  "tags": "Tags",
+  "time": "Time",
+  "all": "All",
+  "today": "Today",
+  "week": "Weekly",
+  "title": "Title",
+  "note": "Notes",
+  "labels": "Labels",
+  "date": "Date",
+  "another": "Another",
+  "new": "New",
+  "login": "Login",
+  "logout": "Logout",
+  "clear": "Clear",
+  "name": "Name",
+  "languages": "Languages",
+  "languageNames": {
+    "de": "German",
+    "en": "English"
+  }
+}

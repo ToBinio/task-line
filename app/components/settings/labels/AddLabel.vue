@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { Label } from "~~/shared/types";
 import EditLabel from "./EditLabel.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const defaultLabel = ref({
   uuid: "",
@@ -20,7 +23,7 @@ function onAddTag(label: Label) {
       class="border-secondary flex cursor-pointer items-center gap-1 rounded border-1 px-1"
     >
       <Icon name="material-symbols:add-2-rounded" size="20" />
-      New
+      {{ t("new") }}
     </div>
   </EditLabel>
 </template>

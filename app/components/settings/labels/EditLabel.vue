@@ -7,6 +7,9 @@ import {
   PopoverArrow,
 } from "reka-ui";
 import type { Label } from "~~/shared/types";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const props = defineProps<{ defaultLabel: Label }>();
 
@@ -61,7 +64,7 @@ function onClick() {
         <input
           v-model="label.name"
           class="border-secondary-popover h-8 w-36 rounded border-1 pl-1"
-          placeholder="Name"
+          :placeholder="t('name')"
           type="text"
         />
         <div class="border-secondary-popover flex h-8 rounded border-1">
