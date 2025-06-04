@@ -37,6 +37,12 @@ export default defineNuxtConfig({
         databaseName: `${process.env.MONGODB_DB}`,
         collectionName: "tags",
       },
+      categories: {
+        driver: "mongodb",
+        connectionString: `${process.env.MONGODB_CONNECTION}`,
+        databaseName: `${process.env.MONGODB_DB}`,
+        collectionName: "categories",
+      },
     },
     devStorage: {
       todos: {
