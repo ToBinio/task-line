@@ -16,6 +16,15 @@ import {
   RangeCalendarRoot,
 } from "reka-ui";
 import type { Timeframe } from "~~/shared/types";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
+const { locale } = useI18n();
+
+const firstDayOfWeek = computed(() => {
+  return locale.value === "de" ? 1 : 0;
+});
 
 const timeframe = defineModel<Timeframe | undefined>("timeframe");
 
@@ -60,6 +69,8 @@ function clear() {
       v-model="dateRange"
       fixed-weeks
       class="flex flex-col gap-2"
+      :locale="locale"
+      :first-day-of-week="firstDayOfWeek"
     >
       <RangeCalendarHeader class="flex items-center justify-between">
         <button
@@ -67,7 +78,7 @@ function clear() {
           class="border-secondary hover:bg-secondary cursor-pointer rounded border-1 px-2 text-center transition"
           @click="clear"
         >
-          clear
+          {{ t("clear") }}
         </button>
         <div class="flex items-center justify-between gap-2">
           <RangeCalendarPrev class="flex cursor-pointer">

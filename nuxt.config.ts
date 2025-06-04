@@ -21,6 +21,7 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "nuxt-vue3-google-signin",
     "@nuxtjs/device",
+    "@nuxtjs/i18n",
   ],
   css: ["~/assets/css/main.css"],
   nitro: {
@@ -67,5 +68,13 @@ export default defineNuxtConfig({
   },
   googleSignIn: {
     clientId: process.env.GOOGLE_CLIENT_ID,
+  },
+  i18n: {
+    defaultLocale: "en",
+    strategy: "prefix",
+    locales: [
+      { code: "en", name: "English", file: "en.json" },
+      { code: "de", name: "German", file: "de.json" },
+    ],
   },
 });

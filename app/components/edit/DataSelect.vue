@@ -10,6 +10,9 @@ import type { Timeframe, UUID } from "~~/shared/types";
 import TagSelect from "../utils/input/TagSelect.vue";
 import DateSelect from "./DateSelect.vue";
 import CategorySelect from "../utils/input/CategorySelect.vue";
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const timeframe = defineModel<Timeframe | undefined>("timeframe", {
   required: true,
@@ -33,19 +36,19 @@ const note = defineModel<string>("note", { required: true });
         class="data-[state=active]:text-primary w-24 cursor-pointer transition"
         value="notes"
       >
-        Note
+        {{ t("note") }}
       </TabsTrigger>
       <TabsTrigger
         class="data-[state=active]:text-primary w-24 cursor-pointer transition"
         value="labels"
       >
-        Labels
+        {{ t("labels") }}
       </TabsTrigger>
       <TabsTrigger
         class="data-[state=active]:text-primary w-24 cursor-pointer transition"
         value="date"
       >
-        Date
+        {{ t("date") }}
       </TabsTrigger>
     </TabsList>
 
@@ -53,14 +56,14 @@ const note = defineModel<string>("note", { required: true });
       <textarea
         v-model="note"
         class="border-secondary w-full flex-1 resize-none rounded border-1 pl-1"
-        placeholder="note"
+        :placeholder="t('note')"
       />
     </TabsContent>
 
     <TabsContent value="labels" class="pt-2">
-      <h2 class="text-muted-text text-lg">Tags</h2>
+      <h2 class="text-muted-text text-lg">{{ t("tags") }}</h2>
       <TagSelect v-model:tags="tags" :show-all="true" />
-      <h2 class="text-muted-text text-lg">Categories</h2>
+      <h2 class="text-muted-text text-lg">{{ t("categories") }}</h2>
       <CategorySelect v-model:category="category" />
     </TabsContent>
 

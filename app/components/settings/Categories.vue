@@ -3,6 +3,9 @@ import { useCategoryStore } from "~/stores/labels/useCategoryStore";
 import Label from "./labels/Label.vue";
 import type { Label as LabelType } from "~~/shared/types";
 import AddLabel from "./labels/AddLabel.vue";
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const categoryStore = useCategoryStore();
 const todoStore = useTodoStore();
@@ -26,7 +29,7 @@ function isUsed(category: LabelType): boolean {
 
 <template>
   <div class="p-1 pt-0">
-    <h2 class="text-muted-text text-lg">Categories</h2>
+    <h2 class="text-muted-text text-lg">{{ t("categories") }}</h2>
     <AddLabel @add="onAddCategory" />
     <div>
       <div

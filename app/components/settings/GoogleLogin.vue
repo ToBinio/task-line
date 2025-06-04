@@ -9,6 +9,9 @@ import {
 } from "reka-ui";
 import { useLoginImageUrl } from "~/composables/login/useLoginImageUrl";
 import { useLoginToken } from "~/composables/login/useLoginToken";
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const token = useLoginToken();
 const userImage = useLoginImageUrl();
@@ -57,7 +60,7 @@ function logout() {
         :disabled="!isReady"
         @click="() => login()"
       >
-        Login
+        {{ t("login") }}
         <img src="/img/google_logo.svg" alt="Google Logo" />
       </button>
     </div>
@@ -90,7 +93,7 @@ function logout() {
               :disabled="!isReady"
               @click="logout()"
             >
-              Logout
+              {{ t("logout") }}
             </button>
 
             <PopoverArrow

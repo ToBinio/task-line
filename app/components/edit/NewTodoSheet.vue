@@ -4,6 +4,9 @@ import Sheet from "../utils/Sheet.vue";
 import TitleSelect from "./TitleSelect.vue";
 import type { TodoData } from "~~/shared/types";
 import DataSelect from "./DataSelect.vue";
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const isOpen = defineModel<boolean>("isOpen", { required: true });
 const todoStore = useTodoStore();
@@ -88,7 +91,7 @@ const isValid = computed(() => {
           @click="onAddTodoNoClose"
         >
           <Icon name="material-symbols:add-2-rounded" size="20" />
-          Another
+          {{ t("another") }}
         </button>
       </div>
     </form>
