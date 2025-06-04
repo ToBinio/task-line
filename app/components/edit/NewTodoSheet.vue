@@ -4,7 +4,7 @@ import Sheet from "../utils/Sheet.vue";
 import TitleSelect from "./TitleSelect.vue";
 import type { TodoData } from "~~/shared/types";
 import DataSelect from "./DataSelect.vue";
-import { useI18n } from 'vue-i18n';
+import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 

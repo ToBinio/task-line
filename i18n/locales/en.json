@@ -15,5 +15,9 @@
   "logout": "Logout",
   "clear": "Clear",
   "name": "Name",
-  "languages": "Languages"
+  "languages": "Languages",
+  "languageNames": {
+    "de": "German",
+    "en": "English"
+  }
 }

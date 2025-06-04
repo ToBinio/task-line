@@ -3,8 +3,7 @@ import Sheet from "../utils/Sheet.vue";
 import Categories from "./Categories.vue";
 import GoogleLogin from "./GoogleLogin.vue";
 import Tags from "./Tags.vue";
-import { useI18n } from "vue-i18n";
-import type { Language, Languages } from "~/utils/languages";
+import { type Locale, useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
@@ -15,20 +14,13 @@ function close() {
 }
 
 const { locale, locales, setLocale } = useI18n();
+const supportedLocales = locales.value.map((l) => l.code);
 
 function onLanguageChange(newLocale: string) {
-  switch (newLocale) {
-    case "en": {
-      setLocale("en");
-      break;
-    }
-    case "de": {
-      setLocale("de");
-      break;
-    }
-    default: {
-      console.error("Unknown locale");
-    }
+  if ((supportedLocales as string[]).includes(newLocale)) {
+    setLocale(newLocale as Locale);
+  } else {
+    console.error("Unknown locale");
   }
 }
 </script>
@@ -46,12 +38,12 @@ function onLanguageChange(newLocale: string) {
     <div class="p-1 pt-0">
       <h2 class="text-muted-text text-lg">{{ t("languages") }}</h2>
       <select
-        class="border-muted-text bg-surface text-muted-text mt-1 w-full rounded border px-2 py-1"
+        class="bg-surface border-secondary h-8 cursor-pointer rounded border px-2 text-white"
         :value="locale"
         @change="onLanguageChange(($event.target as HTMLSelectElement).value)"
       >
         <option v-for="lang in locales" :key="lang.code" :value="lang.code">
-          {{ lang.name }}
+          {{ t(`languageNames.${lang.code}`) }}
         </option>
       </select>
     </div>

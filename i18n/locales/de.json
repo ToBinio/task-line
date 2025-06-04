@@ -15,5 +15,9 @@
   "logout": "Abmelden",
   "clear": "Zurücksetzen",
   "name": "Name",
-  "languages": "Sprachen"
+  "languages": "Sprachen",
+  "languageNames": {
+    "de": "Deutsch",
+    "en": "Englisch"
+  }
 }

@@ -9,7 +9,7 @@ import {
 } from "reka-ui";
 import { useLoginImageUrl } from "~/composables/login/useLoginImageUrl";
 import { useLoginToken } from "~/composables/login/useLoginToken";
-import { useI18n } from 'vue-i18n';
+import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
@@ -72,7 +72,7 @@ function logout() {
       <PopoverRoot>
         <PopoverTrigger class="h-6 cursor-pointer">
           <div class="flex gap-1">
-            <div class="text-nowrap">Logout</div>
+            <div class="text-nowrap">{{ t("logout") }}</div>
 
             <img
               :src="userImage!"

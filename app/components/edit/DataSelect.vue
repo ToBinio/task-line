@@ -10,7 +10,7 @@ import type { Timeframe, UUID } from "~~/shared/types";
 import TagSelect from "../utils/input/TagSelect.vue";
 import DateSelect from "./DateSelect.vue";
 import CategorySelect from "../utils/input/CategorySelect.vue";
-import { useI18n } from 'vue-i18n';
+import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
