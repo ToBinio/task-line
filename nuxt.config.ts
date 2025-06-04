@@ -76,5 +76,10 @@ export default defineNuxtConfig({
       { code: "de", name: "German", file: "de.json" },
     ],
     defaultLocale: "en",
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',
+    }
   },
 });
