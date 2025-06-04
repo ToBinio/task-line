@@ -31,7 +31,7 @@ function resetData() {
   todoData.value.title = "";
   todoData.value.note = "";
   todoData.value.tags = [...filterStore.tags];
-  todoData.value.category = undefined;
+  todoData.value.category = filterStore.category;
   todoData.value.timeframe = undefined;
 }
 
