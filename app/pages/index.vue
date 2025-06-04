@@ -16,6 +16,12 @@ await useInitdata();
 
 //todo - improve splitterWidth - https://github.com/unovue/reka-ui/issues/836
 const { isMobile } = useDevice();
+
+const windowSize = useWindowSize();
+const splitMinSize = computed(() => {
+  const SideBarWidth = 200;
+  return (SideBarWidth / windowSize.width.value) * 100;
+});
 </script>
 <template>
   <div>
@@ -26,7 +32,7 @@ const { isMobile } = useDevice();
 
     <div v-if="!isMobile">
       <SplitterGroup direction="horizontal">
-        <SplitterPanel :default-size="10">
+        <SplitterPanel :default-size="splitMinSize" :min-size="splitMinSize">
           <VerticalNav
             v-model:is-settings-sheet-open="isSettingsSheetOpen"
             v-model:is-filter-sheet-open="isFilterSheetOpen"
