@@ -79,6 +79,9 @@ export default defineNuxtConfig({
     clientId: process.env.GOOGLE_CLIENT_ID,
   },
   i18n: {
+    bundle: {
+      optimizeTranslationDirective: false,
+    },
     strategy: "prefix",
     locales: [
       { code: "en", name: "English", file: "en.json" },
