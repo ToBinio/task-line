@@ -3,7 +3,6 @@ import { useTagStore } from "~/stores/labels/useTagStore";
 import Label from "./labels/Label.vue";
 import type { Label as LabelType } from "~~/shared/types";
 import AddLabel from "./labels/AddLabel.vue";
-import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 

@@ -9,7 +9,6 @@ import {
 } from "reka-ui";
 import { useLoginImageUrl } from "~/composables/login/useLoginImageUrl";
 import { useLoginToken } from "~/composables/login/useLoginToken";
-import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 

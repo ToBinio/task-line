@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { RadioGroupRoot, RadioGroupItem } from "reka-ui";
-import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
