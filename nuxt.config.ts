@@ -52,6 +52,9 @@ export default defineNuxtConfig({
       tags: {
         driver: "memory",
       },
+      categories: {
+        driver: "memory",
+      },
     },
   },
   vite: {
