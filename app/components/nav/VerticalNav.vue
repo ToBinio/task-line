@@ -6,7 +6,7 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
-const filterStore = useFilterStore();
+const { filter } = useFilter();
 
 const isSettingsSheetOpen = defineModel<boolean>("isSettingsSheetOpen");
 const isNewSheetOpen = defineModel<boolean>("isNewSheetOpen");
@@ -24,17 +24,17 @@ const isNewSheetOpen = defineModel<boolean>("isNewSheetOpen");
 
       <div class="p-1 pt-0">
         <h2 class="text-muted-text text-lg">{{ t("categories") }}</h2>
-        <CategorySelect v-model:category="filterStore.category" />
+        <CategorySelect v-model:category="filter.category" />
       </div>
 
       <div class="p-1 pt-0">
         <h2 class="text-muted-text text-lg">{{ t("tags") }}</h2>
-        <TagSelect v-model:tags="filterStore.tags" :show-all="false" />
+        <TagSelect v-model:tags="filter.tags" :show-all="false" />
       </div>
 
       <div class="p-1">
         <h2 class="text-muted-text text-lg">{{ t("time") }}</h2>
-        <TimeSelect v-model:time="filterStore.time" />
+        <TimeSelect v-model:time="filter.time" />
       </div>
     </div>
 

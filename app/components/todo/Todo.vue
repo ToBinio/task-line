@@ -18,7 +18,7 @@ function onCheck() {
   }, 1000);
 }
 
-const filterStore = useFilterStore();
+const { filter } = useFilter();
 const tagStore = useTagStore();
 const categoryStore = useCategoryStore();
 
@@ -33,22 +33,22 @@ const tags = computed(() => {
       return tag;
     })
     .filter((tag) => !!tag)
-    .filter((tag) => !filterStore.tags.includes(tag.uuid))
+    .filter((tag) => !filter.value.tags.includes(tag.uuid))
     .sort((a, b) => a.name.localeCompare(b.name));
 });
 
 function onTagPress(tag: LabelType) {
-  filterStore.tags.push(tag.uuid);
+  filter.value.tags.push(tag.uuid);
 }
 const category = computed(() => {
   if (!props.data.category) return undefined;
-  if (filterStore.category == props.data.category) return undefined;
+  if (filter.value.category == props.data.category) return undefined;
 
   return categoryStore.getByUUID(props.data.category);
 });
 
 function onCategoryPress(category: LabelType) {
-  filterStore.category = category.uuid;
+  filter.value.category = category.uuid;
 }
 </script>
 

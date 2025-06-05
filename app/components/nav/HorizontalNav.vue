@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const filterStore = useFilterStore();
+const { isFiltering } = useFilter();
 
 const isSettingsSheetOpen = defineModel<boolean>("isSettingsSheetOpen");
 const isFilterSheetOpen = defineModel<boolean>("isFilterSheetOpen");
@@ -19,11 +19,7 @@ const isNewSheetOpen = defineModel<boolean>("isNewSheetOpen");
         class="bg-secondary hover:bg-secondary-hover relative m-1 flex aspect-square h-10 cursor-pointer items-center justify-center rounded transition-colors"
         @click="isFilterSheetOpen = true"
       >
-        <Icon
-          v-if="filterStore.isFiltering()"
-          name="material-symbols:filter-alt"
-          size="24"
-        />
+        <Icon v-if="isFiltering" name="material-symbols:filter-alt" size="24" />
         <Icon v-else name="material-symbols:filter-alt-outline" size="24" />
       </button>
     </div>

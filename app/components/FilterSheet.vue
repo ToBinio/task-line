@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useFilterStore } from "~/stores/useFilterStore";
 import TagSelect from "./utils/input/TagSelect.vue";
 import CategorySelect from "./utils/input/CategorySelect.vue";
 import Sheet from "./utils/Sheet.vue";
@@ -7,7 +6,7 @@ import TimeSelect from "./filter/TimeSelect.vue";
 
 const isOpen = defineModel<boolean>("isOpen", { required: true });
 
-const filterStore = useFilterStore();
+const { filter } = useFilter();
 
 function close() {
   isOpen.value = false;
@@ -18,15 +17,15 @@ function close() {
   <Sheet :is-open="isOpen" title="Filter Sheet" @close="close">
     <div class="p-1 pt-0">
       <h2 class="text-muted-text text-lg">Categories</h2>
-      <CategorySelect v-model:category="filterStore.category" />
+      <CategorySelect v-model:category="filter.category" />
     </div>
     <div class="p-1 pt-0">
       <h2 class="text-muted-text text-lg">Tags</h2>
-      <TagSelect v-model:tags="filterStore.tags" :show-all="false" />
+      <TagSelect v-model:tags="filter.tags" :show-all="false" />
     </div>
     <div class="p-1">
       <h2 class="text-muted-text text-lg">Time</h2>
-      <TimeSelect v-model:time="filterStore.time" />
+      <TimeSelect v-model:time="filter.time" />
     </div>
   </Sheet>
 </template>

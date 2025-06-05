@@ -10,7 +10,7 @@ const { t } = useI18n();
 
 const isOpen = defineModel<boolean>("isOpen", { required: true });
 const todoStore = useTodoStore();
-const filterStore = useFilterStore();
+const { filter } = useFilter();
 
 function close() {
   isOpen.value = false;
@@ -33,8 +33,8 @@ watch(isOpen, () => {
 function resetData() {
   todoData.value.title = "";
   todoData.value.note = "";
-  todoData.value.tags = [...filterStore.tags];
-  todoData.value.category = filterStore.category;
+  todoData.value.tags = [...filter.value.tags];
+  todoData.value.category = filter.value.category;
   todoData.value.timeframe = undefined;
 }
 
