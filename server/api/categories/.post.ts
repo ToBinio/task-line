@@ -1,10 +1,10 @@
 import { H3Error } from "h3";
-import { LabelSchema, type Label } from "~~/shared/types";
+import { Label } from "~~/shared/types";
 
 export default defineAuthenticatedEventHandler(
   async (event, token): Promise<Label> => {
     const newCategory = await readValidatedBody<Label>(event, (data) => {
-      return LabelSchema.parse(data) as Label;
+      return Label.parse(data);
     });
 
     const category = await Categories.updateOrAdd(token.sub, newCategory);

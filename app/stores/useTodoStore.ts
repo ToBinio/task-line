@@ -56,6 +56,9 @@ export const useTodoStore = defineStore("todos", {
     async addTodo(todoData: TodoData) {
       const uuid = v4();
 
+      const todos = useFilteredTodos().value;
+      const lastTodo = todos[todos.length - 1];
+
       const todo = {
         uuid,
         ...todoData,
@@ -66,7 +69,10 @@ export const useTodoStore = defineStore("todos", {
       const fetch = useRequestFetch();
       await fetch("/api/todos", {
         method: "POST",
-        body: todo,
+        body: {
+          data: todo,
+          previousId: lastTodo?.uuid,
+        },
         ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast
@@ -87,7 +93,9 @@ export const useTodoStore = defineStore("todos", {
       const fetch = useRequestFetch();
       await fetch("/api/todos", {
         method: "POST",
-        body: todo,
+        body: {
+          data: todo,
+        },
         ...useFetchOptions(),
       }).catch(async (err) => {
         //todo - show in toast

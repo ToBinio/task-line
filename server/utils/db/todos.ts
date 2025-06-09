@@ -38,14 +38,25 @@ export const Todos = {
     await storage.set(getKey(userId), todos);
   },
 
-  async updateOrAdd(userId: string, todo: Todo): Promise<Todo | H3Error> {
+  async updateOrAdd(
+    userId: string,
+    todo: Todo,
+    previous?: UUID,
+  ): Promise<Todo | H3Error> {
     const storage = useStorage();
     const todos = await Todos.getAll(userId);
 
     const index = todos.findIndex((value) => value.uuid === todo.uuid);
+    const previousIndex = previous
+      ? todos.findIndex((value) => value.uuid === previous)
+      : undefined;
 
     if (index === -1) {
-      todos.push(todo);
+      if (previousIndex !== undefined) {
+        todos.splice(previousIndex + 1, 0, todo);
+      } else {
+        todos.push(todo);
+      }
     } else {
       todos[index] = todo;
     }
